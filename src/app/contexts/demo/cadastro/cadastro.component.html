@@ -1,0 +1,340 @@
+
+<div class="md:w-10 lg:w-8 mx-auto" style="max-width: 40rem;">
+<p-stepper orientation="horizontal" [linear]="true">
+
+<!-- Informações Gerais da Instituição -->
+
+    <p-stepperPanel>
+        
+        <ng-template pTemplate="header" let-index="index">
+            <div class="md:border-1 md:border-round-xl md:p-3">
+                <i class="pi pi-user" style="font-size: 1.5rem;"></i>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="content" let-nextCallback="nextCallback">
+
+            <form [formGroup]="profileForm" class="flex flex-column gap-5">
+                
+                <h1>Dados da Instituição</h1>
+                
+                <div class="flex flex-column gap-2">
+                    <label for="nome">Instituição</label>
+                    <input pInputText formControlName="nome" id="nome" 
+                        [class]="profileForm.controls.nome.invalid && 
+                            (profileForm.controls.nome.dirty || 
+                            profileForm.controls.nome.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+
+                <div class="grid">
+
+                    <div class="col-12 md:col-6 flex flex-column gap-3">
+                        <label for="">Tipo de Instituição</label>
+                        
+                        <div class="grid">
+                            <div c  lass="col-12 flex align-items-center">
+                                <p-radioButton formControlName="ie" name="ie" 
+                                    value="true" id="ie" />
+                                <label for="ie" class="ml-2">Instituição de Ensino</label>
+                            </div>
+                            <div class="col-12 flex align-items-center">
+                                <p-radioButton formControlName="ie" name="ie" 
+                                    value="false" id="empresa" />
+                                <label for="empresa" class="ml-2">Empresa</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6 flex flex-column gap-2">
+                        <label for="cnpj">CNPJ</label>
+                        <p-inputMask formControlName="cnpj" id="cnpj"
+                            [style]="{'width':'100%'}" 
+                            mask="99-999-999/9999-99"
+                            [class]="profileForm.controls.cnpj.invalid && 
+                            (profileForm.controls.cnpj.dirty || 
+                            profileForm.controls.cnpj.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                        
+                </div>
+
+
+                <div class="flex flex-column gap-2">
+                    <label for="info">Informações</label>
+                    <textarea id="info" formControlName="info" rows="5" 
+                        cols="30" pInputTextarea [autoResize]="true" 
+                        [class]="profileForm.controls.info.invalid && 
+                            (profileForm.controls.info.dirty || 
+                            profileForm.controls.info.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''" >
+                    </textarea>
+                </div>
+
+            </form>
+
+            <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-end">
+                <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                    label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+
+
+<!-- Endereço -->
+
+    <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+            <div class="md:border-1 md:border-round-xl md:p-3">
+                <i class="pi pi-map-marker" style="font-size: 1.5rem;"></i>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" 
+            let-nextCallback="nextCallback">
+
+            <form [formGroup]="addressForm" class="grid">
+
+                <h1>Endereço</h1>
+                
+                <div class="col-12">
+                    <div class="flex flex-column gap-2">
+                        <label for="rua">Endereço</label>
+                        <input pInputText formControlName="rua" id="rua" 
+                            [class]="addressForm.controls.rua.invalid && 
+                                (addressForm.controls.rua.dirty 
+                                || addressForm.controls.rua.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>    
+                </div>
+ 
+                <div class="col-12 md:col-6">
+                    <div class="flex flex-column gap-2">
+                        <label for="bairro">Bairro</label>
+                        <input formControlName="bairro" pInputText id="bairro" 
+                            [class]="addressForm.controls.bairro.invalid && 
+                                (addressForm.controls.bairro.dirty || 
+                                addressForm.controls.bairro.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="flex flex-column gap-2">
+                        <label for="cidade">Cidade</label>
+                        <input formControlName="cidade" pInputText id="cidade" 
+                            [class]="addressForm.controls.cidade.invalid && 
+                                (addressForm.controls.cidade.dirty 
+                                || addressForm.controls.cidade.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="flex flex-column gap-2">
+                        <label for="estado">Estado</label>
+                        <p-dropdown [style]="{'width':'100%'}" [options]="" 
+                            placeholder="Estado" formControlName="estado" id="estado"
+                            [class]="addressForm.controls.estado.invalid && 
+                                (addressForm.controls.estado.dirty 
+                                || addressForm.controls.estado.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="flex flex-column gap-2">
+                        <label for="pais">Pais</label>
+                        <p-dropdown [style]="{'width':'100%'}" formControlName="pais" 
+                            placeholder="País" id="pais" 
+                            [class]="addressForm.controls.pais.invalid && 
+                                (addressForm.controls.pais.dirty 
+                                || addressForm.controls.pais.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>    
+                </div>
+
+            </form>
+
+            <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
+                <p-button (onClick)="prevCallback.emit()" label="Anterior" 
+                    severity="secondary" icon="pi pi-arrow-left" />
+                <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                    label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+
+
+<!-- CONTATOS -->
+
+    <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+            <div class="md:border-1 md:border-round-xl md:p-3">
+                <i class="pi pi-at" style="font-size: 1.5rem;"></i>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" 
+            let-nextCallback="nextCallback">
+            
+                <h1>Contatos</h1>
+
+                <form [formGroup]="mainContactForm" class="grid" >
+                    <div class="col-12 md:col-6">
+                        <div class="flex flex-column gap-2">
+                            <label for="email">Email</label>
+                            <input pInputText 
+                                formControlName="email" id="email" 
+                                [class]="mainContactForm.controls.email.invalid && 
+                                    (mainContactForm.controls.email.dirty 
+                                    || mainContactForm.controls.email.touched ) 
+                                    ? 'ng-invalid ng-dirty' : ''"/>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">              
+                        <div class="flex flex-column gap-2">
+                            <label for="telefone">Telefone</label>
+                            <p-inputMask [style]="{'width':'100%'}"
+                            formControlName="telefone" id="telefone"
+                            mask="(99) 9999-9999?9" 
+                            [class]="mainContactForm.controls.telefone.invalid 
+                                && (mainContactForm.controls.telefone.dirty 
+                                || mainContactForm.controls.telefone.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                        </div>
+                    </div>
+                </form>
+            
+            <form [formGroup]="profileForm" class="grid">
+                <div class="col-12">
+                    <div class="flex flex-column gap-2">
+                        <label for="website">Website</label>
+                        <input formControlName="website" 
+                            pInputText id="website" 
+                            [class]="profileForm.controls.website.invalid 
+                                && (profileForm.controls.website.dirty 
+                                || profileForm.controls.website.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="flex flex-column gap-2">
+                        <label for="redes">Redes Sociais</label>
+                        <div class="grid">
+                            <div class="col-12 md:col-6">
+                                <input pInputText id="redes1" [style]="{'width':'100%'}"
+                                [class]="profileForm.controls.website.invalid 
+                                    && (profileForm.controls.website.dirty 
+                                    || profileForm.controls.website.touched ) 
+                                    ? 'ng-invalid ng-dirty' : ''"/>    
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <input pInputText id="redes2" [style]="{'width':'100%'}"
+                                [class]="profileForm.controls.website.invalid 
+                                    && (profileForm.controls.website.dirty 
+                                    || profileForm.controls.website.touched ) 
+                                    ? 'ng-invalid ng-dirty' : ''"/>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="applianceContactForm" class="grid">
+                <h4 class="col-12">Contato para Candidaturas (opcional)</h4>
+                <div class="col-12 md:col-6">
+                    <div class="flex flex-column gap-2">
+                        <label for="email2">Email</label>
+                        <input 
+                            pInputText formControlName="email" id="email2" 
+                            [class]="applianceContactForm.controls.email.invalid 
+                                && (applianceContactForm.controls.email.dirty 
+                                || applianceContactForm.controls.email.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="flex flex-column gap-2">
+                        <label for="telefone2">Telefone</label>
+                        <p-inputMask formControlName="telefone" [style]="{'width':'100%'}" 
+                            id="telefone2" mask="(99) 9999-9999?9" 
+                            
+                            [class]="applianceContactForm.controls.telefone.invalid 
+                                && (applianceContactForm.controls.telefone.dirty 
+                                || applianceContactForm.controls.telefone.touched ) 
+                                ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
+                <p-button (onClick)="prevCallback.emit()" label="Anterior" 
+                    severity="secondary" icon="pi pi-arrow-left" />
+                <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                    label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+
+
+<!-- CREDENCIAIS DE LOGIN -->
+
+    <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+            <div class="md:border-1 md:border-round-xl md:p-3">
+                <i class="pi pi-id-card" style="font-size: 1.5rem;"></i>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="content" let-prevCallback="prevCallback">
+
+            <h1>Credenciais para Autenticação</h1>
+
+            <form [formGroup]="credentialsForm" class="w-full md:w-8 mx-auto flex flex-column gap-4" 
+                (ngSubmit)="save()">
+                
+                <div class="flex flex-column gap-2">
+                    <label for="email">Login Email</label>
+                    <input pInputText formControlName="email" id="email" 
+                        [class]="credentialsForm.controls.email.invalid 
+                            && (credentialsForm.controls.email.dirty 
+                            || credentialsForm.controls.email.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+                
+                <div class="flex flex-column gap-2">
+                    <label for="senha">Senha</label>
+                    <p-password formControlName="senha" id="senha" 
+                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                        [class]="credentialsForm.controls.senha.invalid 
+                            && (credentialsForm.controls.senha.dirty 
+                            || credentialsForm.controls.senha.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''">
+                        <ng-template pTemplate="footer">
+                            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                                <li>Ao menos uma letra minúscula</li>
+                                <li>Ao menos uma letra maiúscula</li>
+                                <li>Ao menos um número</li>
+                                <li>Ao menos um caractere especial (*?#$%) </li>
+                                <li>Mínimo de 8 caracteres</li>
+                            </ul>
+                        </ng-template>
+                    </p-password>
+                </div>
+
+            </form>
+
+            <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
+                <p-button (onClick)="prevCallback.emit()" label="Anterior" 
+                    severity="secondary" icon="pi pi-arrow-left" />
+                <p-button [disabled]="false" 
+                    label="Finalizar" icon="pi pi-check" iconPos="right" />
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+
+</p-stepper>
+
+
+
+</div>

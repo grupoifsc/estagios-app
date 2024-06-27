@@ -1,0 +1,29 @@
+/* .cool-background {
+    background: rgb(64,64,64);
+    background: linear-gradient(0deg, rgba(64,64,64,1) 0%, rgba(255,255,255,1) 71%);
+} */
+
+:host ::ng-deep .p-carousel-prev-icon, .p-carousel-next-icon {
+    font-size: 200px;
+}
+
+.opaque {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tag {
+    z-index: 20;
+    transform: rotate(-1deg);
+    min-height: 2rem;
+    font-weight: bold;
+    color: aliceblue;
+    text-align: center;
+    align-content: center;
+    border-color:black;
+    border-width: 1px;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08), 0px 3px 4px rgba(0, 0, 0, 0.1), 0px 1px 4px -1px rgba(0, 0, 0, 0.1);
+    background: rgb(75, 75, 75);
+    /* background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgb(233, 233, 233) 50%, rgba(255,255,255,1) 100%); */
+    position: absolute;
+    width: 10rem;
+}

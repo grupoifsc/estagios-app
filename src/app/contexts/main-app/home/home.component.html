@@ -1,0 +1,68 @@
+
+<div class="w-full md:w-9 lg:w-7 px-3 mx-auto py-5 flex flex-column gap-5">
+
+    <div>
+        <div class="tag">
+            O QUE
+        </div>
+        <div class="pt-3 p-4">
+            <div class="p-4 opaque border-1">
+                Um serviço para conectar ies e empresas para divulgar vagas a comunidade estudantil             
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="tag">
+            PARA QUEM
+        </div>
+        <div class="pt-3 p-4">
+            <div class="p-4 opaque border-1">
+                <p>Escolas, redes e institutos de ensino, universidades, empresas de qualquer porte</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <p-carousel class="hidden md:block"
+        [value]="features" 
+        [numVisible]="1"  
+        [circular]="true" 
+        autoplayInterval="5000"
+        >    
+
+        <ng-template let-item pTemplate="item">
+            <div class="h-25rem flex flex-column align-items-center" style="background-color: rgb(75,75,75);" >
+                <div class="w-9 h-full flex flex-column justify-content-center text-50 ">
+                    <div class="text-center">
+                        <h1 class="m-0">{{item.title}}</h1>
+                    </div>
+                    
+                    <div class="mt-5 flex flex-column gap-3 ">
+                        <div *ngFor="let detail of item.items">
+                            {{ detail }}
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+
+
+    <div class="block md:hidden">
+        <p-accordion [activeIndex]="1">
+            <p-accordionTab [header]="item.title" *ngFor="let item of features">
+                <p class="m-0">
+                    {{ item.items }}
+                </p>
+            </p-accordionTab>
+        </p-accordion>    
+    </div>
+
+    <div class="opaque my-5 align-self-center ">
+        <p-button label="COMECE AQUI" />
+    </div>
+
+</div>
+

@@ -1,0 +1,66 @@
+ 
+blockquote {
+    overflow: auto;
+}
+
+p, ul {
+    line-height: 1.5;
+}
+
+pre {
+    &::-webkit-scrollbar {
+        height: 8px;
+        width: 8px;
+}
+
+&::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.4);
+        border-radius: 4px;
+}
+
+&::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.7);
+}
+
+&::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+}
+}
+
+:host ::ng-deep table {
+    width: 100%;
+    border-spacing: 0;
+    border-width: 0.2px;
+    border-style: solid;
+    border-color: rgba(0,0,0,.12);
+}
+
+:host ::ng-deep th {
+    color: rgba(0,0,0,.54);
+    font-weight: 700;
+    padding: 8px;
+    border-width: 0.2px;
+    border-style: solid;
+    border-color: rgba(0,0,0,.12);
+}
+
+:host ::ng-deep th[align=""],
+th:not([align]) {
+    text-align: left;
+}
+
+:host ::ng-deep td {
+    color: rgba(0,0,0,.70);
+    font-size: medium;
+    padding: 10px;
+    border-width: 0.2px;
+    border-style: solid;
+    border-color: rgba(0,0,0,.12);
+
+}
+
+
+:host ::ng-deep * {
+box-sizing: border-box;
+}

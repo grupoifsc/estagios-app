@@ -1,0 +1,47 @@
+
+<div class="mt-4">
+
+    <p-button class="lg:hidden mb-2 ml-3" icon="pi pi-bars" [rounded]="true" [text]="true" (onClick)="toogleMenu()" />
+
+    <div class="grid m-0 p-0">
+
+        <nav class="col-12 p-0 px-3 z-2 min-h-screen sticky top-0 lg:relative bg-white lg:col-fixed lg:w-15rem lg:block lg:z-0 sidebar" [hidden]="isMenuHidden" >
+            <menu class="p-0 px-3" (click)="toogleMenu()">
+                <p>Demo</p>
+                <p><a routerLink="cadastro">Cadastro</a></p>
+                <p><a routerLink="auth">Autenticação</a></p>
+                <p><a routerLink="criar-anuncio">Criar Anúncio de Vaga</a></p>
+                <p><a routerLink="moderacao">Moderação</a></p>
+                <p><a routerLink="teste">Teste</a></p>
+            </menu>
+
+            <menu class="xl:hidden p-3" (click)="toogleMenu()">
+                <p>API</p>
+                <p>Github</p>
+                <p>Termo de Uso</p>
+                <p>Licença</p>
+            </menu>
+        </nav>
+
+        <div class="col lg:col-9 xl:col grid grid-nogutter">
+            <main class="col-12 lg:border-left-1 border-400 xl:col-10 px-4 pt-5 py-10 xl:px-6">
+                <router-outlet />
+            </main>
+    
+            <aside class="hidden xl:block border-left-1 border-400 col-2">
+                <nav>
+                    <menu class="p-0 pl-4">
+                        <p>API</p>
+                        <p>Github</p>
+                        <p>Termo de Uso</p>
+                        <p>Licença</p>
+                    </menu>
+                </nav>
+            </aside>
+        </div>
+
+
+
+    </div>
+
+</div>
