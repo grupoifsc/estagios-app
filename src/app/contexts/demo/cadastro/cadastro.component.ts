@@ -14,15 +14,16 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputMaskModule } from 'primeng/inputmask';
 import { LoadingService } from '../../../services/loading.service';
-import { Contato, Credenciais, Endereco, Organizacao } from '../organizacao';
-import { OrgService } from '../org.service';
+import { Contact, Credentials, Address, Org } from '../organizacao';
+import { ApiService } from '../api.service';
 import { Subscription } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
+import { log } from 'console';
 
 
-class BlankOrg implements Organizacao {
+class BlankOrg implements Org {
   id?: string | undefined;
   nome = '';
   credenciais = { email: '', senha: '' };
@@ -33,7 +34,7 @@ class BlankOrg implements Organizacao {
   contato_candidaturas = { email: '', telefone: '' };
   endereco = { rua: '', bairro: '', cidade: '', estado: '', pais: '' };
   website = '';
-  redes_sociais = '';
+  redes_sociais = [];
   criado_em?: Date | undefined;
   atualizado_em?: Date | undefined;
 }
@@ -54,13 +55,13 @@ export class CadastroComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private orgService: OrgService,
+    private orgService: ApiService,
     private authService: AuthService,
   ) {}
 
   active: any;
 
-  org! : Organizacao
+  org! : Org
 
   profileForm! : FormGroup
   mainContactForm! : FormGroup
@@ -71,8 +72,44 @@ export class CadastroComponent implements OnInit, OnDestroy {
   subscriptions : Subscription[] = []
 
 
-  ngOnInit(): void {
+  states : {value: string, label: string}[] = [
+    { value: 'AC', label: 'Acre' },
+    { value: 'AL', label: 'Alagoas' },
+    { value: 'AP', label: 'Amapá' },
+    { value: 'AM', label: 'Amazonas' },
+    { value: 'BA', label: 'Bahia' },
+    { value: 'CE', label: 'Ceará' },
+    { value: 'DF', label: 'Distrito Federal' },
+    { value: 'ES', label: 'Espírito Santo' },
+    { value: 'GO', label: 'Goiás' },
+    { value: 'MA', label: 'Maranhão' },
+    { value: 'MT', label: 'Mato Grosso' },
+    { value: 'MS', label: 'Mato Grosso do Sul' },
+    { value: 'MG', label: 'Minas Gerais' },
+    { value: 'PA', label: 'Pará' },
+    { value: 'PB', label: 'Paraíba' },
+    { value: 'PR', label: 'Paraná' },
+    { value: 'PE', label: 'Pernambuco' },
+    { value: 'PI', label: 'Piauí' },
+    { value: 'RJ', label: 'Rio de Janeiro' },
+    { value: 'RN', label: 'Rio Grande do Norte' },
+    { value: 'RS', label: 'Rio Grande do Sul' },
+    { value: 'RO', label: 'Rondônia' },
+    { value: 'RR', label: 'Roraima' },
+    { value: 'SC', label: 'Santa Catarina' },
+    { value: 'SP', label: 'São Paulo' },
+    { value: 'SE', label: 'Sergipe' },
+    { value: 'TO', label: 'Tocantins' },
+    { value: '_0', label: 'Outro' }
+  ];
 
+  countries : { value: string, label: string }[] = [
+    { value: 'BRA', label: "Brasil" },
+    { value: '__0', label: "Outro" }
+  ]
+
+
+  ngOnInit(): void {
     if(this.authService.isAuthenticated()) 
       this.retrieveAuthOrgData()
     else 
@@ -87,7 +124,7 @@ export class CadastroComponent implements OnInit, OnDestroy {
 
   retrieveAuthOrgData() : void {
     let subscr = this.orgService.getAuthOrg().subscribe(authOrg => {
-      if(authOrg) this.org = authOrg
+      if(authOrg.data) this.org = authOrg.data
     });
     this.subscriptions.push(subscr);
   }
@@ -98,13 +135,14 @@ export class CadastroComponent implements OnInit, OnDestroy {
       cnpj : [this.org.cnpj, [Validators.required]],
       ie : [this.org.instituicao_de_ensino, [Validators.required]],
       info : [this.org.info, [Validators.required]],
-      website : [this.org.website, []],
-      redesSociais: [this.org.redes_sociais, []],
     })
   
     this.mainContactForm = this.formBuilder.group({
       email: [this.org.contato_principal.email, [Validators.email, Validators.required]],
-      telefone: [this.org.contato_principal.telefone]
+      telefone: [this.org.contato_principal.telefone],
+      website : [this.org.website, []],
+      redesSociaisA: [this.org.redes_sociais?.[0] ?? '', []],
+      redesSociaisB: [this.org.redes_sociais?.[1] ?? '', []],
     })
   
     this.applianceContactForm = this.formBuilder.group({
@@ -141,11 +179,16 @@ export class CadastroComponent implements OnInit, OnDestroy {
     this.org.cnpj = profile.cnpj;
     this.org.instituicao_de_ensino = profile.ie;
     this.org.info = profile.info;
-    this.org.website = profile.website;
-    this.org.redes_sociais = profile.redesSociais
 
     this.org.contato_principal.email = mainContact.email;
     this.org.contato_principal.telefone = mainContact.telefone;
+    this.org.website = mainContact.website;
+
+    if(mainContact.redesSociaisA)
+      this.org.redes_sociais?.push(mainContact.redesSociaisA)
+
+    if(mainContact.redesSociaisB)
+      this.org.redes_sociais?.push(mainContact.redesSociaisB)
 
     if(applianceContact.email) {
       this.org.contato_candidaturas = { email: applianceContact.email, telefone : '' }
@@ -175,14 +218,27 @@ export class CadastroComponent implements OnInit, OnDestroy {
    * Attempts to save data
    */
   save() : void {
-    let subscr = this.orgService.saveOrg(this.org)?.subscribe({
-      next: org => this.org = org,
+    console.log(this.org);
+    
+    let subscr = this.orgService.createOrg(this.org)?.subscribe({
+      next: org => { 
+        console.log("success!");
+        if(org.data) this.org = org.data;
+        console.log(org);
+       },
   //    error: err => ,
 //      complete: () => // redirecionar para home...
     })
     this.subscriptions.push(subscr);
   }
 
+
+
+  submit() : void {
+    this.updateModel();
+    console.log(JSON.stringify(this.org));
+    this.save();
+  }
 
 
 }

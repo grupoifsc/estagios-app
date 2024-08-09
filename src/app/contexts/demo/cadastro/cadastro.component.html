@@ -1,5 +1,5 @@
 
-<div class="md:w-10 lg:w-8 mx-auto" style="max-width: 40rem;">
+<div class="md:w-10 lg:w-8 mx-auto p-5" style="max-width: 40rem;">
 <p-stepper orientation="horizontal" [linear]="true">
 
 <!-- Informações Gerais da Instituição -->
@@ -21,6 +21,7 @@
                 <div class="flex flex-column gap-2">
                     <label for="nome">Instituição</label>
                     <input pInputText formControlName="nome" id="nome" 
+                        autocomplete="true"
                         [class]="profileForm.controls.nome.invalid && 
                             (profileForm.controls.nome.dirty || 
                             profileForm.controls.nome.touched ) 
@@ -35,12 +36,12 @@
                         <div class="grid">
                             <div c  lass="col-12 flex align-items-center">
                                 <p-radioButton formControlName="ie" name="ie" 
-                                    value="true" id="ie" />
+                                    [value]="true" id="ie" inputId="ie" />
                                 <label for="ie" class="ml-2">Instituição de Ensino</label>
                             </div>
                             <div class="col-12 flex align-items-center">
                                 <p-radioButton formControlName="ie" name="ie" 
-                                    value="false" id="empresa" />
+                                    [value]="false" id="empresa" inputId="empresa" />
                                 <label for="empresa" class="ml-2">Empresa</label>
                             </div>
                         </div>
@@ -50,7 +51,9 @@
                         <label for="cnpj">CNPJ</label>
                         <p-inputMask formControlName="cnpj" id="cnpj"
                             [style]="{'width':'100%'}" 
-                            mask="99-999-999/9999-99"
+                            mask="99.999.999/9999-99"
+                            [unmask]="true"
+                            autocomplete="true"
                             [class]="profileForm.controls.cnpj.invalid && 
                             (profileForm.controls.cnpj.dirty || 
                             profileForm.controls.cnpj.touched ) 
@@ -131,7 +134,8 @@
                 <div class="col-12 md:col-6">
                     <div class="flex flex-column gap-2">
                         <label for="estado">Estado</label>
-                        <p-dropdown [style]="{'width':'100%'}" [options]="" 
+                        <p-dropdown [style]="{'width':'100%'}" [options]="states"
+                            optionLabel="label" optionValue="value" 
                             placeholder="Estado" formControlName="estado" id="estado"
                             [class]="addressForm.controls.estado.invalid && 
                                 (addressForm.controls.estado.dirty 
@@ -143,7 +147,8 @@
                     <div class="flex flex-column gap-2">
                         <label for="pais">Pais</label>
                         <p-dropdown [style]="{'width':'100%'}" formControlName="pais" 
-                            placeholder="País" id="pais" 
+                            placeholder="País" id="pais" [options]="countries" 
+                            optionLabel="label" optionValue="value"
                             [class]="addressForm.controls.pais.invalid && 
                                 (addressForm.controls.pais.dirty 
                                 || addressForm.controls.pais.touched ) 
@@ -175,43 +180,41 @@
         <ng-template pTemplate="content" let-prevCallback="prevCallback" 
             let-nextCallback="nextCallback">
             
-                <h1>Contatos</h1>
+            <h1>Contatos</h1>
 
-                <form [formGroup]="mainContactForm" class="grid" >
-                    <div class="col-12 md:col-6">
-                        <div class="flex flex-column gap-2">
-                            <label for="email">Email</label>
-                            <input pInputText 
-                                formControlName="email" id="email" 
-                                [class]="mainContactForm.controls.email.invalid && 
-                                    (mainContactForm.controls.email.dirty 
-                                    || mainContactForm.controls.email.touched ) 
-                                    ? 'ng-invalid ng-dirty' : ''"/>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-6">              
-                        <div class="flex flex-column gap-2">
-                            <label for="telefone">Telefone</label>
-                            <p-inputMask [style]="{'width':'100%'}"
-                            formControlName="telefone" id="telefone"
-                            mask="(99) 9999-9999?9" 
-                            [class]="mainContactForm.controls.telefone.invalid 
-                                && (mainContactForm.controls.telefone.dirty 
-                                || mainContactForm.controls.telefone.touched ) 
+            <form [formGroup]="mainContactForm" class="grid" >
+                <div class="col-12 md:col-6">
+                    <div class="flex flex-column gap-2">
+                        <label for="email">Email</label>
+                        <input pInputText 
+                            formControlName="email" id="email" 
+                            [class]="mainContactForm.controls.email.invalid && 
+                                (mainContactForm.controls.email.dirty 
+                                || mainContactForm.controls.email.touched ) 
                                 ? 'ng-invalid ng-dirty' : ''"/>
-                        </div>
                     </div>
-                </form>
+                </div>
+                <div class="col-12 md:col-6">              
+                    <div class="flex flex-column gap-2">
+                        <label for="telefone">Telefone</label>
+                        <p-inputMask [style]="{'width':'100%'}"
+                        formControlName="telefone" id="telefone"
+                        mask="(99) 9999-9999?9" 
+                        [class]="mainContactForm.controls.telefone.invalid 
+                            && (mainContactForm.controls.telefone.dirty 
+                            || mainContactForm.controls.telefone.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                </div>
             
-            <form [formGroup]="profileForm" class="grid">
                 <div class="col-12">
                     <div class="flex flex-column gap-2">
                         <label for="website">Website</label>
                         <input formControlName="website" 
                             pInputText id="website" 
-                            [class]="profileForm.controls.website.invalid 
-                                && (profileForm.controls.website.dirty 
-                                || profileForm.controls.website.touched ) 
+                            [class]="mainContactForm.controls.website.invalid 
+                                && (mainContactForm.controls.website.dirty 
+                                || mainContactForm.controls.website.touched ) 
                                 ? 'ng-invalid ng-dirty' : ''"/>
                     </div>
                 </div>
@@ -220,18 +223,20 @@
                         <label for="redes">Redes Sociais</label>
                         <div class="grid">
                             <div class="col-12 md:col-6">
-                                <input pInputText id="redes1" [style]="{'width':'100%'}"
-                                [class]="profileForm.controls.website.invalid 
-                                    && (profileForm.controls.website.dirty 
-                                    || profileForm.controls.website.touched ) 
+                                <input pInputText id="redesA" [style]="{'width':'100%'}"
+                                formControlName="redesSociaisA"
+                                [class]="mainContactForm.controls.redesSociaisA.invalid 
+                                    && (mainContactForm.controls.redesSociaisA.touched 
+                                    || mainContactForm.controls.redesSociaisA.dirty ) 
                                     ? 'ng-invalid ng-dirty' : ''"/>    
                             </div>
                             <div class="col-12 md:col-6">
-                                <input pInputText id="redes2" [style]="{'width':'100%'}"
-                                [class]="profileForm.controls.website.invalid 
-                                    && (profileForm.controls.website.dirty 
-                                    || profileForm.controls.website.touched ) 
-                                    ? 'ng-invalid ng-dirty' : ''"/>    
+                                <input pInputText id="redesB" [style]="{'width':'100%'}"
+                                formControlName="redesSociaisB"
+                                [class]="mainContactForm.controls.redesSociaisB.invalid 
+                                    && (mainContactForm.controls.redesSociaisB.touched 
+                                    || mainContactForm.controls.redesSociaisB.dirty ) 
+                                    ? 'ng-invalid ng-dirty' : ''"/>     
                             </div>
                         </div>
                     </div>
@@ -290,7 +295,7 @@
             <h1>Credenciais para Autenticação</h1>
 
             <form [formGroup]="credentialsForm" class="w-full md:w-8 mx-auto flex flex-column gap-4" 
-                (ngSubmit)="save()">
+                >
                 
                 <div class="flex flex-column gap-2">
                     <label for="email">Login Email</label>
@@ -326,8 +331,8 @@
             <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
                 <p-button (onClick)="prevCallback.emit()" label="Anterior" 
                     severity="secondary" icon="pi pi-arrow-left" />
-                <p-button [disabled]="false" 
-                    label="Finalizar" icon="pi pi-check" iconPos="right" />
+                <p-button type="submit" [disabled]="false" 
+                    label="Finalizar" icon="pi pi-check" (onClick)="submit()" iconPos="right" />
             </div>
 
         </ng-template>

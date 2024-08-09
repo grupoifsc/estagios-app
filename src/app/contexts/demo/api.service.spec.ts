@@ -1,16 +1,22 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OrgService } from './org.service';
+import { ApiService } from './api.service';
 
-describe('OrgService', () => {
-  let service: OrgService;
+describe('ApiService', () => {
+  let service: ApiService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(OrgService);
+    service = TestBed.inject(ApiService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should get authUser', () => {
+    
+  });
+
+
 });

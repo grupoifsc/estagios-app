@@ -1,92 +1,95 @@
-<div class="grid gap-2 xl:w-10 mx-auto mb-5" style="max-width: 60rem;">
+<div *ngIf="(vaga$ | async)?.data as vaga" class="grid gap-2 xl:w-10 mx-auto mb-5" style="max-width: 60rem;">
 
-    <div class="col-12 flex gap-2 flex-wrap ">
-        <h1>Título</h1>
-        <p-button icon="pi pi-pencil" rounded="true" text="true" (onClick)="edit()" />
-        <p-button icon="pi pi-trash" rounded="true" severity="danger" text="true" (onClick)="confirmDelete()" />
-    </div>
-
-    <div class="col flex flex-column gap-4 mr-5">
-
-        <div class="flex flex-column gap-2">
-            <div class="flex flex-wrap gap-2" id="descricao" >
-                <p>Lorem ipsum dolor sit amet. Qui maxime modi id dignissimos optio ut consequuntur suscipit. Est assumenda quibusdam ut corporis voluptatem aut deserunt ducimus. Eos itaque quae a repellendus iste sed nobis consectetur et optio minima qui voluptatem quisquam aut eligendi Quis et inventore sint. Et placeat voluptas sit voluptate ducimus quo praesentium laboriosam non quia doloremque qui error omnis ad voluptas velit est perferendis vero. Nam dicta iste et tempore nemo est enim impedit et nisi commodi. Aut nulla recusandae aut architecto tempore et incidunt alias. Est ipsam soluta qui fugit sunt et molestiae sint. </p><p>Qui fugiat iusto aut labore aliquam id harum iusto sed Quis sapiente ea fuga doloremque sed iure obcaecati sit amet repellat. Ut dolores eligendi ea nemo soluta aut corrupti eligendi qui similique adipisci 33 consequatur iure. Est omnis inventore non sunt facere sit praesentium eius ut galisum soluta sit architecto omnis id eaque facere id expedita sequi? Et obcaecati aliquam sed quasi expedita id corrupti fuga non ducimus earum est magnam dolorem nam iusto quia ea expedita saepe! Est dolorem dolorem et quis eius et illum perspiciatis a deserunt perferendis et facilis nisi qui quod debitis aut dolorem reprehenderit. </p><p>Qui nihil eligendi et consequatur libero rem omnis doloremque. Aut quibusdam eius 33 molestiae dolores ea dolores culpa eum autem facere ut maiores quia sed voluptatem autem. Et iste autem et quia quisquam sit laborum velit. 33 animi laboriosam aut rerum quaerat a maxime excepturi et numquam consequatur id repellendus laboriosam? Ab tenetur dolor et vitae quia et voluptas corporis! Nam doloribus eveniet nam sint ipsam in galisum ipsam est quod quidem ut amet dicta in neque dicta est explicabo corporis. Sit quia culpa id quis rerum et vitae tenetur et dolore delectus qui aperiam ducimus rem magni iusto et velit enim. </p>
-            </div>    
+        <div class="col-12 flex gap-2 flex-wrap ">
+            <h1>{{vaga?.titulo}}</h1>
+            <p-button icon="pi pi-pencil" rounded="true" text="true" (onClick)="edit()" />
+            <p-button icon="pi pi-trash" rounded="true" severity="danger" text="true" (onClick)="confirmDelete()" />
         </div>
 
-        <div class="flex flex-column gap-2">
-            <label for="requisitos">Requisitos</label>
-            <div class="flex flex-wrap gap-2" id="requisitos" >
-                <p-chip label="A" /> <p-chip label="A" /> <p-chip label="A" /> <p-chip label="A" />
-            </div>    
-        </div>
+        <div class="col flex flex-column gap-4 mr-5">
 
-        <div class="flex flex-column gap-2">
-            <label for="areas">Áreas</label>
-            <div class="flex flex-wrap gap-2" id="areas" >
-                <p-chip label="A" /> <p-chip label="A" /> <p-chip label="A" /> <p-chip label="A" />
-            </div>    
-        </div>
-
-        <div class="flex flex-column gap-2">
-            <label for="ies">IEs</label>
-            <div class="flex flex-wrap gap-2" id="ies">
-                <span id="" class="text-bluegray-700">TODAS</span>
+            <div class="flex flex-column gap-2">
+                <div class="flex flex-wrap gap-2" id="descricao" >
+                    <p>{{vaga?.descricao}}</p>
+                </div>    
             </div>
+
+            <div class="flex flex-column gap-2">
+                <label for="requisitos">Requisitos</label>
+                <div class="flex flex-wrap gap-2" id="requisitos" >
+                    <p-chip *ngFor="let requisito of vaga?.requisitos" [label]="requisito" />
+                </div>    
+            </div>
+
+            <div class="flex flex-column gap-2">
+                <label for="areas">Áreas</label>
+                <div class="flex flex-wrap gap-2" id="areas" >
+                    <p-chip *ngFor="let area of vaga?.areas" [label]="area.name" />
+                </div>    
+            </div>
+
+            <div class="flex flex-column gap-2">
+                <label for="ies">IEs</label>
+                <div class="flex flex-wrap gap-2" id="ies">
+                    <span *ngIf="vaga?.destinatarios?.length == 0; else ie" id="" class="text-bluegray-700">TODAS</span>
+                    <ng-template #ie>
+                        <span *ngFor="let ie of vaga?.destinatarios" class="text-bluegray-700">{{ie.nome}}</span>
+                    </ng-template>
+                </div>
+            </div>
+    
+        </div>
+
+
+        <div class="col-12 lg:col-3 flex flex-column gap-3">
+            <div class="flex flex-wrap lg:flex-column gap-3">
+                <div class="flex flex-wrap gap-2" >
+                    <label class="text-bluegray-900 font-bold">Formato:</label>
+                    <span id="" class="text-bluegray-700">{{vaga?.formato}}</span>
+                </div>
+
+                <div class="flex flex-wrap gap-2" >
+                    <label for="periodo" class="text-bluegray-900 font-bold">Período:</label>
+                    <span id="periodo" class="text-bluegray-700">{{vaga?.periodo}}</span>
+                </div>
+
+                <div class="flex flex-wrap gap-2" >
+                    <label for="nivel" class="text-bluegray-900 font-bold">Nível:</label>
+                    <span id="nivel" class="text-bluegray-700">{{vaga?.nivel}}</span>
+                </div>
+
+                <div class="flex flex-wrap gap-2" >
+                    <label for="ch" class="text-bluegray-900 font-bold">Carga Horária:</label>
+                    <span id="ch" class="text-bluegray-700">{{vaga?.carga_horaria_semanal}} horas/semana</span>
+                </div>
+
+                <div class="flex flex-wrap gap-2" >
+                    <label for="remuneracao" class="text-bluegray-900 font-bold">Remuneração:</label>
+                    <span id="remuneracao" class="text-bluegray-700"> R$ {{vaga?.remuneracao}}</span>
+                </div>
+
+                <div class="flex flex-wrap gap-2" >
+                    <label for="duracao" class="text-bluegray-900 font-bold">Duração:</label>
+                    <span id="duracao" class="text-bluegray-700">{{vaga?.duracao_meses}} meses</span>
+                </div>
+            </div>
+
+            <p-divider class="hidden lg:block" />
+            
+            <div class="flex flex-column">
+                <div class="flex gap-2 flex-grow-1" >
+                    <label for="criado" class="text-bluegray-900">Criado em:</label>
+                    <span id="criado" class="text-bluegray-700">{{vaga?.criado_em | date : 'short'}}</span>
+                </div>
+
+                <div class="flex gap-2 flex-grow-1" >
+                    <label for="atualizado" class="text-bluegray-900">Atualizado em:</label>
+                    <span id="atualizado" class="text-bluegray-700">{{vaga?.atualizado_em | date : 'short'}}</span>
+                </div>    
+            </div>
+
         </div>
   
-    </div>
-
-
-    <div class="col-12 lg:col-3 flex flex-column gap-3">
-        <div class="flex flex-wrap lg:flex-column gap-3">
-            <div class="flex flex-wrap gap-2" >
-                <label class="text-bluegray-900 font-bold">Formato:</label>
-                <span id="" class="text-bluegray-700">remoto</span>
-            </div>
-
-            <div class="flex flex-wrap gap-2" >
-                <label for="periodo" class="text-bluegray-900 font-bold">Período:</label>
-                <span id="periodo" class="text-bluegray-700">remoto</span>
-            </div>
-
-            <div class="flex flex-wrap gap-2" >
-                <label for="nivel" class="text-bluegray-900 font-bold">Nível:</label>
-                <span id="nivel" class="text-bluegray-700">remoto</span>
-            </div>
-
-            <div class="flex flex-wrap gap-2" >
-                <label for="ch" class="text-bluegray-900 font-bold">Carga Horária:</label>
-                <span id="ch" class="text-bluegray-700">remoto</span>
-            </div>
-
-            <div class="flex flex-wrap gap-2" >
-                <label for="remuneracao" class="text-bluegray-900 font-bold">Remuneração:</label>
-                <span id="remuneracao" class="text-bluegray-700">remoto</span>
-            </div>
-
-            <div class="flex flex-wrap gap-2" >
-                <label for="duracao" class="text-bluegray-900 font-bold">Duração:</label>
-                <span id="duracao" class="text-bluegray-700">remoto</span>
-            </div>
-        </div>
-
-        <p-divider class="hidden lg:block" />
-        
-        <div class="flex flex-column">
-            <div class="flex gap-2 flex-grow-1" >
-                <label for="criado" class="text-bluegray-900">Criado em:</label>
-                <span id="criado" class="text-bluegray-700">remoto</span>
-            </div>
-
-            <div class="flex gap-2 flex-grow-1" >
-                <label for="atualizado" class="text-bluegray-900">Atualizado em:</label>
-                <span id="atualizado" class="text-bluegray-700">remoto</span>
-            </div>    
-        </div>
-
-    </div>
-
 
 <p-confirmDialog styleClass="delete-dialog" #cd >
     <ng-template pTemplate="header" styleClass="">

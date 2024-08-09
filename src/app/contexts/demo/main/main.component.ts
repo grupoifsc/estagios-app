@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-main',
@@ -21,20 +22,24 @@ export class MainComponent {
     private router : Router,
   ) { }
 
-  menu : { label : string, route: string }[] = [
-    { label : 'Home', route: '/demo' },
-    { label : 'Dashboard', route: 'dashboard' },
-    { label: 'Anunciar Vaga', route: 'anuncio' },
-    { label : 'Login', route: 'login' },
-    { label : 'Cadastro', route: 'cadastro' },
+  menu : { label : string, route: string, guard?: 'ie' }[] = [
+    { label : 'Minhas Vagas', route: 'dashboard' },
+    { label: 'Vagas Aprovadas', route: 'moderacao/aprovados', guard: 'ie' },
+    { label: 'Vagas Rejeitadas', route: 'moderacao/rejeitados', guard: 'ie' },
+    { label: 'Vagas Pendentes', route: 'moderacao/pendentes', guard: 'ie' },
     { label : 'Ajuda', route: '/tutoriais' },
-    { label : 'Detalhes', route: 'detalhes' },
   ]
 
   isMenuHidden : boolean = true;
 
-  toogleMenu() : void {
+  public toogleMenu() : void {
     this.isMenuHidden = !this.isMenuHidden;
   }
+
+  public logout() : void {
+    this.auth.logoutAndRedirect();
+  }
+
+
 
 }

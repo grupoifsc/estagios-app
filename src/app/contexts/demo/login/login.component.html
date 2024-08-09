@@ -1,29 +1,32 @@
 
 
-<form class="border-1 md:w-8 max-w-23rem mx-auto p-3 flex flex-column gap-6 justify-content-center"  [formGroup]="form" (ngSubmit)="submit()">
+<div class="p-5">
 
-    <h1 class="m-0">Login</h1>
+    <form class="border-1 md:w-8 max-w-23rem mx-auto p-3 flex flex-column gap-6 justify-content-center"  [formGroup]="form" (ngSubmit)="submit()">
 
-    <div class="mb-3 flex flex-wrap gap-2 justify-content-center">
-        <span>Ainda não tem uma conta?</span>
-        <span><a routerLink="../cadastro">Cadastre sua instituição</a></span>
-    </div>
+        <h1 class="m-0">Login</h1>
 
-    <div class="flex flex-column gap-2">
-        <label for="email">Email</label>
-        <input pInputText id="email" formControlName="email" placeholder="Email" />
-    </div>
-
-    <div class="flex flex-column gap-2">
-        <div class="flex justify-content-between align-content-end">
-            <label for="pwd">Senha</label>
-            <p class="m-0">Esqueceu a senha?</p>
+        <div class="mb-3 flex flex-wrap gap-2 justify-content-center">
+            <span>Ainda não tem uma conta?</span>
+            <span><a routerLink="../cadastro">Cadastre sua instituição</a></span>
         </div>
-        <p-password [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" toggleMask="true" id="pwd" formControlName="password" placeholder="Senha" />
-    </div>
 
-    <div class="flex justify-content-center">
-        <p-button label="Login" [disabled]="!form.valid" type="submit" />
-    </div>
+        <div class="flex flex-column gap-2">
+            <label for="email">Email</label>
+            <input pInputText id="email" formControlName="email" placeholder="Email" />
+        </div>
 
-</form>
+        <div class="flex flex-column gap-2">
+            <div class="flex justify-content-between align-content-end">
+                <label for="pwd">Senha</label>
+                <p class="m-0">Esqueceu a senha?</p>
+            </div>
+            <p-password [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" toggleMask="true" id="pwd" formControlName="password" placeholder="Senha" />
+        </div>
+
+        <div class="flex justify-content-center">
+            <p-button label="Login" [disabled]="!form.valid" type="submit" />
+        </div>
+
+    </form>
+</div>

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService, LoginRequestBody } from '../auth.service';
 import { ButtonModule } from 'primeng/button';
@@ -24,28 +24,45 @@ import { ChipModule } from 'primeng/chip';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Job } from '../job';
+import { Observable } from 'rxjs';
+import { ApiResponse } from '../api-response';
+import { ApiService } from '../api.service';
+import { SharedDataService } from '../shared-data.service';
 
 
 @Component({
   selector: 'app-card-vaga',
   providers: [ConfirmationService],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule,  
+  imports: [ReactiveFormsModule, CommonModule, DatePipe,  
     InputTextareaModule, MultiSelectModule, DropdownModule, InputNumberModule, 
     InputTextModule, ChipModule, FieldsetModule, ButtonModule, CardModule, SpeedDialModule,
     ConfirmDialogModule, DividerModule, 
   ],
   templateUrl: './card-vaga.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './card-vaga.component.css'
 })
-export class CardVagaComponent {
+
+export class CardVagaComponent implements OnInit {
 
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router : Router,
+    private apiService : ApiService,
+    private route : ActivatedRoute,
+    private sharedDataService : SharedDataService,
   ) { }
+
+  @Input() id! : string;
+  vaga$! : Observable<ApiResponse<Job | undefined>>;
+
+  ngOnInit(): void {
+    this.vaga$ = this.apiService.getJobInfo(this.id);
+  }
 
   confirmDelete() : void {
     this.confirmationService.confirm({
@@ -60,7 +77,9 @@ export class CardVagaComponent {
   }
 
   edit() : void {
-    this.router.navigate(['demo', 'anuncio'])
+    this.router.navigate(['/demo/vagas/' + this.id + '/edit'])
   }
+
+
 
 }

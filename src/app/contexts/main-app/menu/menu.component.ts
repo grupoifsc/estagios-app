@@ -24,14 +24,20 @@ export class MenuComponent {
     {
       route: 'tutoriais',
       text: 'Tutoriais',
-      label: 'Comece Aqui',
-      icon: 'pi pi-play-circle'
+      label: 'Tutoriais',
+      icon: 'pi pi-book'
+    },
+    {
+      route: 'demo',
+      text: 'Demo',
+      label: 'Demo',
+      icon: 'pi pi-play'
     },
     {
       route: 'api',
       text: 'API',
       label: 'API',
-      icon: 'pi pi-microchip'
+      icon: 'pi pi-code'
     },
     {
       route: 'sobre',

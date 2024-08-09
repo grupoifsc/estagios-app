@@ -12,7 +12,7 @@ import { estagiosUrlInterceptor } from './interceptors/estagios-url.interceptor'
 import { requestTimingInterceptor } from './interceptors/request-timing.interceptor';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {provideMarkdown} from "ngx-markdown";
+import { provideMarkdown} from "ngx-markdown";
 
 export const appConfig: ApplicationConfig = {
   providers: [

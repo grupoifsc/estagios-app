@@ -35,7 +35,7 @@ export class LoginComponent {
   
   form = this.formBuilder.group({
     email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    password: ['', [Validators.required]],
   })
 
 
@@ -44,20 +44,21 @@ export class LoginComponent {
   }
 
   public submit() : void {
-    const redirectUrl : string = this.route.snapshot.queryParams['goTo'] ?? '/';
+    const redirectUrl : string = this.route.snapshot.queryParams['goTo'] ?? '/demo';
     const form = this.form.getRawValue();
     let loginRequest : LoginRequestBody = {
       email: form.email!,
       password: form.password!
     }
     this.authService.loginAndRedirect(loginRequest, redirectUrl).subscribe({
+      next: response => console.log(response),
       error: err => this.loginError(err)
     });
   }
 
 
   private loginError(err: any) : void {
-
+    console.log(err);    
   }
 
 }

@@ -1,10 +1,9 @@
 import { HttpContextToken, HttpInterceptorFn } from '@angular/common/http';
-
-export const API_REQUEST = new HttpContextToken<boolean>(() => false);
+import { API_REQUEST } from './contexts';
 
 export const estagiosUrlInterceptor: HttpInterceptorFn = (req, next) => {
 
-  if(req.context.get(API_REQUEST)) {
+  if(req.context.get(API_REQUEST) && !req.url.endsWith('.md')) {
     console.log("ENTREI NO URL INTERCEPTOR");
     
     const estagiosApiBaseUrl = "http://localhost:8080/api/v1"

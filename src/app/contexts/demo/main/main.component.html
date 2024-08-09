@@ -3,7 +3,7 @@
     <div class="p-3 bg-bluegray-900 top-0 sticky min-h-screen col-fixed w-full absolute lg:block z-2 lg:relative lg:z-0 lg:w-15rem" [hidden]="isMenuHidden">
         <p-button class="lg:hidden" (onClick)="toogleMenu()" label="Voltar" icon="pi pi-arrow-left" severity="secondary" [text]="true" />
         <div *ngFor="let item of menu" class="my-3" (click)="toogleMenu()" >
-            <a [routerLink]="item.route" class="p-button bg-transparent w-full border-none text-0 no-underline">{{item.label}}</a>
+            <a *ngIf="item.guard == undefined || item.guard == 'ie' && auth.isIe()" [routerLink]="item.route" class="p-button bg-transparent w-full border-none text-0 no-underline">{{item.label}}</a>
         </div>
     </div>
 
@@ -12,7 +12,7 @@
 
         <div class="flex lg:justify-content-end justify-content-between">
             <p-button class="lg:hidden mb-2 ml-3" icon="pi pi-bars" [rounded]="true" [text]="true" (onClick)="toogleMenu()" />
-            <p>Está logado: {{ auth.isAuthenticated() }}</p>
+            <p-button class="" icon="pi pi-sign-out" [rounded]="true" [text]="true" title="Logout" (onClick)="logout()" />            
         </div>
         
         <div class="p-3">

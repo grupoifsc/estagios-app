@@ -1,10 +1,7 @@
 
-<div class="mb-2">
-    <a routerLink="../anuncio" class="p-button no-underline"> <i class="pi pi-plus mr-2"></i> Anunciar Vaga</a>
-</div>
-
 
 <p-table
+    *ngIf="vagas$"
     #dt2
     dataKey="id"
     [rows]="10"
@@ -32,7 +29,8 @@
     <ng-template pTemplate="header">
         <tr>
             <th style="width:10%">#</th>
-            <th style="width:60%">Titulo</th>
+            <th style="width:60%">Título</th>
+            <th style="width:60%">Empresa/IE</th>
             <th style="width:30%">Criado em</th>
             <th></th>
         </tr>
@@ -43,12 +41,12 @@
                 {{vaga.id}}
             </td>
             <td>{{vaga.titulo}}</td>
+            <td>{{vaga.criado_por.nome}}</td>
             <td>{{vaga.criado_em | date : 'short'}}</td>
             <td>
                 <div class="flex gap-2">
-                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
-                    <p-button icon="pi pi-file-edit" [rounded]="true" [text]="true" title="Editar" (onClick)="edit(vaga.id, vaga)" />
-                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" title="Deletar" (onClick)="delete(vaga.id)" />
+                    <p-button *ngIf="action != 'accept'" icon="pi pi-eye" [rounded]="true" [text]="true" title="Aceitar" (onClick)="accept(vaga.id)" />
+                    <p-button  *ngIf="action != 'reject'" icon="pi pi-trash" [rounded]="true" [text]="true" title="Rejeitar" (onClick)="reject(vaga.id)" />
                 </div>
             </td>
         </tr>

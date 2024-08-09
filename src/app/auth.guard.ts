@@ -1,5 +1,5 @@
 import { CanActivateFn } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from './contexts/demo/auth.service';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 
@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  router.navigate(['/login'], { queryParams: { goTo: state.url }});
+  router.navigate(['/demo/login'], { queryParams: { goTo: state.url }});
   return false;
 
 };

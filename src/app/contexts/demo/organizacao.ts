@@ -1,36 +1,46 @@
-export interface Organizacao { 
+export interface Org { 
     id?:                   string;   
     nome:                  string;
-    credenciais:           Credenciais;
+    credenciais:           Credentials;
     cnpj:                  string;
     instituicao_de_ensino: boolean;
     info:                  string;
-    contato_principal:     Contato;
-    contato_candidaturas?: Contato;
-    endereco:              Endereco;
+    contato_principal:     Contact;
+    contato_candidaturas?: Contact;
+    endereco:              Address;
     website:               string;
-    redes_sociais?:        string;
+    redes_sociais?:        string[];
     criado_em?:            Date;
     atualizado_em?:        Date;
 }
 
 
-export interface Contato {
+export interface Contact {
     id?:      string;   
     email:    string;
     telefone: string;
+    tipo?:    string;
 }
 
 
-export interface Credenciais {
+export interface Credentials {
     email:  string;
     senha?: string;
 }
 
-export interface Endereco {
+
+export interface OrgSummary {
+    nome: string;
+    id:   string;
+    ie:   boolean;
+}
+
+
+export interface Address {
     id?:     string;
     rua?:    string;
     bairro?: string;
+    tipo?:   string;
     cidade:  string;
     estado:  string;
     pais:    string;

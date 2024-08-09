@@ -1,28 +1,33 @@
-import { Component, Input, OnChanges, Signal, SimpleChanges, signal } from '@angular/core';
+import { HttpClient, HttpContext } from '@angular/common/http';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import {MarkdownComponent} from "ngx-markdown";
-import {ActivatedRoute} from "@angular/router";
+import { API_REQUEST } from '../../../interceptors/contexts';
+import { Observable, Subscription } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { error } from 'console';
 
 @Component({
   selector: 'app-markdown-tut',
   standalone: true,
-  imports: [MarkdownComponent],
+  imports: [MarkdownComponent, AsyncPipe, ],
   templateUrl: './markdown-tut.component.html',
   styleUrl: './markdown-tut.component.css'
 })
 export class MarkdownTutComponent implements OnChanges {
 
   constructor(
-    private route: ActivatedRoute
   ) { }
 
   @Input({required: true}) tut! : string;
 
-  tutorialSrc : string | undefined;
+  dataURL: string = '';
 
   ngOnChanges(changes: SimpleChanges): void {
+    
     if(changes['tut']) {
-      this.tutorialSrc = '../../../../../wiki/' + this.tut + '.md';
+      this.dataURL = '../../../../../wiki/' + this.tut + '.md';
     }
   }
+
 
 }

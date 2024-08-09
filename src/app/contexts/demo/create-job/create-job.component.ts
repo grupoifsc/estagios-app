@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { AsyncPipe, CommonModule, NgIfContext } from '@angular/common';
+import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, RequiredValidator, Validators } from '@angular/forms';
 import { AuthService, LoginRequestBody } from '../auth.service';
 import { ButtonModule } from 'primeng/button';
@@ -22,12 +22,18 @@ import { DividerModule } from 'primeng/divider';
 import { ChipsModule } from 'primeng/chips';
 import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
-import { Job } from '../job';
+import { Area, Job, JobEntryData } from '../job';
+import { Observable, Subscription } from 'rxjs';
+import { ApiService } from '../api.service';
+import { ApiResponse } from '../api-response';
+import { Address, Contact, Org } from '../organizacao';
+import { Page } from '../page';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-create-job',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule,  
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, AsyncPipe,   
     InputTextareaModule, MultiSelectModule, DropdownModule, InputNumberModule, 
     InputTextModule, ChipsModule, FieldsetModule, ButtonModule, InputSwitchModule,
     DialogModule, InputMaskModule, DividerModule, 
@@ -35,55 +41,67 @@ import { Job } from '../job';
   templateUrl: './create-job.component.html',
   styleUrl: './create-job.component.css'
 })
-export class CreateJobComponent implements OnInit {
+export class CreateJobComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
+    private apiService: ApiService,
+    private sharedDataService : SharedDataService,
   ) {}
 
-  @Input() jobToEdit : Job | undefined
-  job! : Job
+  
+  @Input() id? : string;
+  jobToEdit? : Job
 
-  form!: FormGroup
-  contactForm! : FormGroup
-  addressForm! : FormGroup
+  subscriptions : Subscription[] = []
 
+  job! : JobEntryData
 
+  addresses$ : Observable<ApiResponse<Address[]> | undefined> = this.apiService.getAuthOrgAddresses();
+  contacts$ : Observable<ApiResponse<Contact[]> | undefined> =  this.apiService.getAuthOrgContacts();
+  ies$ : Observable<ApiResponse<Page<Org> | undefined>> = this.apiService.getAllSchools();
+  areas$ : Observable<ApiResponse<Area[]> | undefined> =  this.apiService.getAreas();
+
+  form?: FormGroup
+  contactForm? : FormGroup
+  addressForm? : FormGroup
+
+  // TODO: Deixar isto em conformidade com os enums do backend e em um lugar fácil de mudar
   levels : string[] = ['fundamental', 'medio', 'tecnico', 'superior', 'pos']
   periods : string[] = ['matutino', 'vespertino', 'noturno']
   formats : string[] = ['presencial', 'hibrido', 'remoto']
+
   cargaHoraria : number[] = [10, 20, 30, 40]
 
   isFormContactVisible: boolean = false;
   isFormAddressVisible: boolean = false;
 
-  areas: {id: string, name: string}[] = [
-    {id: '1', name: 'educacao'},
-    {id: '2', name: 'engenharia'},
-    {id: '3', name: 'outra'}
-  ] 
-
-
-  ies: {id: string, name: string}[] = [
-    {id: '1', name: 'ufsc'},
-    {id: '2', name: 'ifsc'}
-  ]
-
-
   ngOnInit(): void {
-    this.retrieveOrCreateJob();
-    this.buildForm();
+    this.initjob();
+    if(this.id) {
+      this.apiService.getJobInfo(this.id).subscribe({
+        next: res => {
+          this.jobToEdit = res.data;
+          this.assignJobtoEdit();
+          this.buildForm();
+        }
+      })
+    }
+    else {
+      this.buildForm();
+    }
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
 
-  private retrieveOrCreateJob() : void {
-    this.job = this.jobToEdit ?? {
-      id: undefined,
-      criado_por : undefined,
+  private initjob() : void {
+    this.job = {
       titulo: '',
       descricao: '',
       requisitos: [],
-      areas: [],
+      areas_ids: [],
       carga_horaria_semanal: 0,
       remuneracao: 0,
       periodo: '',
@@ -91,27 +109,35 @@ export class CreateJobComponent implements OnInit {
       formato: '',
       duracao_meses: 0,
       imagem_url: '',
-      endereco: {
-        id: '',
-        tipo: '',
-        rua: '',
-        bairro: '',
-        cidade: '',
-        estado: '',
-        pais: ''
-      },
-      contato: {
-        id: '',
-        tipo: '',
-        email: '',
-        telefone: ''
-      },
-      destinatarios: []
-    } 
+      endereco_id: '',
+      contato_id: '',
+      destinatarios_ids: []
+    }
   }
+
+  
+  private assignJobtoEdit() : void {
+    if (this.jobToEdit) {
+      this.job.areas_ids = this.jobToEdit.areas?.map(a => a.id) ?? [];
+      this.job.carga_horaria_semanal = this.jobToEdit.carga_horaria_semanal ?? 0;
+      this.job.contato_id = this.jobToEdit.contato?.id ?? '';
+      this.job.descricao = this.jobToEdit.descricao ?? '';
+      this.job.destinatarios_ids = this.jobToEdit.destinatarios?.map(org => org.id) ?? [];
+      this.job.duracao_meses = this.jobToEdit.duracao_meses ?? 0;
+      this.job.endereco_id = this.jobToEdit.endereco?.id ?? '';
+      this.job.formato = this.jobToEdit.formato ?? '';
+      this.job.imagem_url = this.jobToEdit.imagem_url ?? '';
+      this.job.nivel = this.jobToEdit.nivel ?? '';
+      this.job.periodo = this.jobToEdit.periodo ?? '';
+      this.job.remuneracao = this.jobToEdit.remuneracao ?? 0;
+      this.job.requisitos = this.jobToEdit.requisitos ?? [];
+      this.job.titulo = this.jobToEdit.titulo ?? '';
+    }
+}
 
 
   private buildForm() : void {
+    let todasIesState : boolean = this.job.destinatarios_ids.length == 0 ? true : false;
     this.form = this.formBuilder.group({
       titulo: [this.job.titulo, [Validators.required]],
       descricao: [this.job.descricao, [Validators.required]],
@@ -121,11 +147,13 @@ export class CreateJobComponent implements OnInit {
       formato: [this.job.formato, [Validators.required]],
       cargaHoraria: [this.job.carga_horaria_semanal, [Validators.required, Validators.min(10)]],
       remuneracao: [this.job.remuneracao, [Validators.required, Validators.min(100)]],
-      areas: [this.job.areas],
-      todasIes: [true],
-      ies: [ {value: this.job.destinatarios, disabled: true} ],
+      areas: [ this.job.areas_ids, [Validators.required]],
+      todasIes: [ todasIesState ],
+      ies: [ {value: this.job.destinatarios_ids, disabled: todasIesState} ],
       duracao : [this.job.duracao_meses],
-      imagemUrl: [this.job.imagem_url]
+      imagemUrl: [this.job.imagem_url],
+      contato : [this.job.contato_id, [Validators.required]],
+      endereco: [this.job.endereco_id, [Validators.required]],
     })
 
     this.contactForm = this.formBuilder.group({
@@ -144,7 +172,7 @@ export class CreateJobComponent implements OnInit {
 
 
   private updateJobFromInput() : void {
-    const raw = this.form.getRawValue();
+    const raw = this.form!.getRawValue();
 
     this.job.titulo = raw.titulo;
     this.job.descricao = raw.descricao;
@@ -154,27 +182,42 @@ export class CreateJobComponent implements OnInit {
     this.job.formato = raw.formato;
     this.job.carga_horaria_semanal = raw.cargaHoraria;
     this.job.remuneracao = raw.remuneracao;
-    this.job.areas = raw.areas;
-    this.job.destinatarios = raw.ies;
+    this.job.areas_ids = raw.areas;
+    this.job.destinatarios_ids = raw.todasIes ? [] : raw.ies;
     this.job.duracao_meses = raw.duracao;
     this.job.imagem_url = raw.imagemUrl;
+    this.job.contato_id = raw.contato;
+    this.job.endereco_id = raw.endereco;
   }
 
 
   submit() : void {
-    console.log(this.form.getRawValue());
-    
+    this.updateJobFromInput();
+    if(this.jobToEdit) {
+      this.apiService.updateJob(this.jobToEdit.id!, this.job).subscribe({
+        next: res => {
+          console.log("Success");
+          console.log(res);
+        }
+      })
+    }
+    else {
+      this.apiService.createJob(this.job).subscribe({
+        next: data => {console.log("success");
+         console.log(data);},
+      });
+    }
   }
 
 
   toogleDisableIes() : void {
-    if(this.form.get('ies')?.disabled)
-      this.form.get('ies')?.enable()
+    if(this.form!.get('ies')?.disabled)
+      this.form!.get('ies')?.enable()
     else 
-      this.form.get('ies')?.disable()
+      this.form!.get('ies')?.disable()
   }
 
-
+  // TODO: Implementar formulários de novo contato e novo endereço (só que não tem endpoint pra isso)
   toogleContactForm() : void {
     this.isFormContactVisible = !this.isFormContactVisible    
   }

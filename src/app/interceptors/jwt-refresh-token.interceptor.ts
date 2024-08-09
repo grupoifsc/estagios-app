@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthService } from '../contexts/demo/auth.service';
 import { inject } from '@angular/core';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
 
 export const jwtRefreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
   
@@ -26,7 +26,7 @@ export const jwtRefreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
           })
         );
       }
-      throw new Error(err.error);
+      else return of();
     })
   )
 
