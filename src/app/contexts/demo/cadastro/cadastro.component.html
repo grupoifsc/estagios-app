@@ -1,7 +1,13 @@
 
 <div class="demo-bg p-5 min-h-screen">
 
+    <div class="md:w-10 lg:w-8 mx-auto mb-3 flex justify-content-end" style="max-width: 40rem;">
+        <p-button (onClick)="redirectHome()" 
+        icon="pi pi-times" iconPos="left" title="Cancelar" [text]="true"/>    
+    </div>
+
     <div class="md:w-10 lg:w-8 mx-auto p-5 border-round-lg bg-white opacity-90" style="max-width: 40rem;">
+        
         <p-stepper orientation="horizontal" [linear]="true" [style]="{'background-color': 'transparent'}">
 
         <!-- Informações Gerais da Instituição -->
@@ -16,15 +22,10 @@
 
                 <ng-template pTemplate="content" let-nextCallback="nextCallback" [style]="{'background-color': 'transparent'}">
 
-                    <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-end">
-                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
-                            label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
-                    </div>
+                    <h1 class="my-5">Dados da Instituição</h1>
 
                     <form [formGroup]="profileForm" class="flex flex-column gap-5">
-                        
-                        <h1>Dados da Instituição</h1>
-                        
+                         
                         <div class="flex flex-column gap-2">
                             <label for="nome">Nome:</label>
                             <input pInputText formControlName="nome" id="nome" 
@@ -83,6 +84,11 @@
 
                     </form>
 
+                    <div class="my-3 flex flex-wrap pt-4 justify-content-center md:justify-content-end">
+                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                            label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
+                    </div>
+
                 </ng-template>
             </p-stepperPanel>
 
@@ -98,18 +104,11 @@
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" 
                     let-nextCallback="nextCallback">
                     
-                    <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
-                        <p-button (onClick)="prevCallback.emit()" label="Anterior" 
-                            severity="secondary" icon="pi pi-arrow-left" />
-                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
-                            label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
-                    </div>
 
-                    <form [formGroup]="addressForm" class="grid">    
+                    <h1 class="my-5">Endereço</h1>
 
-                        <h1>Endereço</h1>
-                        
-                        <div class="col-12">
+                    <form [formGroup]="addressForm" class="grid">                            
+                        <div class="col-12 mb-3">
                             <div class="flex flex-column gap-2">
                                 <label for="rua">Endereço:</label>
                                 <input pInputText formControlName="rua" id="rua" 
@@ -120,7 +119,7 @@
                             </div>    
                         </div>
         
-                        <div class="col-12 md:col-6">
+                        <div class="col-12 md:col-6 mb-3">
                             <div class="flex flex-column gap-2">
                                 <label for="bairro">Bairro:</label>
                                 <input formControlName="bairro" pInputText id="bairro" 
@@ -167,6 +166,13 @@
 
                     </form>
 
+                    <div class="my-5 flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
+                        <p-button (onClick)="prevCallback.emit()" label="Anterior" 
+                            severity="secondary" icon="pi pi-arrow-left" />
+                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                            label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
+                    </div>
+
                 </ng-template>
             </p-stepperPanel>
 
@@ -181,18 +187,11 @@
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" 
                     let-nextCallback="nextCallback">
-
-                    <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
-                        <p-button (onClick)="prevCallback.emit()" label="Anterior" 
-                            severity="secondary" icon="pi pi-arrow-left" />
-                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
-                            label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
-                    </div>
                     
-                    <h1>Contatos</h1>
+                    <h1 class="my-5">Contato</h1>
 
                     <form [formGroup]="mainContactForm" class="grid" >
-                        <div class="col-12 md:col-6">
+                        <div class="col-12 md:col-6 mb-3">
                             <div class="flex flex-column gap-2">
                                 <label for="email">Email Institucional para contato:</label>
                                 <input pInputText 
@@ -203,7 +202,7 @@
                                         ? 'ng-invalid ng-dirty' : ''"/>
                             </div>
                         </div>
-                        <div class="col-12 md:col-6">              
+                        <div class="col-12 md:col-6 mb-3">              
                             <div class="flex flex-column gap-2">
                                 <label for="telefone">Telefone Institucional:</label>
                                 <p-inputMask [style]="{'width':'100%'}"
@@ -216,7 +215,7 @@
                             </div>
                         </div>
                     
-                        <div class="col-12">
+                        <div class="col-12 mb-3">
                             <div class="flex flex-column gap-2">
                                 <label for="website">Website:</label>
                                 <input formControlName="website" 
@@ -227,7 +226,7 @@
                                         ? 'ng-invalid ng-dirty' : ''"/>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mb-3">
                             <div class="flex flex-column gap-2">
                                 <label for="redes">Redes Sociais:</label>
                                 <div class="grid">
@@ -253,8 +252,8 @@
                     </form>
 
                     <form [formGroup]="applianceContactForm" class="grid">
-                        <h4 class="col-12">Contato para Candidaturas (opcional)</h4>
-                        <div class="col-12 md:col-6">
+                        <h4 class="col-12 my-2">Contato para Candidaturas (opcional)</h4>
+                        <div class="col-12 md:col-6 mb-3">
                             <div class="flex flex-column gap-2">
                                 <label for="email2">Email de RH:</label>
                                 <input 
@@ -265,7 +264,7 @@
                                         ? 'ng-invalid ng-dirty' : ''"/>
                             </div>
                         </div>
-                        <div class="col-12 md:col-6">
+                        <div class="col-12 md:col-6 mb-3">
                             <div class="flex flex-column gap-2">
                                 <label for="telefone2">Telefone de RH:</label>
                                 <p-inputMask formControlName="telefone" [style]="{'width':'100%'}" 
@@ -278,6 +277,13 @@
                             </div>
                         </div>
                     </form>
+
+                    <div class="my-5 flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
+                        <p-button (onClick)="prevCallback.emit()" label="Anterior" 
+                            severity="secondary" icon="pi pi-arrow-left" />
+                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                            label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
+                    </div>
 
                 </ng-template>
             </p-stepperPanel>
@@ -293,16 +299,9 @@
                 </ng-template>
                 <ng-template pTemplate="content" let-prevCallback="prevCallback">
 
-                    <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
-                        <p-button (onClick)="prevCallback.emit()" label="Anterior" 
-                            severity="secondary" icon="pi pi-arrow-left" />
-                        <p-button type="submit" [disabled]="false" 
-                            label="Finalizar" icon="pi pi-check" (onClick)="submit()" iconPos="right" />
-                    </div>
+                    <h1 class="my-5">Credenciais</h1>
 
-                    <h1>Credenciais para Autenticação</h1>
-
-                    <form [formGroup]="credentialsForm" class="w-full md:w-8 mx-auto flex flex-column gap-4" 
+                    <form [formGroup]="credentialsForm" class="w-full md:w-8 mx-auto flex flex-column gap-5" 
                         >
                         
                         <div class="flex flex-column gap-2">
@@ -345,11 +344,19 @@
                         
                         <div *ngIf="(credentialsForm.controls.confirmaSenha.dirty 
                                     || credentialsForm.controls.confirmaSenha.touched ) 
-                                    && credentialsForm.errors?.['mismatch']">
+                                    && credentialsForm.errors?.['mismatch']"
+                            class="ng-invalid ng-dirty">
                             Ooops, as senhas não conferem!
                         </div>
+
                     </form>
 
+                    <div class="my-5 flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
+                        <p-button (onClick)="prevCallback.emit()" label="Anterior" 
+                            severity="secondary" icon="pi pi-arrow-left" />
+                        <p-button type="submit" class="align-self-center" [disabled]="false" 
+                            label="Cadastrar" icon="pi pi-check" (onClick)="submit()" iconPos="right" />
+                    </div>
   
 
                 </ng-template>

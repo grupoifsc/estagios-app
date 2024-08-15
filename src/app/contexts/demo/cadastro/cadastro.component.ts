@@ -236,7 +236,10 @@ export class CadastroComponent implements OnInit, OnDestroy {
   save() : void {    
     let subscr = this.orgService.createOrg(this.org)?.subscribe({
       next: org => { 
-        if(org.data) this.redirectToLoginPage();
+        if(org.data) {
+          this.messageService.add({severity: 'success', detail: 'Cadastro realizado!', key: 'demo-main'});
+          this.redirectHome();
+        }
        },
       error: err => {
         this.messageService.add({severity: 'error', detail: 'Não foi possível salvar seu cadastro. ' + err, key: 'demo-main'})
@@ -252,9 +255,8 @@ export class CadastroComponent implements OnInit, OnDestroy {
   }
 
 
-  private redirectToLoginPage() : void {
-    this.messageService.add({severity: 'success', detail: 'Cadastro realizado!', key: 'demo-main'});
-    this.router.navigate(['demo/login']);
+  public redirectHome() : void {
+    this.router.navigate(['demo']);
   }  
 
 
