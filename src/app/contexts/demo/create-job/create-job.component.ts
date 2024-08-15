@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule, NgIfContext } from '@angular/common';
+import { AsyncPipe, CommonModule, Location, NgIfContext } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, RequiredValidator, Validators } from '@angular/forms';
 import { AuthService, LoginRequestBody } from '../auth.service';
@@ -45,6 +45,7 @@ export class CreateJobComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private apiService: ApiService,
+    private location: Location,
   ) {}
 
   
@@ -92,6 +93,10 @@ export class CreateJobComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  public cancel() : void {
+    this.location.back();
   }
 
   private initjob() : void {

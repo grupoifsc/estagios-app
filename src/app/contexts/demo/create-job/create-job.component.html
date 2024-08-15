@@ -1,331 +1,339 @@
-<form *ngIf="form" class="flex flex-column w-full lg:w-10 xl:w-8 gap-4 mx-auto" [formGroup]="form" (ngSubmit)="submit()">
+<div class="flex flex-column w-full lg:w-10 xl:w-8 gap-4 mx-auto">
 
-    <h1>{{ jobToEdit ? "Editar Vaga" : "Criar Vaga" }}</h1>
-
-        <div class="flex flex-column gap-2">
-            <label for="titulo">Título:*</label>
-            <input pInputText id="titulo"  
-                formControlName="titulo" 
-                [class]="form.controls.titulo.invalid 
-                                && (form.controls.titulo.dirty 
-                                || form.controls.titulo.touched ) 
-                                ? 'ng-invalid ng-dirty' : ''"/>
-        </div>
-
-        <div class="flex flex-column gap-2">
-            <label for="descricao">Descrição:*</label>
-            <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" 
-                id="descricao" formControlName="descricao"
-                [class]="form.controls.descricao.invalid 
-                    && (form.controls.descricao.dirty 
-                    || form.controls.descricao.touched ) 
-                    ? 'ng-invalid ng-dirty' : ''" ></textarea>
-        </div>
-
-        <div class="flex flex-column gap-2">
-            <label for="requsisitos">Requisitos: (separe usando ENTER)</label>
-            <p-chips styleClass="block" id="requisitos" 
-                formControlName="requisitos" 
-                [class]="form.controls.requisitos.invalid 
-                    && (form.controls.requisitos.dirty 
-                    || form.controls.requisitos.touched ) 
-                    ? 'ng-invalid ng-dirty' : ''" />
-        </div>
-
-        <div class="flex flex-column gap-2">
-            <label for="image">URL da imagem de divulgação (se houver):</label>
-            <input type="text" id="image" pInputText formControlName="imagemUrl"
-                [class]="form.controls.imagemUrl.invalid 
-                    && (form.controls.imagemUrl.dirty 
-                    || form.controls.imagemUrl.touched ) 
-                    ? 'ng-invalid ng-dirty' : ''"/>
-        </div>
-
-        <div class="formgrid grid">
-            <div class="field col-12 lg:col-6">
-                <label for="areas">Áreas:*</label>
-                <div *ngIf="areas$ | async as areas; else loadingArea">
-                    <p-multiSelect *ngIf="areas.data && areas.data.length > 0" [style]="{'width':'100%'}" [options]="areas.data" 
-                    [virtualScroll]="true"
-                    [virtualScrollItemSize]="43" [filter]="true" optionLabel="nome" 
-                    optionValue="id" placeholder="Selecione" formControlName="areas" 
-                    [class]="form.controls.areas.invalid 
-                        && (form.controls.areas.dirty 
-                        || form.controls.areas.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-                </div>
-                <ng-template #loadingArea> Loading Areas</ng-template>
-            </div>
-
-            <div class="field col-12 lg:col-6">
-                <label for="nivel">Nível:*</label>
-                <p-dropdown [style]="{'width':'100%'}" [options]="levels" 
-                    placeholder="Selecione" formControlName="nivel" 
-                    [class]="form.controls.nivel.invalid 
-                        && (form.controls.nivel.dirty 
-                        || form.controls.nivel.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-        </div>
-
-        <div class="formgrid grid">
-            <div class="field col-12 lg:col-6">
-                <label for="periodo">Período:*</label>
-                <p-dropdown id="period" [style]="{'width':'100%'}" [options]="periods" 
-                    placeholder="Selecione" formControlName="periodo" 
-                    [class]="form.controls.periodo.invalid 
-                        && (form.controls.periodo.dirty 
-                        || form.controls.periodo.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-
-            <div class="field col-12 lg:col-6">
-                <label for="formato">Formato:*</label>
-                <p-dropdown id="formato" [style]="{'width':'100%'}" [options]="formats" 
-                    placeholder="Selecione" formControlName="formato" 
-                    [class]="form.controls.formato.valid 
-                        && (form.controls.formato.dirty 
-                        || form.controls.formato.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-        </div>
-
-        <div class="formgrid grid">
-            <div class="field col-12 lg:col-6">
-                <label for="ch">Carga Horária Semanal:*</label>
-                <p-dropdown id="ch" [style]="{'width':'100%'}" [options]="cargaHoraria"
-                    placeholder="Selecione" formControlName="cargaHoraria" 
-                    [class]="form.controls.cargaHoraria.invalid 
-                        && (form.controls.cargaHoraria.dirty 
-                        || form.controls.cargaHoraria.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-
-            <div class="field col-12 lg:col-6 flex flex-column ">
-                <label for="remuneracao">Remuneração:*</label>
-                <p-inputNumber id="remuneracao" [style]="{'width':'100%'}" 
-                    [inputStyle]="{'width':'100%'}" inputId="currency-us" mode="currency" 
-                    currency="BRL" locale="pt-BR" formControlName="remuneracao" 
-                    [class]="form.controls.remuneracao.invalid 
-                        && (form.controls.remuneracao.dirty 
-                        || form.controls.remuneracao.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-        </div>
-
-        <div class="formgrid grid align-items-center">
-            <div class="field col-12 my-0 py-0">
-                <label for="selectIes" >Instituições de Ensino destinatárias:*</label>
-            </div>    
-                            
-            <div class="field col-12 lg:col-6 flex gap-3 align-items-center">
-                <p-inputSwitch title="Todas" formControlName="todasIes" 
-                    (onChange)="toogleDisableIes()" />
-                <p>Todas</p>
-            </div>
-
-            <div class="field col-12 lg:col-6">
-                <div *ngIf="ies$ | async as ies; else loadingIes">    
-                    <p-multiSelect 
-                        [style]="{'width':'100%'}" 
-                        *ngIf="ies.data && ies.data.content" 
-                        [options]="ies.data.content" 
-                        [virtualScroll]="true" 
-                        [virtualScrollItemSize]="43" 
-                        [filter]="true" 
-                        optionLabel="nome"
-                        optionValue="id"
-                        placeholder="Selecione as IEs"  
-                        formControlName="ies" 
-                    />    
-                </div>
-                <ng-template #loadingIes> ... Loading IEs ...</ng-template>
-            </div>
-        </div>
-
-        <div class="formgrid grid">
-
-            <div class="field col-12 lg:col-6">
-                <label for="endereco">Endereço de Atuação:*</label>
-                <div *ngIf="addresses$ | async as addresses; else loadingAddr">
-                    <p-dropdown
-                        formControlName="endereco" 
-                        [style]="{'width':'100%'}" 
-                        *ngIf="addresses.data && addresses.data.length > 0" 
-                        [options]="addresses.data" 
-                        placeholder="Selecione o endereço" 
-                        [showClear]="true"
-                        [checkmark]="true"
-                        optionLabel="rua"
-                        optionValue="id"
-                    >
-                    <ng-template let-address pTemplate="item">
-                        <div class="flex align-items-center gap-2">
-                            {{ address.tipo }} - {{ address.rua }}, {{ address.bairro }}, {{  address.cidade}}
-                        </div>
-                    </ng-template>
-                    </p-dropdown>
-                </div>
-                <ng-template #loadingAddr>Loading...</ng-template>
-            </div>
-
-            <div class="field col-12 lg:col-6">
-                <label for="contato">Contato:*</label>   
-                <div *ngIf="contacts$ | async as contacts; else loadingContact">
-                    <p-dropdown
-                        *ngIf="contacts.data && contacts.data.length > 0" 
-                        formControlName="contato"
-                        [style]="{'width':'100%'}" 
-                        [options]="contacts.data"
-                        optionLabel="email"
-                        optionValue="id" 
-                        placeholder="Selecione o contato"  >
-                        <ng-template let-contact pTemplate="item">
-                            <div class="flex align-items-center gap-2">
-                                {{contact.tipo}} - {{ contact.email }} / {{ contact.telefone }}
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <ng-template #loadingContact></ng-template>
-            </div>        
-        
-        </div>
- 
-    <div class="align-self-center my-5">
-        <p-button type="submit" label="Salvar" [disabled]="!this.form.valid" />
+    <div class="flex justify-content-end">
+        <p-button (onClick)="cancel()" 
+        icon="pi pi-times" iconPos="left" title="Cancelar" [text]="true"/> 
     </div>
 
-</form>
+    <form *ngIf="form" class="" [formGroup]="form" (ngSubmit)="submit()">
 
+        <h1>{{ jobToEdit ? "Editar Vaga" : "Criar Vaga" }}</h1>
 
+            <div class="flex flex-column gap-2">
+                <label for="titulo">Título:*</label>
+                <input pInputText id="titulo"  
+                    formControlName="titulo" 
+                    [class]="form.controls.titulo.invalid 
+                                    && (form.controls.titulo.dirty 
+                                    || form.controls.titulo.touched ) 
+                                    ? 'ng-invalid ng-dirty' : ''"/>
+            </div>
 
-<p-dialog
+            <div class="flex flex-column gap-2">
+                <label for="descricao">Descrição:*</label>
+                <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" 
+                    id="descricao" formControlName="descricao"
+                    [class]="form.controls.descricao.invalid 
+                        && (form.controls.descricao.dirty 
+                        || form.controls.descricao.touched ) 
+                        ? 'ng-invalid ng-dirty' : ''" ></textarea>
+            </div>
+
+            <div class="flex flex-column gap-2">
+                <label for="requsisitos">Requisitos: (separe usando ENTER)</label>
+                <p-chips styleClass="block" id="requisitos" 
+                    formControlName="requisitos" 
+                    [class]="form.controls.requisitos.invalid 
+                        && (form.controls.requisitos.dirty 
+                        || form.controls.requisitos.touched ) 
+                        ? 'ng-invalid ng-dirty' : ''" />
+            </div>
+
+            <div class="flex flex-column gap-2">
+                <label for="image">URL da imagem de divulgação (se houver):</label>
+                <input type="text" id="image" pInputText formControlName="imagemUrl"
+                    [class]="form.controls.imagemUrl.invalid 
+                        && (form.controls.imagemUrl.dirty 
+                        || form.controls.imagemUrl.touched ) 
+                        ? 'ng-invalid ng-dirty' : ''"/>
+            </div>
+
+            <div class="formgrid grid">
+                <div class="field col-12 lg:col-6">
+                    <label for="areas">Áreas:*</label>
+                    <div *ngIf="areas$ | async as areas; else loadingArea">
+                        <p-multiSelect *ngIf="areas.data && areas.data.length > 0" [style]="{'width':'100%'}" [options]="areas.data" 
+                        [virtualScroll]="true"
+                        [virtualScrollItemSize]="43" [filter]="true" optionLabel="nome" 
+                        optionValue="id" placeholder="Selecione" formControlName="areas" 
+                        [class]="form.controls.areas.invalid 
+                            && (form.controls.areas.dirty 
+                            || form.controls.areas.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                    </div>
+                    <ng-template #loadingArea> Loading Areas</ng-template>
+                </div>
+
+                <div class="field col-12 lg:col-6">
+                    <label for="nivel">Nível:*</label>
+                    <p-dropdown [style]="{'width':'100%'}" [options]="levels" 
+                        placeholder="Selecione" formControlName="nivel" 
+                        [class]="form.controls.nivel.invalid 
+                            && (form.controls.nivel.dirty 
+                            || form.controls.nivel.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+            </div>
+
+            <div class="formgrid grid">
+                <div class="field col-12 lg:col-6">
+                    <label for="periodo">Período:*</label>
+                    <p-dropdown id="period" [style]="{'width':'100%'}" [options]="periods" 
+                        placeholder="Selecione" formControlName="periodo" 
+                        [class]="form.controls.periodo.invalid 
+                            && (form.controls.periodo.dirty 
+                            || form.controls.periodo.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+
+                <div class="field col-12 lg:col-6">
+                    <label for="formato">Formato:*</label>
+                    <p-dropdown id="formato" [style]="{'width':'100%'}" [options]="formats" 
+                        placeholder="Selecione" formControlName="formato" 
+                        [class]="form.controls.formato.valid 
+                            && (form.controls.formato.dirty 
+                            || form.controls.formato.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+            </div>
+
+            <div class="formgrid grid">
+                <div class="field col-12 lg:col-6">
+                    <label for="ch">Carga Horária Semanal:*</label>
+                    <p-dropdown id="ch" [style]="{'width':'100%'}" [options]="cargaHoraria"
+                        placeholder="Selecione" formControlName="cargaHoraria" 
+                        [class]="form.controls.cargaHoraria.invalid 
+                            && (form.controls.cargaHoraria.dirty 
+                            || form.controls.cargaHoraria.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+
+                <div class="field col-12 lg:col-6 flex flex-column ">
+                    <label for="remuneracao">Remuneração:*</label>
+                    <p-inputNumber id="remuneracao" [style]="{'width':'100%'}" 
+                        [inputStyle]="{'width':'100%'}" inputId="currency-us" mode="currency" 
+                        currency="BRL" locale="pt-BR" formControlName="remuneracao" 
+                        [class]="form.controls.remuneracao.invalid 
+                            && (form.controls.remuneracao.dirty 
+                            || form.controls.remuneracao.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+            </div>
+
+            <div class="formgrid grid align-items-center">
+                <div class="field col-12 my-0 py-0">
+                    <label for="selectIes" >Instituições de Ensino destinatárias:*</label>
+                </div>    
+                                
+                <div class="field col-12 lg:col-6 flex gap-3 align-items-center">
+                    <p-inputSwitch title="Todas" formControlName="todasIes" 
+                        (onChange)="toogleDisableIes()" />
+                    <p>Todas</p>
+                </div>
+
+                <div class="field col-12 lg:col-6">
+                    <div *ngIf="ies$ | async as ies; else loadingIes">    
+                        <p-multiSelect 
+                            [style]="{'width':'100%'}" 
+                            *ngIf="ies.data && ies.data.content" 
+                            [options]="ies.data.content" 
+                            [virtualScroll]="true" 
+                            [virtualScrollItemSize]="43" 
+                            [filter]="true" 
+                            optionLabel="nome"
+                            optionValue="id"
+                            placeholder="Selecione as IEs"  
+                            formControlName="ies" 
+                        />    
+                    </div>
+                    <ng-template #loadingIes> ... Loading IEs ...</ng-template>
+                </div>
+            </div>
+
+            <div class="formgrid grid">
+
+                <div class="field col-12 lg:col-6">
+                    <label for="endereco">Endereço de Atuação:*</label>
+                    <div *ngIf="addresses$ | async as addresses; else loadingAddr">
+                        <p-dropdown
+                            formControlName="endereco" 
+                            [style]="{'width':'100%'}" 
+                            *ngIf="addresses.data && addresses.data.length > 0" 
+                            [options]="addresses.data" 
+                            placeholder="Selecione o endereço" 
+                            [showClear]="true"
+                            [checkmark]="true"
+                            optionLabel="rua"
+                            optionValue="id"
+                        >
+                        <ng-template let-address pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                {{ address.tipo }} - {{ address.rua }}, {{ address.bairro }}, {{  address.cidade}}
+                            </div>
+                        </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <ng-template #loadingAddr>Loading...</ng-template>
+                </div>
+
+                <div class="field col-12 lg:col-6">
+                    <label for="contato">Contato:*</label>   
+                    <div *ngIf="contacts$ | async as contacts; else loadingContact">
+                        <p-dropdown
+                            *ngIf="contacts.data && contacts.data.length > 0" 
+                            formControlName="contato"
+                            [style]="{'width':'100%'}" 
+                            [options]="contacts.data"
+                            optionLabel="email"
+                            optionValue="id" 
+                            placeholder="Selecione o contato"  >
+                            <ng-template let-contact pTemplate="item">
+                                <div class="flex align-items-center gap-2">
+                                    {{contact.tipo}} - {{ contact.email }} / {{ contact.telefone }}
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <ng-template #loadingContact></ng-template>
+                </div>        
+            
+            </div>
     
-    header="Header" 
-    [(visible)]="isFormAddressVisible" 
-    [modal]="true" 
-    [style]="{ width: '25rem' }">
-        <ng-template pTemplate="header">
-            <div class="inline-flex align-items-center justify-content-center gap-2">
-                Cadastrar Novo Endereço
-            </div>
-        </ng-template>
+        <div class="align-self-center my-5">
+            <p-button type="submit" label="Salvar" [disabled]="!this.form.valid" />
+        </div>
 
-        <form *ngIf="addressForm" [formGroup]="addressForm" class="flex flex-column gap-3">
-            <div class="flex flex-column gap-2">
-                <label for="rua">Endereço</label>
-                <input pInputText formControlName="rua" id="rua" 
-                    [class]="addressForm.controls.rua.invalid && 
-                        (addressForm.controls.rua.dirty 
-                        || addressForm.controls.rua.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-
-            <div class="flex flex-column gap-2">
-                <label for="bairro">Bairro</label>
-                <input formControlName="bairro" pInputText id="bairro" 
-                    [class]="addressForm.controls.bairro.invalid && 
-                        (addressForm.controls.bairro.dirty || 
-                        addressForm.controls.bairro.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-            <div class="flex flex-column gap-2">
-                <label for="cidade">Cidade</label>
-                <input formControlName="cidade" pInputText id="cidade" 
-                    [class]="addressForm.controls.cidade.invalid && 
-                        (addressForm.controls.cidade.dirty 
-                        || addressForm.controls.cidade.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-
-            <div class="flex flex-column gap-2">
-                <label for="estado">Estado</label>
-                <p-dropdown [style]="{'width':'100%'}" [options]="" 
-                    placeholder="Estado" formControlName="estado" id="estado"
-                    [class]="addressForm.controls.estado.invalid && 
-                        (addressForm.controls.estado.dirty 
-                        || addressForm.controls.estado.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-            <div class="flex-grow-1 flex flex-column gap-2">
-                <label for="pais">Pais</label>
-                <p-dropdown [style]="{'width':'100%'}" formControlName="pais" 
-                    placeholder="País" id="pais" 
-                    [class]="addressForm.controls.pais.invalid && 
-                        (addressForm.controls.pais.dirty 
-                        || addressForm.controls.pais.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>    
-
-        </form>
-        <ng-template pTemplate="footer">
-            <p-button 
-                label="Cancel" 
-                [text]="true" 
-                severity="secondary" 
-                (click)="isFormAddressVisible = false" />
-            <p-button 
-                label="Save" 
-                [outlined]="true" 
-                severity="secondary" 
-                (click)="isFormAddressVisible = false" 
-              />
-
-        </ng-template>
-
-</p-dialog>
+    </form>
+</div>
 
 
-<p-dialog 
-    header="Header" 
-    [(visible)]="isFormContactVisible" 
-    [modal]="true" 
-    [style]="{ width: '25rem' }">
-        <ng-template pTemplate="header">
-            <div class="inline-flex align-items-center justify-content-center gap-2">
-                Cadastrar Novo Contato
-            </div>
-        </ng-template>
 
-        <form *ngIf="contactForm" [formGroup]="contactForm" class="flex flex-column gap-2" >
-
-            <div class="flex flex-column gap-2">
-                <label for="email">Email</label>
-                <input pInputText 
-                    formControlName="email" id="email" 
-                    [class]="contactForm.controls.email.invalid && 
-                        (contactForm.controls.email.dirty 
-                        || contactForm.controls.email.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
+    <p-dialog
         
-            <div class="flex flex-column gap-2">
-                <label for="telefone">Telefone</label>
-                <p-inputMask [style]="{'width':'100%'}" 
-                    formControlName="telefone" id="telefone"
-                    mask="(99) 9999-9999?9" 
-                    [class]="contactForm.controls.telefone.invalid 
-                        && (contactForm.controls.telefone.dirty 
-                        || contactForm.controls.telefone.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''"/>
-            </div>
-        </form>
+        header="Header" 
+        [(visible)]="isFormAddressVisible" 
+        [modal]="true" 
+        [style]="{ width: '25rem' }">
+            <ng-template pTemplate="header">
+                <div class="inline-flex align-items-center justify-content-center gap-2">
+                    Cadastrar Novo Endereço
+                </div>
+            </ng-template>
+
+            <form *ngIf="addressForm" [formGroup]="addressForm" class="flex flex-column gap-3">
+                <div class="flex flex-column gap-2">
+                    <label for="rua">Endereço</label>
+                    <input pInputText formControlName="rua" id="rua" 
+                        [class]="addressForm.controls.rua.invalid && 
+                            (addressForm.controls.rua.dirty 
+                            || addressForm.controls.rua.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <label for="bairro">Bairro</label>
+                    <input formControlName="bairro" pInputText id="bairro" 
+                        [class]="addressForm.controls.bairro.invalid && 
+                            (addressForm.controls.bairro.dirty || 
+                            addressForm.controls.bairro.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+                <div class="flex flex-column gap-2">
+                    <label for="cidade">Cidade</label>
+                    <input formControlName="cidade" pInputText id="cidade" 
+                        [class]="addressForm.controls.cidade.invalid && 
+                            (addressForm.controls.cidade.dirty 
+                            || addressForm.controls.cidade.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <label for="estado">Estado</label>
+                    <p-dropdown [style]="{'width':'100%'}" [options]="" 
+                        placeholder="Estado" formControlName="estado" id="estado"
+                        [class]="addressForm.controls.estado.invalid && 
+                            (addressForm.controls.estado.dirty 
+                            || addressForm.controls.estado.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+                <div class="flex-grow-1 flex flex-column gap-2">
+                    <label for="pais">Pais</label>
+                    <p-dropdown [style]="{'width':'100%'}" formControlName="pais" 
+                        placeholder="País" id="pais" 
+                        [class]="addressForm.controls.pais.invalid && 
+                            (addressForm.controls.pais.dirty 
+                            || addressForm.controls.pais.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>    
+
+            </form>
+            <ng-template pTemplate="footer">
+                <p-button 
+                    label="Cancel" 
+                    [text]="true" 
+                    severity="secondary" 
+                    (click)="isFormAddressVisible = false" />
+                <p-button 
+                    label="Save" 
+                    [outlined]="true" 
+                    severity="secondary" 
+                    (click)="isFormAddressVisible = false" 
+                />
+
+            </ng-template>
+
+    </p-dialog>
 
 
-        <ng-template pTemplate="footer">
-            <p-button 
-                label="Cancel" 
-                [text]="true" 
-                severity="secondary" 
-                (click)="isFormContactVisible = false" />
-            <p-button 
-                label="Save" 
-                [outlined]="true" 
-                severity="secondary" 
-                (click)="isFormContactVisible = false" 
-              />
+    <p-dialog 
+        header="Header" 
+        [(visible)]="isFormContactVisible" 
+        [modal]="true" 
+        [style]="{ width: '25rem' }">
+            <ng-template pTemplate="header">
+                <div class="inline-flex align-items-center justify-content-center gap-2">
+                    Cadastrar Novo Contato
+                </div>
+            </ng-template>
 
-        </ng-template>
+            <form *ngIf="contactForm" [formGroup]="contactForm" class="flex flex-column gap-2" >
 
-</p-dialog>
+                <div class="flex flex-column gap-2">
+                    <label for="email">Email</label>
+                    <input pInputText 
+                        formControlName="email" id="email" 
+                        [class]="contactForm.controls.email.invalid && 
+                            (contactForm.controls.email.dirty 
+                            || contactForm.controls.email.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+            
+                <div class="flex flex-column gap-2">
+                    <label for="telefone">Telefone</label>
+                    <p-inputMask [style]="{'width':'100%'}" 
+                        formControlName="telefone" id="telefone"
+                        mask="(99) 9999-9999?9" 
+                        [class]="contactForm.controls.telefone.invalid 
+                            && (contactForm.controls.telefone.dirty 
+                            || contactForm.controls.telefone.touched ) 
+                            ? 'ng-invalid ng-dirty' : ''"/>
+                </div>
+            </form>
+
+
+            <ng-template pTemplate="footer">
+                <p-button 
+                    label="Cancel" 
+                    [text]="true" 
+                    severity="secondary" 
+                    (click)="isFormContactVisible = false" />
+                <p-button 
+                    label="Save" 
+                    [outlined]="true" 
+                    severity="secondary" 
+                    (click)="isFormContactVisible = false" 
+                />
+
+            </ng-template>
+
+    </p-dialog>
