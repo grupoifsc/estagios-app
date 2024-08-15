@@ -29,7 +29,6 @@ import { Job } from '../job';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../api-response';
 import { ApiService } from '../api.service';
-import { SharedDataService } from '../shared-data.service';
 
 
 @Component({
@@ -54,7 +53,6 @@ export class CardVagaComponent implements OnInit {
     private router : Router,
     private apiService : ApiService,
     private route : ActivatedRoute,
-    private sharedDataService : SharedDataService,
   ) { }
 
   @Input() id! : string;

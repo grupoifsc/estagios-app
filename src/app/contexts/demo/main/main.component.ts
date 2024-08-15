@@ -4,12 +4,11 @@ import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
 import { jwtDecode } from 'jwt-decode';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-main',
-  providers: [MessageService],
   standalone: true,
   imports: [RouterOutlet, CommonModule, RouterLink, ToastModule, ButtonModule, ],
   templateUrl: './main.component.html',
@@ -39,7 +38,5 @@ export class MainComponent {
   public logout() : void {
     this.auth.logoutAndRedirect();
   }
-
-
 
 }

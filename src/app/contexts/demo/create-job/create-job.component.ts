@@ -28,7 +28,6 @@ import { ApiService } from '../api.service';
 import { ApiResponse } from '../api-response';
 import { Address, Contact, Org } from '../organizacao';
 import { Page } from '../page';
-import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-create-job',
@@ -46,7 +45,6 @@ export class CreateJobComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private apiService: ApiService,
-    private sharedDataService : SharedDataService,
   ) {}
 
   
@@ -211,7 +209,7 @@ export class CreateJobComponent implements OnInit, OnDestroy {
 
 
   toogleDisableIes() : void {
-    if(this.form!.get('ies')?.disabled)
+    if (this.form!.get('ies')?.disabled)
       this.form!.get('ies')?.enable()
     else 
       this.form!.get('ies')?.disable()

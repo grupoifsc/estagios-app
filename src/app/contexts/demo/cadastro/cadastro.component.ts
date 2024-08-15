@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService, LoginRequestBody } from '../auth.service';
 import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -21,7 +21,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
 import { log } from 'console';
-
+import { confirmPasswordValidator, mustMatch } from '../confirm-password.validator';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 class BlankOrg implements Org {
   id?: string | undefined;
@@ -57,6 +59,8 @@ export class CadastroComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private orgService: ApiService,
     private authService: AuthService,
+    private messageService: MessageService,
+    private router: Router,
   ) {}
 
   active: any;
@@ -158,11 +162,23 @@ export class CadastroComponent implements OnInit, OnDestroy {
       pais : [this.org.endereco.pais, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
     })
   
+    // Solução para Confirmar Senha:
+    // https://blog.bitsrc.io/implementing-confirm-password-validation-in-angular-with-custom-validators-6acd01cb0288
     this.credentialsForm = this.formBuilder.group({
       email: [this.org.credenciais.email, [Validators.required, Validators.email]],
-      senha: [this.org.credenciais.senha ?? '', [Validators.required, Validators.minLength(5)]]
-    })
+      senha: [this.org.credenciais.senha ?? '', [Validators.required, Validators.minLength(5)]],
+      confirmaSenha: ['', [Validators.required]]
+    }, 
+  {validators: this.passwordMatchValidator})
 
+  }
+
+  passwordMatchValidator(formGroup: FormGroup): { [key: string]: boolean } | null {
+    const password = formGroup.get('senha')?.value;
+    const confirmPassword = formGroup.get('confirmaSenha')?.value;
+    return password && confirmPassword && password !== confirmPassword
+      ? { 'mismatch': true }
+      : null;
   }
 
   /**
@@ -217,28 +233,29 @@ export class CadastroComponent implements OnInit, OnDestroy {
   /**
    * Attempts to save data
    */
-  save() : void {
-    console.log(this.org);
-    
+  save() : void {    
     let subscr = this.orgService.createOrg(this.org)?.subscribe({
       next: org => { 
-        console.log("success!");
-        if(org.data) this.org = org.data;
-        console.log(org);
+        if(org.data) this.redirectToLoginPage();
        },
-  //    error: err => ,
-//      complete: () => // redirecionar para home...
+      error: err => {
+        this.messageService.add({severity: 'error', detail: 'Não foi possível salvar seu cadastro. ' + err, key: 'demo-main'})
+      }
     })
     this.subscriptions.push(subscr);
   }
 
 
-
   submit() : void {
     this.updateModel();
-    console.log(JSON.stringify(this.org));
     this.save();
   }
+
+
+  private redirectToLoginPage() : void {
+    this.messageService.add({severity: 'success', detail: 'Cadastro realizado!', key: 'demo-main'});
+    this.router.navigate(['demo/login']);
+  }  
 
 
 }

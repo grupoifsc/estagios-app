@@ -307,8 +307,8 @@
                 </div>
                 
                 <div class="flex flex-column gap-2">
-                    <label for="senha">Senha</label>
-                    <p-password formControlName="senha" id="senha" 
+                    <label for="senha">Senha: </label>
+                    <p-password formControlName="senha" id="senha" [toggleMask]="true"
                         [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
                         [class]="credentialsForm.controls.senha.invalid 
                             && (credentialsForm.controls.senha.dirty 
@@ -326,6 +326,24 @@
                     </p-password>
                 </div>
 
+                <div class="flex flex-column gap-2">
+                    <label for="confirmaSenha">Confirme a senha: </label>
+                    <p-password formControlName="confirmaSenha" id="confirmaSenha" 
+                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                        [feedback]="false" [toggleMask]="true"
+                        [class]="(credentialsForm.controls.confirmaSenha.dirty 
+                            || credentialsForm.controls.confirmaSenha.touched ) 
+                            && credentialsForm.errors?.['mismatch']
+                            ? 'ng-invalid ng-dirty' : ''"
+                        >
+                    </p-password>
+                </div>
+                
+                <div *ngIf="(credentialsForm.controls.confirmaSenha.dirty 
+                            || credentialsForm.controls.confirmaSenha.touched ) 
+                            && credentialsForm.errors?.['mismatch']">
+                    Senhas não conferem.
+                  </div>
             </form>
 
             <div class="flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">

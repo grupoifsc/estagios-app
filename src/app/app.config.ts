@@ -35,5 +35,6 @@ export const appConfig: ApplicationConfig = {
     )
     ),
     provideMarkdown({ loader: HttpClient, sanitize: SecurityContext.NONE }),
+    
   ]
 };

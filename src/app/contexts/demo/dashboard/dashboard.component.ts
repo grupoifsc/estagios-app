@@ -22,7 +22,6 @@ import { ApiService } from '../api.service';
 import { Page } from '../page';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -44,16 +43,10 @@ export class DashboardComponent{
     private router: Router,
     private apiService: ApiService,
     private confirmationService : ConfirmationService,
-    private messageService : MessageService,
-    private sharedDataService : SharedDataService, 
-  ) { }
+    private messageService : MessageService  ) { }
 
 
   vagas$ : Observable<ApiResponse<Page<Job | undefined>>> = this.apiService.getAllCreated();
-
-  public setSharedData(jobs: Job[]) {
-    this.sharedDataService.setCreatedJobs(jobs);
-  }
 
   public add() : void {
     this.router.navigate(['/', 'api', 'anuncio'])
@@ -63,12 +56,10 @@ export class DashboardComponent{
   }
 
   public see(id: string, job: Job) : void {
-    this.sharedDataService.setSelectedJob(job);
     this.router.navigate(['/demo/vagas/' + id]);
   }
 
   public edit(id: string, job: Job) : void {
-    this.sharedDataService.setSelectedJob(job);
     this.router.navigate(['/demo/vagas/' + id + '/edit']);
   }
 
