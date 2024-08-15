@@ -1,9 +1,9 @@
 <form *ngIf="form" class="flex flex-column w-full lg:w-10 xl:w-8 gap-4 mx-auto" [formGroup]="form" (ngSubmit)="submit()">
 
-    <h1>Novo anúncio</h1>
+    <h1>{{ jobToEdit ? "Editar Vaga" : "Criar Vaga" }}</h1>
 
         <div class="flex flex-column gap-2">
-            <label for="titulo">Título *</label>
+            <label for="titulo">Título:*</label>
             <input pInputText id="titulo"  
                 formControlName="titulo" 
                 [class]="form.controls.titulo.invalid 
@@ -13,7 +13,7 @@
         </div>
 
         <div class="flex flex-column gap-2">
-            <label for="descricao">Descrição *</label>
+            <label for="descricao">Descrição:*</label>
             <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" 
                 id="descricao" formControlName="descricao"
                 [class]="form.controls.descricao.invalid 
@@ -23,7 +23,7 @@
         </div>
 
         <div class="flex flex-column gap-2">
-            <label for="requsisitos">Requisitos (separe usando ENTER)</label>
+            <label for="requsisitos">Requisitos: (separe usando ENTER)</label>
             <p-chips styleClass="block" id="requisitos" 
                 formControlName="requisitos" 
                 [class]="form.controls.requisitos.invalid 
@@ -43,7 +43,7 @@
 
         <div class="formgrid grid">
             <div class="field col-12 lg:col-6">
-                <label for="areas">Áreas: </label>
+                <label for="areas">Áreas:*</label>
                 <div *ngIf="areas$ | async as areas; else loadingArea">
                     <p-multiSelect *ngIf="areas.data && areas.data.length > 0" [style]="{'width':'100%'}" [options]="areas.data" 
                     [virtualScroll]="true"
@@ -58,7 +58,7 @@
             </div>
 
             <div class="field col-12 lg:col-6">
-                <label for="nivel">Nível *</label>
+                <label for="nivel">Nível:*</label>
                 <p-dropdown [style]="{'width':'100%'}" [options]="levels" 
                     placeholder="Selecione" formControlName="nivel" 
                     [class]="form.controls.nivel.invalid 
@@ -70,7 +70,7 @@
 
         <div class="formgrid grid">
             <div class="field col-12 lg:col-6">
-                <label for="periodo">Período *</label>
+                <label for="periodo">Período:*</label>
                 <p-dropdown id="period" [style]="{'width':'100%'}" [options]="periods" 
                     placeholder="Selecione" formControlName="periodo" 
                     [class]="form.controls.periodo.invalid 
@@ -80,7 +80,7 @@
             </div>
 
             <div class="field col-12 lg:col-6">
-                <label for="formato">Formato *</label>
+                <label for="formato">Formato:*</label>
                 <p-dropdown id="formato" [style]="{'width':'100%'}" [options]="formats" 
                     placeholder="Selecione" formControlName="formato" 
                     [class]="form.controls.formato.valid 
@@ -92,8 +92,8 @@
 
         <div class="formgrid grid">
             <div class="field col-12 lg:col-6">
-                <label for="ch">CH Semanal *</label>
-                <p-dropdown id="ch" [style]="{'width':'100%'}" [options]="cargaHoraria" 
+                <label for="ch">Carga Horária Semanal:*</label>
+                <p-dropdown id="ch" [style]="{'width':'100%'}" [options]="cargaHoraria"
                     placeholder="Selecione" formControlName="cargaHoraria" 
                     [class]="form.controls.cargaHoraria.invalid 
                         && (form.controls.cargaHoraria.dirty 
@@ -102,7 +102,7 @@
             </div>
 
             <div class="field col-12 lg:col-6 flex flex-column ">
-                <label for="remuneracao">Remuneração *</label>
+                <label for="remuneracao">Remuneração:*</label>
                 <p-inputNumber id="remuneracao" [style]="{'width':'100%'}" 
                     [inputStyle]="{'width':'100%'}" inputId="currency-us" mode="currency" 
                     currency="BRL" locale="pt-BR" formControlName="remuneracao" 
@@ -115,7 +115,7 @@
 
         <div class="formgrid grid align-items-center">
             <div class="field col-12 my-0 py-0">
-                <label for="selectIes" >Instituições de Ensino destinatárias</label>
+                <label for="selectIes" >Instituições de Ensino destinatárias:*</label>
             </div>    
                             
             <div class="field col-12 lg:col-6 flex gap-3 align-items-center">
@@ -146,7 +146,7 @@
         <div class="formgrid grid">
 
             <div class="field col-12 lg:col-6">
-                <label for="endereco">Endereço: *</label>
+                <label for="endereco">Endereço de Atuação:*</label>
                 <div *ngIf="addresses$ | async as addresses; else loadingAddr">
                     <p-dropdown
                         formControlName="endereco" 
@@ -170,7 +170,7 @@
             </div>
 
             <div class="field col-12 lg:col-6">
-                <label for="contato">Contato *</label>   
+                <label for="contato">Contato:*</label>   
                 <div *ngIf="contacts$ | async as contacts; else loadingContact">
                     <p-dropdown
                         *ngIf="contacts.data && contacts.data.length > 0" 

@@ -26,7 +26,7 @@
                         <h1>Dados da Instituição</h1>
                         
                         <div class="flex flex-column gap-2">
-                            <label for="nome">Instituição</label>
+                            <label for="nome">Nome:</label>
                             <input pInputText formControlName="nome" id="nome" 
                                 autocomplete="true"
                                 [class]="profileForm.controls.nome.invalid && 
@@ -38,10 +38,10 @@
                         <div class="grid">
 
                             <div class="col-12 md:col-6 flex flex-column gap-3">
-                                <label for="">Tipo de Instituição</label>
+                                <label for="">Tipo de Instituição:</label>
                                 
                                 <div class="grid">
-                                    <div c  lass="col-12 flex align-items-center">
+                                    <div class="col-12 flex align-items-center">
                                         <p-radioButton formControlName="ie" name="ie" 
                                             [value]="true" id="ie" inputId="ie" />
                                         <label for="ie" class="ml-2">Instituição de Ensino</label>
@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="col-12 md:col-6 flex flex-column gap-2">
-                                <label for="cnpj">CNPJ</label>
+                                <label for="cnpj">CNPJ:</label>
                                 <p-inputMask formControlName="cnpj" id="cnpj"
                                     [style]="{'width':'100%'}" 
                                     mask="99.999.999/9999-99"
@@ -71,7 +71,7 @@
 
 
                         <div class="flex flex-column gap-2">
-                            <label for="info">Informações</label>
+                            <label for="info">Informações de perfil:</label>
                             <textarea id="info" formControlName="info" rows="5" 
                                 cols="30" pInputTextarea [autoResize]="true" 
                                 [class]="profileForm.controls.info.invalid && 
@@ -111,7 +111,7 @@
                         
                         <div class="col-12">
                             <div class="flex flex-column gap-2">
-                                <label for="rua">Endereço</label>
+                                <label for="rua">Endereço:</label>
                                 <input pInputText formControlName="rua" id="rua" 
                                     [class]="addressForm.controls.rua.invalid && 
                                         (addressForm.controls.rua.dirty 
@@ -122,7 +122,7 @@
         
                         <div class="col-12 md:col-6">
                             <div class="flex flex-column gap-2">
-                                <label for="bairro">Bairro</label>
+                                <label for="bairro">Bairro:</label>
                                 <input formControlName="bairro" pInputText id="bairro" 
                                     [class]="addressForm.controls.bairro.invalid && 
                                         (addressForm.controls.bairro.dirty || 
@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-12 md:col-6">
                             <div class="flex flex-column gap-2">
-                                <label for="cidade">Cidade</label>
+                                <label for="cidade">Cidade:</label>
                                 <input formControlName="cidade" pInputText id="cidade" 
                                     [class]="addressForm.controls.cidade.invalid && 
                                         (addressForm.controls.cidade.dirty 
@@ -142,7 +142,7 @@
                         </div>
                         <div class="col-12 md:col-6">
                             <div class="flex flex-column gap-2">
-                                <label for="estado">Estado</label>
+                                <label for="estado">Estado:</label>
                                 <p-dropdown [style]="{'width':'100%'}" [options]="states"
                                     optionLabel="label" optionValue="value" 
                                     placeholder="Estado" formControlName="estado" id="estado"
@@ -154,7 +154,7 @@
                         </div>
                         <div class="col-12 md:col-6">
                             <div class="flex flex-column gap-2">
-                                <label for="pais">Pais</label>
+                                <label for="pais">País:</label>
                                 <p-dropdown [style]="{'width':'100%'}" formControlName="pais" 
                                     placeholder="País" id="pais" [options]="countries" 
                                     optionLabel="label" optionValue="value"
@@ -194,7 +194,7 @@
                     <form [formGroup]="mainContactForm" class="grid" >
                         <div class="col-12 md:col-6">
                             <div class="flex flex-column gap-2">
-                                <label for="email">Email</label>
+                                <label for="email">Email Institucional para contato:</label>
                                 <input pInputText 
                                     formControlName="email" id="email" 
                                     [class]="mainContactForm.controls.email.invalid && 
@@ -205,7 +205,7 @@
                         </div>
                         <div class="col-12 md:col-6">              
                             <div class="flex flex-column gap-2">
-                                <label for="telefone">Telefone</label>
+                                <label for="telefone">Telefone Institucional:</label>
                                 <p-inputMask [style]="{'width':'100%'}"
                                 formControlName="telefone" id="telefone"
                                 mask="(99) 9999-9999?9" 
@@ -218,7 +218,7 @@
                     
                         <div class="col-12">
                             <div class="flex flex-column gap-2">
-                                <label for="website">Website</label>
+                                <label for="website">Website:</label>
                                 <input formControlName="website" 
                                     pInputText id="website" 
                                     [class]="mainContactForm.controls.website.invalid 
@@ -229,7 +229,7 @@
                         </div>
                         <div class="col-12">
                             <div class="flex flex-column gap-2">
-                                <label for="redes">Redes Sociais</label>
+                                <label for="redes">Redes Sociais:</label>
                                 <div class="grid">
                                     <div class="col-12 md:col-6">
                                         <input pInputText id="redesA" [style]="{'width':'100%'}"
@@ -256,7 +256,7 @@
                         <h4 class="col-12">Contato para Candidaturas (opcional)</h4>
                         <div class="col-12 md:col-6">
                             <div class="flex flex-column gap-2">
-                                <label for="email2">Email</label>
+                                <label for="email2">Email de RH:</label>
                                 <input 
                                     pInputText formControlName="email" id="email2" 
                                     [class]="applianceContactForm.controls.email.invalid 
@@ -267,7 +267,7 @@
                         </div>
                         <div class="col-12 md:col-6">
                             <div class="flex flex-column gap-2">
-                                <label for="telefone2">Telefone</label>
+                                <label for="telefone2">Telefone de RH:</label>
                                 <p-inputMask formControlName="telefone" [style]="{'width':'100%'}" 
                                     id="telefone2" mask="(99) 9999-9999?9" 
                                     
@@ -306,7 +306,7 @@
                         >
                         
                         <div class="flex flex-column gap-2">
-                            <label for="email">Login Email</label>
+                            <label for="email">Email para Autenticação:</label>
                             <input pInputText formControlName="email" id="email" 
                                 [class]="credentialsForm.controls.email.invalid 
                                     && (credentialsForm.controls.email.dirty 
@@ -324,11 +324,7 @@
                                     ? 'ng-invalid ng-dirty' : ''">
                                 <ng-template pTemplate="footer">
                                     <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                                        <li>Ao menos uma letra minúscula</li>
-                                        <li>Ao menos uma letra maiúscula</li>
-                                        <li>Ao menos um número</li>
-                                        <li>Ao menos um caractere especial (*?#$%) </li>
-                                        <li>Mínimo de 8 caracteres</li>
+                                        <li>Utilize uma senha segura</li>
                                     </ul>
                                 </ng-template>
                             </p-password>
@@ -350,7 +346,7 @@
                         <div *ngIf="(credentialsForm.controls.confirmaSenha.dirty 
                                     || credentialsForm.controls.confirmaSenha.touched ) 
                                     && credentialsForm.errors?.['mismatch']">
-                            Senhas não conferem.
+                            Ooops, as senhas não conferem!
                         </div>
                     </form>
 
