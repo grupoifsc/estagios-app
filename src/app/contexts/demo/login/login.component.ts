@@ -10,6 +10,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoadingService } from '../../../services/loading.service';
+import { MessageService } from 'primeng/api';
+import { error } from 'console';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +31,8 @@ export class LoginComponent {
     private authService : AuthService,
     private formBuilder : FormBuilder,
     private route : ActivatedRoute,
-    public loading: LoadingService
+    public loading: LoadingService,
+    private messageService: MessageService,
   ) {}
 
   
@@ -51,14 +54,13 @@ export class LoginComponent {
       password: form.password!
     }
     this.authService.loginAndRedirect(loginRequest, redirectUrl).subscribe({
-      next: response => console.log(response),
       error: err => this.loginError(err)
     });
   }
 
 
   private loginError(err: any) : void {
-    console.log(err);    
+    this.messageService.add({severity: 'error', summary: "Oh, não!", detail: err.error.message, key: 'demo-main'})    
   }
 
 }

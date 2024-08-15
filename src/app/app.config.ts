@@ -26,11 +26,11 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([
        estagiosUrlInterceptor,
        authInterceptor,
-       requestTimingInterceptor,
-       loadingInterceptor,
-       jwtRefreshTokenInterceptor,
-       retryInterceptor,
-       handleErrorInterceptor 
+       //requestTimingInterceptor,
+       //loadingInterceptor,
+       //jwtRefreshTokenInterceptor,
+       //retryInterceptor,
+       //handleErrorInterceptor 
       ]
     )
     ),
