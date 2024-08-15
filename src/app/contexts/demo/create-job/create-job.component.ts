@@ -99,6 +99,7 @@ export class CreateJobComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
+
   private initjob() : void {
     this.job = {
       titulo: '',
