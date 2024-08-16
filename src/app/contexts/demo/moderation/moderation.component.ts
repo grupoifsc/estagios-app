@@ -42,21 +42,24 @@ export class ModerationComponent implements OnInit, OnDestroy {
   view! : string
   subscriptions : Subscription[] = []
   status!: 'aprovada' | 'rejeitada' | 'pendente'
-
+  title: 'Vagas Aprovadas' | 'Vagas Rejeitadas' | 'Moderação Pendente' | undefined;
   ngOnInit(): void {
     let sub = this.route.data.subscribe({
       next: data => {
         this.view = data.view;
         if(this.view == "accepted") {
           this.status = 'aprovada'
+          this.title = 'Vagas Aprovadas'
           this.vagas$ = this.apiService.getAllApproved();
         } 
         else if (this.view == "rejected") {
           this.status = 'rejeitada'
+          this.title = 'Vagas Rejeitadas'
           this.vagas$ = this.apiService.getAllRejected();
         }
         else {
           this.status = 'pendente'
+          this.title = 'Moderação Pendente'
           this.vagas$ = this.apiService.getAllPending();
         }
         // this.vagas$.subscribe({
@@ -82,11 +85,25 @@ export class ModerationComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+
+  confirmAction(action: 'aprovar' | 'rejeitar', id: string) : void {
+    this.confirmationService.confirm({
+      message: 'Deseja ' + action + ' esta vaga?',
+      accept: () => {
+        if(action == 'aprovar') return this.accept(id);
+        else return this.reject(id);
+      },
+      icon: action == 'aprovar' ? 'pi pi-thumbs-up' : 'pi pi-thumbs-down',
+      
+    })
+  }
+
+
   accept(id : string) : void {
     let sub = this.apiService.approveJob([id]).subscribe({
       next: data => {
         this.messageService.add({severity: 'success', detail: 'Vaga aceita', key: 'demo-main'})
-        this.reloadPage();
+        this.router.navigate(['demo/moderacao/aprovadas'])
       },
       error: err => {
         this.messageService.add({severity: 'error', summary: 'Oops', detail: err.error?.message ?? "Um erro ocorreu. Tente novamente", key: 'demo-main'})
@@ -99,7 +116,7 @@ export class ModerationComponent implements OnInit, OnDestroy {
     let sub = this.apiService.rejectJob([id]).subscribe({
       next: data => {
         this.messageService.add({severity: 'success', detail: 'Vaga rejeitada', key: 'demo-main'})
-        this.reloadPage();
+        this.router.navigate(['demo/moderacao/rejeitadas'])
       },
       error: err => {
         this.messageService.add({severity: 'error', summary: 'Oops', detail: err.error?.message ?? "Um erro ocorreu. Tente novamente", key: 'demo-main'})

@@ -27,8 +27,8 @@ export class MainComponent {
     { label : 'Minhas Vagas', routerLink: 'dashboard' },
     { label: 'Moderação', state: {guard: 'ie'}, items:
       [
-        { label: 'Vagas Aprovadas', routerLink: 'moderacao/aprovados', state: {guard: 'ie'} },
-        { label: 'Vagas Rejeitadas', routerLink: 'moderacao/rejeitados', state: {guard: 'ie'} },
+        { label: 'Vagas Aprovadas', routerLink: 'moderacao/aprovadas', state: {guard: 'ie'} },
+        { label: 'Vagas Rejeitadas', routerLink: 'moderacao/rejeitadas', state: {guard: 'ie'} },
         { label: 'Vagas Pendentes', routerLink: 'moderacao/pendentes', state: {guard: 'ie'} }
       ]
     },

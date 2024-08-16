@@ -85,11 +85,11 @@ export class ApiService {
 
 
   approveJob(ids: string[]) : Observable<ApiResponse<any>> {
-    return this.http.put<ApiResponse<any>>(this.jobBaseUrl + 'disponiveis/', ids);
+    return this.http.put<ApiResponse<any>>(this.orgBaseUrl + this.jobBaseUrl + '/disponiveis', ids);
   } 
 
   rejectJob(ids: string[]) : Observable<ApiResponse<any>> {
-    return this.http.put<ApiResponse<any>>(this.jobBaseUrl + 'rejeitadas/', ids);
+    return this.http.put<ApiResponse<any>>(this.orgBaseUrl + this.jobBaseUrl + '/rejeitadas', ids);
   } 
 
   getAllPending() : Observable<ApiResponse<Page<Job> | undefined>> {

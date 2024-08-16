@@ -1,6 +1,5 @@
 
-<p>{{ view }}</p>
-<p>{{ vagas$ ? 'true' : 'false' }}</p>
+<h1>{{ title }}</h1>
 
 <p-table
     dataKey="id"
@@ -51,8 +50,8 @@
             <td>{{vaga.criado_em | date : 'short'}}</td>
             <td>
                 <div class="flex gap-2">
-                    <p-button *ngIf="view != 'accepted'" icon="pi pi-thumbs-up" [rounded]="true" [text]="true" severity="success" title="Aceitar" (onClick)="accept(vaga.id)" />
-                    <p-button *ngIf="view != 'rejected'" icon="pi pi-thumbs-down" [rounded]="true" [text]="true" severity="danger" title="Rejeitar" (onClick)="reject(vaga.id)" />
+                    <p-button *ngIf="view != 'accepted'" icon="pi pi-thumbs-up" [rounded]="true" [text]="true" severity="success" title="Aceitar" (onClick)="confirmAction('aprovar', vaga.id)" />
+                    <p-button *ngIf="view != 'rejected'" icon="pi pi-thumbs-down" [rounded]="true" [text]="true" severity="danger" title="Rejeitar" (onClick)="confirmAction('rejeitar', vaga.id)" />
                 </div>
             </td>
         </tr>
@@ -64,15 +63,11 @@
     </ng-template>
 </p-table>
 
-<p-confirmDialog styleClass="delete-dialog" #cd >
-    <ng-template pTemplate="header" styleClass="">
-        <h3>Deletar esta vaga?</h3>
-        <button pButton type="button" title="Cancel" class="p-button-text" icon="pi pi-times" (click)="cd.reject()"></button>
-    </ng-template>
+<p-confirmDialog styleClass="delete-dialog" #cd styleClass="w-11 md:w-4" closable="false">
     <ng-template pTemplate="footer">
         <div class="flex flex-column gap-2">
-            <button type="button" class="p-button-primary" pButton label="Cancelar" (click)="cd.reject()"></button>
-            <button type="button" class="p-button-danger p-button-text font-bold" pButton label="Sim, quero deletar esta vaga" (click)="cd.accept()"></button>
+            <button type="button" class="p-button-primary" pButton label="Confirmar" (click)="cd.accept()"></button>
+            <button type="button" class="p-button-secondary" pButton label="Cancelar" (click)="cd.reject()"></button>
         </div>
     </ng-template>
 </p-confirmDialog>
