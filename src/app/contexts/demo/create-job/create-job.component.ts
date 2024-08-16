@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule, Location, NgIfContext } from '@angular/common';
+import { AsyncPipe, CommonModule, Location, NgIfContext, TitleCasePipe } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, RequiredValidator, Validators } from '@angular/forms';
 import { AuthService, LoginRequestBody } from '../auth.service';
@@ -28,11 +28,12 @@ import { ApiService } from '../api.service';
 import { ApiResponse } from '../api-response';
 import { Address, Contact, Org } from '../organizacao';
 import { Page } from '../page';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-job',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, AsyncPipe,   
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, AsyncPipe, TitleCasePipe,    
     InputTextareaModule, MultiSelectModule, DropdownModule, InputNumberModule, 
     InputTextModule, ChipsModule, FieldsetModule, ButtonModule, InputSwitchModule,
     DialogModule, InputMaskModule, DividerModule, 
@@ -46,6 +47,7 @@ export class CreateJobComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private apiService: ApiService,
     private location: Location,
+    private messageService: MessageService,
   ) {}
 
   
@@ -61,21 +63,36 @@ export class CreateJobComponent implements OnInit, OnDestroy {
   ies$ : Observable<ApiResponse<Page<Org> | undefined>> = this.apiService.getAllSchools();
   areas$ : Observable<ApiResponse<Area[]> | undefined> =  this.apiService.getAreas();
 
-  form?: FormGroup
+  form: FormGroup = this.formBuilder.group({})
   contactForm? : FormGroup
   addressForm? : FormGroup
 
-  // TODO: Deixar isto em conformidade com os enums do backend e em um lugar fácil de mudar
-  levels : string[] = ['fundamental', 'medio', 'tecnico', 'superior', 'pos']
-  periods : string[] = ['matutino', 'vespertino', 'noturno']
-  formats : string[] = ['presencial', 'hibrido', 'remoto']
 
-  cargaHoraria : number[] = [10, 20, 30, 40]
+  levels : {label: string, value: string}[] = [
+    {label: 'Fundamental', value: 'fundamental'}, {label: 'Médio', value: 'medio'}, 
+    {label: 'Técnico', value: 'tecnico'}, {label: 'Graduação', value: 'graduacao'}, 
+    {label: 'Pós-Graduação', value: 'pos'}
+  ]
+  
+  periods : {label: string, value: string}[] = [
+    {label: 'Matutino', value: 'matutino'}, {label: 'Vespertino', value: 'vespertino'}, 
+    {label: 'Noturno', value:'noturno'}]
+  
+  formats : {label: string, value: string}[] = [
+    {label: 'Presencial', value: 'presencial'}, {label: 'Híbrido', value: 'hibrido'}, 
+    {label: 'Remoto', value: 'remoto'}]
+
+  cargaHoraria : {label: string, value: number}[] = [
+    {label: '10 hrs', value: 10}, 
+    {label: '20 hrs', value: 20}, 
+    {label: '30 hrs', value: 30}, 
+    {label: '40 hrs', value: 40}
+  ]
 
   isFormContactVisible: boolean = false;
   isFormAddressVisible: boolean = false;
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.initjob();
     if(this.id) {
       this.apiService.getJobInfo(this.id).subscribe({
@@ -197,20 +214,34 @@ export class CreateJobComponent implements OnInit, OnDestroy {
 
   submit() : void {
     this.updateJobFromInput();
+    let subs;
     if(this.jobToEdit) {
-      this.apiService.updateJob(this.jobToEdit.id!, this.job).subscribe({
+      subs = this.apiService.updateJob(this.jobToEdit.id!, this.job).subscribe({
         next: res => {
-          console.log("Success");
-          console.log(res);
+          if(res.data) {
+            this.messageService.add({severity: 'success', detail: 'Vaga atualizada com sucesso!', key: 'demo-main'})
+            this.location.back();
+          }
+        }, 
+        error: err => {
+          this.messageService.add({severity: 'error', summary: 'Oops', detail: err.error?.message ?? 'Não foi possível salvar sua vaga. Tente novamente!', key: 'demo-main'})
         }
       })
     }
     else {
-      this.apiService.createJob(this.job).subscribe({
-        next: data => {console.log("success");
-         console.log(data);},
+      subs = this.apiService.createJob(this.job).subscribe({
+        next: res => {
+          if(res.data) {
+            this.messageService.add({severity: 'success', detail: 'Vaga adicionada com sucesso!', key: 'demo-main'})
+            this.location.back();
+          }
+        }, 
+        error: err => {
+          this.messageService.add({severity: 'error', summary: 'Oops', detail: err.error?.message ?? 'Não foi possível salvar sua vaga. Tente novamente!', key: 'demo-main'})
+        }
       });
     }
+    this.subscriptions.push(subs);
   }
 
 

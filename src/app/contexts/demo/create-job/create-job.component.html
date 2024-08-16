@@ -1,13 +1,13 @@
-<div class="flex flex-column w-full lg:w-10 xl:w-8 gap-4 mx-auto">
+<div class="w-full lg:w-10 xl:w-8 mx-auto">
 
     <div class="flex justify-content-end">
         <p-button (onClick)="cancel()" 
         icon="pi pi-times" iconPos="left" title="Cancelar" [text]="true"/> 
     </div>
 
-    <form *ngIf="form" class="" [formGroup]="form" (ngSubmit)="submit()">
+    <h1 class="mb-5">{{ id ? "Editar Vaga" : "Criar Vaga" }}</h1>
 
-        <h1>{{ jobToEdit ? "Editar Vaga" : "Criar Vaga" }}</h1>
+    <form *ngIf="form" class="flex flex-column gap-5 " [formGroup]="form" (ngSubmit)="submit()">
 
             <div class="flex flex-column gap-2">
                 <label for="titulo">Título:*</label>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="formgrid grid">
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 mb-4">
                     <label for="areas">Áreas:*</label>
                     <div *ngIf="areas$ | async as areas; else loadingArea">
                         <p-multiSelect *ngIf="areas.data && areas.data.length > 0" [style]="{'width':'100%'}" [options]="areas.data" 
@@ -64,9 +64,10 @@
                     <ng-template #loadingArea> Loading Areas</ng-template>
                 </div>
 
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 lg:mb-4">
                     <label for="nivel">Nível:*</label>
-                    <p-dropdown [style]="{'width':'100%'}" [options]="levels" 
+                    <p-dropdown [style]="{'width':'100%'}" [options]="levels"
+                    optionLabel="label" optionValue="value"  
                         placeholder="Selecione" formControlName="nivel" 
                         [class]="form.controls.nivel.invalid 
                             && (form.controls.nivel.dirty 
@@ -76,7 +77,7 @@
             </div>
 
             <div class="formgrid grid">
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 mb-4">
                     <label for="periodo">Período:*</label>
                     <p-dropdown id="period" [style]="{'width':'100%'}" [options]="periods" 
                         placeholder="Selecione" formControlName="periodo" 
@@ -86,9 +87,10 @@
                             ? 'ng-invalid ng-dirty' : ''"/>
                 </div>
 
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 lg:mb-4">
                     <label for="formato">Formato:*</label>
-                    <p-dropdown id="formato" [style]="{'width':'100%'}" [options]="formats" 
+                    <p-dropdown id="formato" [style]="{'width':'100%'}" [options]="formats"
+                    optionLabel="label" optionValue="value"  
                         placeholder="Selecione" formControlName="formato" 
                         [class]="form.controls.formato.valid 
                             && (form.controls.formato.dirty 
@@ -98,17 +100,18 @@
             </div>
 
             <div class="formgrid grid">
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 mb-4">
                     <label for="ch">Carga Horária Semanal:*</label>
                     <p-dropdown id="ch" [style]="{'width':'100%'}" [options]="cargaHoraria"
-                        placeholder="Selecione" formControlName="cargaHoraria" 
+                    optionLabel="label" optionValue="value"     
+                    placeholder="Selecione" formControlName="cargaHoraria" 
                         [class]="form.controls.cargaHoraria.invalid 
                             && (form.controls.cargaHoraria.dirty 
                             || form.controls.cargaHoraria.touched ) 
                             ? 'ng-invalid ng-dirty' : ''"/>
                 </div>
 
-                <div class="field col-12 lg:col-6 flex flex-column ">
+                <div class="field col-12 lg:col-6 flex flex-column lg:mb-4">
                     <label for="remuneracao">Remuneração:*</label>
                     <p-inputNumber id="remuneracao" [style]="{'width':'100%'}" 
                         [inputStyle]="{'width':'100%'}" inputId="currency-us" mode="currency" 
@@ -131,7 +134,7 @@
                     <p>Todas</p>
                 </div>
 
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 lg:mb-4">
                     <div *ngIf="ies$ | async as ies; else loadingIes">    
                         <p-multiSelect 
                             [style]="{'width':'100%'}" 
@@ -152,7 +155,7 @@
 
             <div class="formgrid grid">
 
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 mb-4">
                     <label for="endereco">Endereço de Atuação:*</label>
                     <div *ngIf="addresses$ | async as addresses; else loadingAddr">
                         <p-dropdown
@@ -163,12 +166,16 @@
                             placeholder="Selecione o endereço" 
                             [showClear]="true"
                             [checkmark]="true"
-                            optionLabel="rua"
                             optionValue="id"
                         >
+                        <ng-template let-address pTemplate="selectedItem">
+                            <div class="flex align-items-center gap-2">
+                                {{ address.tipo == 'main' ? 'Principal' : 'Outro' }} ({{ address.rua }}, {{ address.bairro }}, {{  address.cidade}})
+                            </div>
+                        </ng-template>
                         <ng-template let-address pTemplate="item">
                             <div class="flex align-items-center gap-2">
-                                {{ address.tipo }} - {{ address.rua }}, {{ address.bairro }}, {{  address.cidade}}
+                                {{ address.tipo == 'main' ? 'Principal' : 'Outro' }} ({{ address.rua }}, {{ address.bairro }}, {{  address.cidade}})
                             </div>
                         </ng-template>
                         </p-dropdown>
@@ -176,7 +183,7 @@
                     <ng-template #loadingAddr>Loading...</ng-template>
                 </div>
 
-                <div class="field col-12 lg:col-6">
+                <div class="field col-12 lg:col-6 lg:mb-4">
                     <label for="contato">Contato:*</label>   
                     <div *ngIf="contacts$ | async as contacts; else loadingContact">
                         <p-dropdown
@@ -184,12 +191,17 @@
                             formControlName="contato"
                             [style]="{'width':'100%'}" 
                             [options]="contacts.data"
-                            optionLabel="email"
+                            [showClear]="true"
                             optionValue="id" 
                             placeholder="Selecione o contato"  >
+                            <ng-template let-contact pTemplate="selectedItem">
+                                <div class="flex align-items-center gap-2">
+                                    {{contact.tipo == 'main' ? 'Principal' : 'Candidaturas'}} ({{ contact.email }} / {{ contact.telefone }})
+                                </div>
+                            </ng-template>
                             <ng-template let-contact pTemplate="item">
                                 <div class="flex align-items-center gap-2">
-                                    {{contact.tipo}} - {{ contact.email }} / {{ contact.telefone }}
+                                    {{contact.tipo == 'main' ? 'Principal' : 'Candidaturas'}} ({{ contact.email }} / {{ contact.telefone }})
                                 </div>
                             </ng-template>
                         </p-dropdown>
