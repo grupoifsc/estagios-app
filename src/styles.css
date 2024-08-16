@@ -24,3 +24,15 @@ body {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
 }
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-panel .p-panelmenu-header .p-panelmenu-header-content {
+    border: none;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
+    background-color: transparent !important;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action:hover {
+    background-color: transparent !important;
+}

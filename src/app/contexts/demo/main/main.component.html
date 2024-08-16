@@ -1,10 +1,19 @@
 <div class="grid m-0 p-0">
 
+
+
     <div class="p-3 bg-bluegray-900 top-0 sticky min-h-screen col-fixed w-full absolute lg:block z-2 lg:relative lg:z-0 lg:w-15rem" [hidden]="isMenuHidden">
         <p-button class="lg:hidden" (onClick)="toogleMenu()" label="Voltar" icon="pi pi-arrow-left" severity="secondary" [text]="true" />
-        <div *ngFor="let item of menu" class="my-3" (click)="toogleMenu()" >
-            <a *ngIf="item.guard == undefined || item.guard == 'ie' && auth.isIe()" [routerLink]="item.route" class="p-button bg-transparent w-full border-none text-0 no-underline">{{item.label}}</a>
+     
+        <div>
+            <p-panelMenu [model]="menu" [style]="{'background-color':'transparent'}" />
         </div>
+        
+        <!-- <div *ngFor="let item of menu" class="my-3" (click)="toogleMenu()" >
+            <a *ngIf="item.state?.guard == undefined || item.state?.guard == 'ie' && auth.isIe()" [routerLink]="item.routerLink" class="p-button bg-transparent w-full border-none text-0 no-underline">{{item.label}}</a>
+        </div> -->
+   
+   
     </div>
 
 

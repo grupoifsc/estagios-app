@@ -75,7 +75,7 @@ export class ApiService {
 
 
   getAllCreated() : Observable<ApiResponse<Page<Job | undefined>>> {
-    return this.http.get<ApiResponse<Page<Job>>>('/org/vagas/owned');
+    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl+ '/owned');
   } 
 
   getAreas() : Observable<ApiResponse<Area[]> | undefined> {
@@ -92,16 +92,16 @@ export class ApiService {
     return this.http.put<ApiResponse<any>>(this.jobBaseUrl + 'rejeitadas/', ids);
   } 
 
-  getAllPending() : Observable<ApiResponse<Page<Job | undefined>>> {
-    return this.http.get<ApiResponse<Page<Job>>>(this.jobBaseUrl + '/pendentes');
+  getAllPending() : Observable<ApiResponse<Page<Job> | undefined>> {
+    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/pendentes');
   } 
 
-  getAllApproved() : Observable<ApiResponse<Page<Job | undefined>>> {
-    return this.http.get<ApiResponse<Page<Job>>>(this.jobBaseUrl + '/disponiveis');
+  getAllApproved() : Observable<ApiResponse<Page<Job> | undefined>> {
+    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/disponiveis');
   } 
 
-  getAllRejected() : Observable<ApiResponse<Page<Job | undefined>>> {
-    return this.http.get<ApiResponse<Page<Job>>>(this.jobBaseUrl + '/rejeitadas');
+  getAllRejected() : Observable<ApiResponse<Page<Job> | undefined>> {
+    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/rejeitadas');
   } 
 
 

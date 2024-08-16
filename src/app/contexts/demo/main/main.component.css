@@ -1,0 +1,12 @@
+/* your-component.component.css */
+:host ::ng-deep .p-panelmenu {
+    background: transparent !important;
+  }
+  
+  :host ::ng-deep .p-panelmenu .p-panelmenu-header {
+    background: transparent !important;
+  }
+  
+  :host ::ng-deep .p-panelmenu .p-menuitem {
+    background: transparent !important;
+  }

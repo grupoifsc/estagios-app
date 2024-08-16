@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { jwtDecode } from 'jwt-decode';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RouterLink, ToastModule, ButtonModule, ],
+  imports: [RouterOutlet, CommonModule, RouterLink, ToastModule, ButtonModule, PanelMenuModule, ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
@@ -21,13 +23,19 @@ export class MainComponent {
     private router : Router,
   ) { }
 
-  menu : { label : string, route: string, guard?: 'ie' }[] = [
-    { label : 'Minhas Vagas', route: 'dashboard' },
-    { label: 'Vagas Aprovadas', route: 'moderacao/aprovados', guard: 'ie' },
-    { label: 'Vagas Rejeitadas', route: 'moderacao/rejeitados', guard: 'ie' },
-    { label: 'Vagas Pendentes', route: 'moderacao/pendentes', guard: 'ie' },
-    { label : 'Ajuda', route: '/tutoriais' },
+  menu : MenuItem[] = [
+    { label : 'Minhas Vagas', routerLink: 'dashboard' },
+    { label: 'Moderação', state: {guard: 'ie'}, items:
+      [
+        { label: 'Vagas Aprovadas', routerLink: 'moderacao/aprovados', state: {guard: 'ie'} },
+        { label: 'Vagas Rejeitadas', routerLink: 'moderacao/rejeitados', state: {guard: 'ie'} },
+        { label: 'Vagas Pendentes', routerLink: 'moderacao/pendentes', state: {guard: 'ie'} }
+      ]
+    },
+    { label : 'Ajuda', routerLink: '/tutoriais' },
   ]
+
+
 
   isMenuHidden : boolean = true;
 

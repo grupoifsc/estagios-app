@@ -12,6 +12,8 @@ import { Job } from '../job';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Page } from '../page';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-moderation',
@@ -19,7 +21,7 @@ import { Page } from '../page';
   standalone: true,
   imports: [ CommonModule, DatePipe, AsyncPipe, 
     TableModule, ButtonModule, IconFieldModule, ConfirmDialogModule, 
-    InputIconModule, 
+    InputIconModule, InputTextModule, TagModule,
    ],
   templateUrl: './moderation.component.html',
   styleUrl: './moderation.component.css'
@@ -34,28 +36,46 @@ export class ModerationComponent implements OnInit, OnDestroy {
     private router : Router, 
   ) {}
 
-  vagas$! : Observable<ApiResponse<Page<Job | undefined>>>
+  vagas$! : Observable<ApiResponse<Page<Job> | undefined>>
+  vagas: Job[] | undefined = []
 
-  action! : string
+  view! : string
   subscriptions : Subscription[] = []
+  status!: 'aprovada' | 'rejeitada' | 'pendente'
 
   ngOnInit(): void {
     let sub = this.route.data.subscribe({
       next: data => {
-        this.action = data.action;
-        if(this.action == "accepted") {
+        this.view = data.view;
+        if(this.view == "accepted") {
+          this.status = 'aprovada'
           this.vagas$ = this.apiService.getAllApproved();
         } 
-        else if (this.action == "rejected") {
+        else if (this.view == "rejected") {
+          this.status = 'rejeitada'
           this.vagas$ = this.apiService.getAllRejected();
         }
         else {
+          this.status = 'pendente'
           this.vagas$ = this.apiService.getAllPending();
         }
+        // this.vagas$.subscribe({
+        //   next: response => {
+        //     if(response.data) this.vagas = response.data.content
+        //     console.log(JSON.stringify(this.vagas));
+        //   },
+        //   error: err => {
+        //     console.log(JSON.stringify(err));
+        //   }
+        // })        
       },
       error: err => console.log(err)      
     })
     this.subscriptions.push(sub);    
+  }
+
+  stringify(object: any) : string {
+    return JSON.stringify(object)
   }
 
   ngOnDestroy(): void {
@@ -65,29 +85,27 @@ export class ModerationComponent implements OnInit, OnDestroy {
   accept(id : string) : void {
     let sub = this.apiService.approveJob([id]).subscribe({
       next: data => {
-        console.log("job accepted"); 
-        console.log(data);
+        this.messageService.add({severity: 'success', detail: 'Vaga aceita', key: 'demo-main'})
+        this.reloadPage();
       },
       error: err => {
-        console.log(err);
+        this.messageService.add({severity: 'error', summary: 'Oops', detail: err.error?.message ?? "Um erro ocorreu. Tente novamente", key: 'demo-main'})
       }
     });
     this.subscriptions.push(sub);
-    this.reloadPage();
   }
 
   reject(id: string) : void {
     let sub = this.apiService.rejectJob([id]).subscribe({
       next: data => {
-        console.log("job rejected"); 
-        console.log(data);
+        this.messageService.add({severity: 'success', detail: 'Vaga rejeitada', key: 'demo-main'})
+        this.reloadPage();
       },
       error: err => {
-        console.log(err);
+        this.messageService.add({severity: 'error', summary: 'Oops', detail: err.error?.message ?? "Um erro ocorreu. Tente novamente", key: 'demo-main'})
       }
     })
     this.subscriptions.push(sub);
-    this.reloadPage();
   }
 
   reloadPage() : void {

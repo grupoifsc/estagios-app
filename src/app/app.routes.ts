@@ -33,9 +33,9 @@ export const routes: Routes = [
         { path: 'anuncio', component: CreateJobComponent, canActivate: [ authGuard ] },
         { path: 'vagas/:id/edit', component: CreateJobComponent, canActivate: [ authGuard ] },
         { path: 'vagas/:id', component: CardVagaComponent, canActivate: [ authGuard ] },
-        { path: 'moderacao/rejeitados', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {action: 'reject'} },
-        { path: 'moderacao/aprovados', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {action: 'accept'} },
-        { path: 'moderacao/pendentes', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {action: 'pending'} },
+        { path: 'moderacao/rejeitados', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {view: 'rejected'} },
+        { path: 'moderacao/aprovados', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {view: 'accepted'} },
+        { path: 'moderacao/pendentes', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {view: 'pending'} },
         { path: '**', component: NotFoundComponent },
     ]},
     { path : '', component: MenuComponent, children: [
