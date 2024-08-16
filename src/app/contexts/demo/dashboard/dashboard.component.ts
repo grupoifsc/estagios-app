@@ -75,7 +75,7 @@ export class DashboardComponent{
   private confirmDelete(id: string) : void {
     this.apiService.deleteJob(id).subscribe({
       next: response => {
-        this.messageService.add({key: 'demo-main', severity: 'info', summary: 'Sucesso', detail: 'Vaga deletada!', life: 3000 });
+        this.messageService.add({severity: 'warn', detail: 'Vaga deletada', key: 'demo-main'})
         this.reloadCurrentRoute();
       }
     });

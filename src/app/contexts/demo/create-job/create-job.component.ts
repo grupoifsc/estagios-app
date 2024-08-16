@@ -67,7 +67,6 @@ export class CreateJobComponent implements OnInit, OnDestroy {
   contactForm? : FormGroup
   addressForm? : FormGroup
 
-
   levels : {label: string, value: string}[] = [
     {label: 'Fundamental', value: 'fundamental'}, {label: 'Médio', value: 'medio'}, 
     {label: 'Técnico', value: 'tecnico'}, {label: 'Graduação', value: 'graduacao'}, 
@@ -243,7 +242,6 @@ export class CreateJobComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.push(subs);
   }
-
 
   toogleDisableIes() : void {
     if (this.form!.get('ies')?.disabled)

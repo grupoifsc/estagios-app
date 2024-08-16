@@ -1,5 +1,5 @@
-import { CommonModule, DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { CommonModule, DatePipe, Location } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService, LoginRequestBody } from '../auth.service';
 import { ButtonModule } from 'primeng/button';
@@ -26,7 +26,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Job } from '../job';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ApiResponse } from '../api-response';
 import { ApiService } from '../api.service';
 
@@ -45,37 +45,52 @@ import { ApiService } from '../api.service';
   styleUrl: './card-vaga.component.css'
 })
 
-export class CardVagaComponent implements OnInit {
+export class CardVagaComponent implements OnInit, OnDestroy {
 
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router : Router,
     private apiService : ApiService,
-    private route : ActivatedRoute,
+    private location: Location,
   ) { }
 
   @Input() id! : string;
   vaga$! : Observable<ApiResponse<Job | undefined>>;
+  subscriptions: Subscription[] = []
 
   ngOnInit(): void {
     this.vaga$ = this.apiService.getJobInfo(this.id);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   confirmDelete() : void {
     this.confirmationService.confirm({
       message: "Você quer deletar este anúncio de vaga?",
       accept: () => {
-          this.messageService.add({key: 'demo-main', severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-      },
-      reject: () => {
-          this.messageService.add({key: 'demo-main', severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+          this.delete();
       }
     });
   }
 
   edit() : void {
     this.router.navigate(['/demo/vagas/' + this.id + '/edit'])
+  }
+
+  private delete() : void {
+    let subs = this.apiService.deleteJob(this.id).subscribe({
+      next: response => {
+        this.messageService.add({severity: 'warn', detail: 'Vaga deletada', key: 'demo-main'})
+        this.location.back()
+      }, 
+      error: err => {
+        this.messageService.add({severity: 'error', summary: 'Oops', detail: err.error?.message ?? "Não foi possível deletar a vaga", key: 'demo-main'})
+      }
+    })
+    this.subscriptions.push(subs);
   }
 
 
