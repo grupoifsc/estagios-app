@@ -32,7 +32,7 @@ export class MainComponent {
         { label: 'Vagas Pendentes', routerLink: 'moderacao/pendentes', state: {guard: 'ie'} }
       ]
     },
-    { label : 'Ajuda', routerLink: '/tutoriais' },
+    { label : 'API', routerLink: '/' },
   ]
 
 
