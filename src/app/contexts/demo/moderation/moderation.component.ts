@@ -85,6 +85,9 @@ export class ModerationComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  public see(id: string, job: Job) : void {
+    this.router.navigate(['demo/vagas/' + id]);
+  }
 
   confirmAction(action: 'aprovar' | 'rejeitar', id: string) : void {
     this.confirmationService.confirm({

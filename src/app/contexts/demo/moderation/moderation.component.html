@@ -32,13 +32,15 @@
             <th>Título</th>
             <th>Criado por</th>
             <th>Status</th>
-            <th>Data de criação</th>
             <th>Moderação</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vaga>
         <tr>
-            <td>{{vaga.titulo}}</td>
+            <td class="flex align-items-center gap-1">    
+                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
+                {{vaga.titulo}}
+            </td>
             <td>{{vaga.criado_por.nome}}</td>
             @if(status == 'aprovada') {
                 <td><p-tag rounded="true" [value]="status" severity="success"/></td>
@@ -47,7 +49,6 @@
             } @else {
                 <td><p-tag rounded="true" [value]="status" severity="secondary"/></td>
             }
-            <td>{{vaga.criado_em | date : 'short'}}</td>
             <td>
                 <div class="flex gap-2">
                     <p-button *ngIf="view != 'accepted'" icon="pi pi-thumbs-up" [rounded]="true" [text]="true" severity="success" title="Aceitar" (onClick)="confirmAction('aprovar', vaga.id)" />
