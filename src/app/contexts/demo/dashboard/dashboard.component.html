@@ -25,23 +25,19 @@
                     type="text" 
                     #input
                     (input)="dt2.filterGlobal(input.value, 'contains')" 
-                    placeholder="Search keyword" />
+                    placeholder="Busca" />
             </p-iconField>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th style="width:10%">#</th>
-            <th style="width:60%">Titulo</th>
-            <th style="width:30%">Criado em</th>
+            <th style="width:60%">Título</th>
+            <th style="width:30%">Data de criação</th>
             <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vaga>
         <tr>
-            <td>
-                {{vaga.id}}
-            </td>
             <td>{{vaga.titulo}}</td>
             <td>{{vaga.criado_em | date : 'short'}}</td>
             <td>
@@ -55,7 +51,7 @@
     </ng-template>
     <ng-template pTemplate="emptymessage">
         <tr>
-            <td colspan="5">Você ainda não adicionou nenhum anúncio.</td>
+            <td colspan="5">Nenhuma vaga criada.</td>
         </tr>
     </ng-template>
 </p-table>
