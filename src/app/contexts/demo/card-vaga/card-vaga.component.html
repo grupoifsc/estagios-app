@@ -2,8 +2,6 @@
 
         <div class="col-12 flex gap-2 flex-wrap ">
             <h1>{{vaga?.titulo}}</h1>
-            <p-button icon="pi pi-pencil" rounded="true" text="true" (onClick)="edit()" />
-            <p-button icon="pi pi-trash" rounded="true" severity="danger" text="true" (onClick)="confirmDelete()" />
         </div>
 
         <div class="col flex flex-column gap-4 mr-5">
@@ -90,16 +88,3 @@
 
         </div>
   
-
-<p-confirmDialog styleClass="delete-dialog" #cd >
-    <ng-template pTemplate="header" styleClass="">
-        <h3>Deletar esta vaga?</h3>
-        <button pButton type="button" title="Cancel" class="p-button-text" icon="pi pi-times" (click)="cd.reject()"></button>
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <div class="flex flex-column gap-2">
-            <button type="button" class="p-button-primary" pButton label="Cancelar" (click)="cd.reject()"></button>
-            <button type="button" class="p-button-danger p-button-text font-bold" pButton label="Sim, quero deletar esta vaga" (click)="cd.accept()"></button>
-        </div>
-    </ng-template>
-</p-confirmDialog>
