@@ -92,6 +92,14 @@ export class ApiService {
     return this.http.put<ApiResponse<any>>(this.orgBaseUrl + this.jobBaseUrl + '/rejeitadas', ids);
   } 
 
+
+  getAllReceived(page?: number, limit?: number | null) : Observable<ApiResponse<Page<Job> | undefined>> {
+    if (!page) page = 0;
+    if (!limit) limit = 10;
+    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/recebidas?limit=' + limit + '&page=' + page);
+  } 
+
+
   getAllPending() : Observable<ApiResponse<Page<Job> | undefined>> {
     return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/pendentes');
   } 

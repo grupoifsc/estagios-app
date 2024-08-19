@@ -24,14 +24,8 @@ export class MainComponent {
   ) { }
 
   menu : MenuItem[] = [
-    { label : 'Minhas Vagas', routerLink: 'dashboard' },
-    { label: 'Moderação', state: {guard: 'ie'}, items:
-      [
-        { label: 'Vagas Aprovadas', routerLink: 'moderacao/aprovadas', state: {guard: 'ie'} },
-        { label: 'Vagas Rejeitadas', routerLink: 'moderacao/rejeitadas', state: {guard: 'ie'} },
-        { label: 'Vagas Pendentes', routerLink: 'moderacao/pendentes', state: {guard: 'ie'} }
-      ]
-    },
+    { label : 'Minhas Vagas', routerLink: 'vagas/criadas' },
+    { label: 'Vagas Recebidas', routerLink: 'vagas/recebidas', state: {guard: 'ie'} },
     { label : 'API', routerLink: '/' },
   ]
 

@@ -49,7 +49,7 @@ export class DashboardComponent{
   vagas$ : Observable<ApiResponse<Page<Job | undefined>>> = this.apiService.getAllCreated();
 
   public add() : void {
-    this.router.navigate(['/', 'api', 'anuncio'])
+    this.router.navigate(['vagas/new'])
     .then(err => {
       console.log(err) // when there's an error
     });

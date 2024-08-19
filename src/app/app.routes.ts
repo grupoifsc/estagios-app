@@ -28,14 +28,12 @@ export const routes: Routes = [
     { path: 'demo/login', component: LoginComponent },
     { path: 'demo/cadastro', component: CadastroComponent },
     { path: 'demo', component: MainComponent, children: [
-        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-        { path: 'dashboard', component: DashboardComponent, canActivate: [ authGuard ] },
-        { path: 'anuncio', component: CreateJobComponent, canActivate: [ authGuard ] },
+        { path: '', redirectTo: 'vagas/criadas', pathMatch: 'full' },
+        { path: 'vagas/criadas', component: DashboardComponent, canActivate: [ authGuard ] },
+        { path: 'vagas/new', component: CreateJobComponent, canActivate: [ authGuard ] },
+        { path: 'vagas/recebidas', component: ModerationComponent, canActivate: [ authGuard, iesGuard ] },
         { path: 'vagas/:id/edit', component: CreateJobComponent, canActivate: [ authGuard ] },
         { path: 'vagas/:id', component: CardVagaComponent, canActivate: [ authGuard ] },
-        { path: 'moderacao/rejeitadas', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {view: 'rejected'} },
-        { path: 'moderacao/aprovadas', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {view: 'accepted'} },
-        { path: 'moderacao/pendentes', component: ModerationComponent, canActivate: [ authGuard, iesGuard ], data: {view: 'pending'} },
         { path: '**', component: NotFoundComponent },
     ]},
     { path : '', component: MenuComponent, children: [

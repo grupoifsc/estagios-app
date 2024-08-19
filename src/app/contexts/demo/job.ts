@@ -19,6 +19,12 @@ export interface Job {
     destinatarios:         OrgSummary[];
     criado_em:             Date;
     atualizado_em:         Date;
+    moderacao?:            Moderacao
+}
+
+export interface Moderacao {
+    status?:            String,
+    modificado_em?:     Date,
 }
 
 

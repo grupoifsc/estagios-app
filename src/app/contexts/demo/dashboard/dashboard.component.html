@@ -1,6 +1,6 @@
 
 <div class="mb-2">
-    <a routerLink="../anuncio" class="p-button no-underline"> <i class="pi pi-plus mr-2"></i> Anunciar Vaga</a>
+    <a routerLink="/demo/vagas/new" class="p-button no-underline"> <i class="pi pi-plus mr-2"></i> Anunciar Vaga</a>
 </div>
 
 
@@ -8,6 +8,7 @@
     #dt2
     dataKey="id"
     [rows]="10"
+    [totalRecords]="100"
     [rowsPerPageOptions]="[10, 25, 50]"
     [loading]="false"
     [paginator]="true"
