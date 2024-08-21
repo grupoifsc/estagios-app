@@ -24,8 +24,9 @@ export class MainComponent {
   ) { }
 
   menu : MenuItem[] = [
-    { label : 'Minhas Vagas', routerLink: 'vagas/criadas' },
-    { label: 'Vagas Recebidas', routerLink: 'vagas/recebidas', state: {guard: 'ie'} },
+    { label : 'Vagas Criadas', routerLink: 'vagas/criadas' },
+    { label: 'Moderação', routerLink: 'vagas/recebidas', state: {guard: 'ie'} },
+    { label: 'Vagas Disponíveis', routerLink: 'vagas/disponiveis', state: {guard: 'ie'} },
     { label : 'API', routerLink: '/' },
   ]
 

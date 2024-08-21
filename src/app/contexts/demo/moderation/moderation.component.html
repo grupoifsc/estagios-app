@@ -1,5 +1,6 @@
 
-<h1>{{ title }}</h1>
+<h1 class="text-4xl">Moderação</h1>
+<h2 class="text-color-secondary text-xl mb-6" >Veja aqui todas as vagas que sua IE recebe de outras instituições e o status de moderação</h2>
 
 <p-table
     dataKey="id"
@@ -22,7 +23,7 @@
             <th>Título</th>
             <th>Criado por</th>
             <th>Status</th>
-            <th>Moderação</th>
+            <th>Ações de Moderação</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vaga>
@@ -35,8 +36,8 @@
             <td><p-tag #tag rounded="true" [value]="vaga.moderacao?.status ?? 'indefinido'" [severity]="getSeverity(tag.value ?? '')"/></td>
             <td>
                 <div class="flex gap-2">
-                    <p-button icon="pi pi-thumbs-up" [rounded]="true" [text]="true" severity="success" title="Aceitar" (onClick)="confirmAction('aprovar', vaga.id)" />
-                    <p-button icon="pi pi-thumbs-down" [rounded]="true" [text]="true" severity="danger" title="Rejeitar" (onClick)="confirmAction('rejeitar', vaga.id)" />
+                    <p-button [icon]="vaga.moderacao?.status == 'aprovado' ? 'pi pi-thumbs-up-fill' : 'pi pi-thumbs-up'" [rounded]="true" [text]="true" severity="success" title="Aceitar" [disabled]="vaga.moderacao?.status == 'aprovado'" (onClick)="confirmAction('aprovar', vaga.id)" />
+                    <p-button [icon]="vaga.moderacao?.status == 'rejeitado' ? 'pi pi-thumbs-down-fill' : 'pi pi-thumbs-down'" [rounded]="true" [text]="true" severity="danger" title="Rejeitar" [disabled]="vaga.moderacao?.status == 'rejeitado'" (onClick)="confirmAction('rejeitar', vaga.id)" />
                 </div>
             </td>
         </tr>

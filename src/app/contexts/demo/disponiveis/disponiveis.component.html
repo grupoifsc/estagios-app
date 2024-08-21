@@ -1,0 +1,96 @@
+
+<h1 class="text-4xl">Vagas Disponíveis</h1>
+<h2 class="text-color-secondary text-xl mb-6" >Aqui você pode ver todas as vagas que estarão disponíveis de forma segura para sua comunidade acadêmica. Todas as vagas listadas aqui foram criadas ou aprovadas pela sua IE</h2>
+
+<p-table
+    dataKey="id"
+    *ngIf="(vagas$ | async) as vagas; else skeleton"
+    #dt2
+    dataKey="id"
+    [rows]="10"
+    [totalRecords]="100"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="false"
+    [paginator]="true"
+    [globalFilterFields]="['titulo', 'criado_por.nome']"
+    [value]="vagas.data?.content ?? []"
+>
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                    <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input 
+                    pInputText 
+                    type="text" 
+                    #input
+                    (input)="dt2.filterGlobal(input.value, 'contains')" 
+                    placeholder="Busca" />
+            </p-iconField>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Título</th>
+            <th>Criado por</th>
+            <th>Status</th>
+            <th>Ações de Moderação</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-vaga>
+        <tr>
+            <td class="flex align-items-center gap-1">    
+                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
+                {{vaga.titulo}}
+            </td>
+            <td>{{vaga.criado_por.nome}}</td>
+            <td></td>
+            <td>
+                
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">Você ainda não adicionou nenhum anúncio.</td>
+        </tr>
+    </ng-template>
+    <div>
+        {{setTotalRecords(vagas.data?.totalElements)}}
+    </div>
+</p-table>
+
+<ng-template #skeleton>
+    <p-table 
+    dataKey="id"
+    #dt3
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [pageLinks]="5"
+    [globalFilterFields]="['titulo', 'criado_por.nome']"
+    [value]="[1,2,3,4,5]"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Título</th>
+                <th>Criado por</th>
+                <th>Status</th>
+                <th>Moderação</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vaga>
+            <tr>
+                <td><p-skeleton /></td>
+                <td><p-skeleton /></td>
+                <td><p-skeleton /></td>
+                <td><p-skeleton /></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</ng-template>
+
+
+<div><p>Total de vagas: {{totalVagas}}</p></div>

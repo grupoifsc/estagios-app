@@ -130,7 +130,5 @@ export class ModerationComponent implements OnInit, OnDestroy {
   setTotalRecords(total? : number) : void {
     this.totalVagas = total ?? 0
   }
-
-
   
 }

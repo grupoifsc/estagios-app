@@ -15,6 +15,7 @@ import { MarkdownTutComponent } from './contexts/main-app/markdown-tut/markdown-
 import { iesGuard } from './ies.guard';
 import { ModerationComponent } from './contexts/demo/moderation/moderation.component';
 import { NotFoundComponent } from './contexts/not-found/not-found.component';
+import { DisponiveisComponent } from './contexts/demo/disponiveis/disponiveis.component';
 
 export const routes: Routes = [
     { path : '', component: MenuComponent, children: [
@@ -32,8 +33,10 @@ export const routes: Routes = [
         { path: 'vagas/criadas', component: DashboardComponent, canActivate: [ authGuard ] },
         { path: 'vagas/new', component: CreateJobComponent, canActivate: [ authGuard ] },
         { path: 'vagas/recebidas', component: ModerationComponent, canActivate: [ authGuard, iesGuard ] },
+        { path: 'vagas/disponiveis', component: DisponiveisComponent,canActivate: [authGuard, iesGuard ] },
         { path: 'vagas/:id/edit', component: CreateJobComponent, canActivate: [ authGuard ] },
         { path: 'vagas/:id', component: CardVagaComponent, canActivate: [ authGuard ] },
+//        {path: 'teste', canActivate: [authGuard]},
         { path: '**', component: NotFoundComponent },
     ]},
     { path : '', component: MenuComponent, children: [
