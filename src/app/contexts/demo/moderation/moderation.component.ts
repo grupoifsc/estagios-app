@@ -46,6 +46,8 @@ export class ModerationComponent implements OnInit, OnDestroy {
   totalVagas: number = 10;
   rows: number = 10;
 
+  search : string = "";
+
   ngOnInit(): void {
 
   }
@@ -115,10 +117,22 @@ export class ModerationComponent implements OnInit, OnDestroy {
     this.reloadTable()
   }
 
+  onLazyLoad(event: TableLazyLoadEvent) : void {
+    console.log(JSON.stringify(event));
+    
+    this.first = event.first ?? 0
+    this.rows = event.rows ?? 10
+    if("string" == typeof event.globalFilter)
+      this.search = event.globalFilter
+    else if ("object" == typeof event.globalFilter && event.globalFilter)
+      this.search = event.globalFilter.join(" ")
+    this.reloadTable();
+  }
+
 
   reloadTable() : void {
     const page: number = this.first / this.rows;
-    this.vagas$ = this.apiService.getAllReceived(page, this.rows);
+    this.vagas$ = this.apiService.getAllReceived(this.search, page, this.rows);
   }
 
   getSeverity(status: string) : Tag["severity"] {

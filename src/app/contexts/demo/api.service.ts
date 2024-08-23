@@ -74,8 +74,17 @@ export class ApiService {
   } 
 
 
-  getAllCreated() : Observable<ApiResponse<Page<Job | undefined>>> {
-    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl+ '/owned');
+  getAllCreated(search?: string, page?: number, limit?: number) : Observable<ApiResponse<Page<Job | undefined>>> {
+    let url = this.orgBaseUrl + this.jobBaseUrl + '/owned';
+    if(search || page || limit) {
+      console.log("Search = " + search);
+      console.log("Page = " + page);
+      console.log("Limit = " + limit);      
+      url += '?search=' + (search ?? '') + '&page=' + (page ?? 0) + '&limit=' + (limit ?? 10) 
+      console.log(url);
+      
+    } 
+    return this.http.get<ApiResponse<Page<Job>>>(url);
   } 
 
   getAreas() : Observable<ApiResponse<Area[]> | undefined> {
@@ -93,10 +102,12 @@ export class ApiService {
   } 
 
 
-  getAllReceived(page?: number, limit?: number | null) : Observable<ApiResponse<Page<Job> | undefined>> {
-    if (!page) page = 0;
-    if (!limit) limit = 10;
-    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/recebidas?limit=' + limit + '&page=' + page);
+  getAllReceived(search? : string, page?: number, limit?: number | null) : Observable<ApiResponse<Page<Job> | undefined>> {
+    let url = this.orgBaseUrl + this.jobBaseUrl + '/recebidas';
+    if(search || page || limit) {
+      url += '?search=' + (search ?? '') + '&page=' + (page ?? 0) + '&limit=' + (limit ?? 10) 
+    } 
+    return this.http.get<ApiResponse<Page<Job>>>(url);
   } 
 
 
@@ -104,8 +115,12 @@ export class ApiService {
     return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/pendentes');
   } 
 
-  getAllApproved() : Observable<ApiResponse<Page<Job> | undefined>> {
-    return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/disponiveis');
+  getAllApproved(search? : string, page? : number, limit? : number) : Observable<ApiResponse<Page<Job> | undefined>> {
+    let url = this.orgBaseUrl + this.jobBaseUrl + '/disponiveis';
+    if(search || page || limit) {
+      url += '?search=' + (search ?? '') + '&page=' + (page ?? 0) + '&limit=' + (limit ?? 10) 
+    } 
+    return this.http.get<ApiResponse<Page<Job>>>(url);
   } 
 
   getAllRejected() : Observable<ApiResponse<Page<Job> | undefined>> {

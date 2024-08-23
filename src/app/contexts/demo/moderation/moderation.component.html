@@ -1,6 +1,6 @@
 
 <h1 class="text-4xl">Moderação</h1>
-<h2 class="text-color-secondary text-xl mb-6" >Veja aqui todas as vagas que sua IE recebe de outras instituições e o status de moderação</h2>
+<p class="text-color-secondary text-xl mb-6" >Veja aqui todas as vagas que sua IE recebe de outras instituições e o status de moderação</p>
 
 <p-table
     dataKey="id"
@@ -14,30 +14,46 @@
     [totalRecords]="vagas.data?.totalElements ?? 50"
     [lazy]="true"
     [pageLinks]="5"
-    (onPage)="onPage($event)"
+    (onLazyLoad)="onLazyLoad($event)"
+    [lazyLoadOnInit]="false"
     [globalFilterFields]="['titulo', 'criado_por.nome']"
     [value]="vagas.data?.content ?? []"
 >
+    <ng-template pTemplate="caption">
+        <div class="flex gap-2">
+            <p-iconField iconPosition="right" class="ml-auto" >
+                <input 
+                    pInputText 
+                    type="text" 
+                    #input
+                    placeholder="Busca" 
+                    />
+                <p-inputIcon class="cursor-pointer">
+                    <i class="pi pi-search"  (click)="dt2.filterGlobal(input.value, 'contains')" ></i>
+                </p-inputIcon>
+            </p-iconField>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th>Título</th>
             <th>Criado por</th>
             <th>Status</th>
-            <th>Ações de Moderação</th>
+            <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vaga>
         <tr>
             <td class="flex align-items-center gap-1">    
-                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
                 {{vaga.titulo}}
             </td>
             <td>{{vaga.criado_por.nome}}</td>
             <td><p-tag #tag rounded="true" [value]="vaga.moderacao?.status ?? 'indefinido'" [severity]="getSeverity(tag.value ?? '')"/></td>
             <td>
                 <div class="flex gap-2">
-                    <p-button [icon]="vaga.moderacao?.status == 'aprovado' ? 'pi pi-thumbs-up-fill' : 'pi pi-thumbs-up'" [rounded]="true" [text]="true" severity="success" title="Aceitar" [disabled]="vaga.moderacao?.status == 'aprovado'" (onClick)="confirmAction('aprovar', vaga.id)" />
-                    <p-button [icon]="vaga.moderacao?.status == 'rejeitado' ? 'pi pi-thumbs-down-fill' : 'pi pi-thumbs-down'" [rounded]="true" [text]="true" severity="danger" title="Rejeitar" [disabled]="vaga.moderacao?.status == 'rejeitado'" (onClick)="confirmAction('rejeitar', vaga.id)" />
+                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
+                    <p-button [icon]="'pi pi-thumbs-up'" [rounded]="true" [text]="true" title="Aceitar" [disabled]="vaga.moderacao?.status == 'aprovado'" (onClick)="confirmAction('aprovar', vaga.id)" />
+                    <p-button [icon]="'pi pi-thumbs-down'" [rounded]="true" [text]="true" title="Rejeitar" [disabled]="vaga.moderacao?.status == 'rejeitado'" (onClick)="confirmAction('rejeitar', vaga.id)" />
                 </div>
             </td>
         </tr>

@@ -18,5 +18,9 @@ describe('ApiService', () => {
     
   });
 
+  it('should get authUser', () => {
+    
+  });
+
 
 });

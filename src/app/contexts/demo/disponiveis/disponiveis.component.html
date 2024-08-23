@@ -6,27 +6,31 @@
     dataKey="id"
     *ngIf="(vagas$ | async) as vagas; else skeleton"
     #dt2
-    dataKey="id"
-    [rows]="10"
-    [totalRecords]="100"
+    [rows]="rows"
     [rowsPerPageOptions]="[10, 25, 50]"
-    [loading]="false"
     [paginator]="true"
+    [showCurrentPageReport]="true"
+    [first]="first"
+    [totalRecords]="vagas.data?.totalElements ?? 50"
+    [lazy]="true"
+    [pageLinks]="5"
+    (onLazyLoad)="onLazyLoad($event)"
+    [lazyLoadOnInit]="false"
     [globalFilterFields]="['titulo', 'criado_por.nome']"
     [value]="vagas.data?.content ?? []"
 >
     <ng-template pTemplate="caption">
-        <div class="flex">
-            <p-iconField iconPosition="left" class="ml-auto">
-                <p-inputIcon>
-                    <i class="pi pi-search"></i>
-                </p-inputIcon>
+        <div class="flex gap-2">
+            <p-iconField iconPosition="right" class="ml-auto" >
                 <input 
                     pInputText 
                     type="text" 
                     #input
-                    (input)="dt2.filterGlobal(input.value, 'contains')" 
-                    placeholder="Busca" />
+                    placeholder="Busca" 
+                    />
+                <p-inputIcon class="cursor-pointer">
+                    <i class="pi pi-search"  (click)="dt2.filterGlobal(input.value, 'contains')" ></i>
+                </p-inputIcon>
             </p-iconField>
         </div>
     </ng-template>
@@ -34,20 +38,17 @@
         <tr>
             <th>Título</th>
             <th>Criado por</th>
-            <th>Status</th>
-            <th>Ações de Moderação</th>
+            <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vaga>
         <tr>
             <td class="flex align-items-center gap-1">    
-                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
                 {{vaga.titulo}}
             </td>
             <td>{{vaga.criado_por.nome}}</td>
-            <td></td>
             <td>
-                
+                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
             </td>
         </tr>
     </ng-template>
@@ -63,27 +64,32 @@
 
 <ng-template #skeleton>
     <p-table 
-    dataKey="id"
-    #dt3
-    [rows]="10"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [paginator]="true"
-    [showCurrentPageReport]="true"
-    [pageLinks]="5"
-    [globalFilterFields]="['titulo', 'criado_por.nome']"
-    [value]="[1,2,3,4,5]"
+    [value]="[1,2,3]"
     >
+        <ng-template pTemplate="caption">
+            <div class="flex gap-2">
+                <p-iconField iconPosition="right" class="ml-auto" >
+                    <input 
+                        pInputText 
+                        type="text" 
+                        placeholder="Busca" 
+                        />
+                    <p-inputIcon class="cursor-pointer">
+                        <i class="pi pi-search" ></i>
+                    </p-inputIcon>
+                </p-iconField>
+            </div>
+        </ng-template>
+
         <ng-template pTemplate="header">
             <tr>
                 <th>Título</th>
                 <th>Criado por</th>
-                <th>Status</th>
-                <th>Moderação</th>
+                <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-vaga>
             <tr>
-                <td><p-skeleton /></td>
                 <td><p-skeleton /></td>
                 <td><p-skeleton /></td>
                 <td><p-skeleton /></td>

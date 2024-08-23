@@ -9,6 +9,22 @@ body {
     padding: 0;
 }
 
+.main-blue-bg {
+    background-color: #383859;
+}
+
+.main-blue-font {
+    color: #383859;
+}
+
+.main-green-font {
+    color: #C2FFF0;
+}
+
+.main-green-bg {
+    background-color: #C2FFF0;
+}
+
 
 .demo-bg {
     background-color: #77aa77;

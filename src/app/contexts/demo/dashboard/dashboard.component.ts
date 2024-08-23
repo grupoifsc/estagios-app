@@ -11,7 +11,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StepperModule } from 'primeng/stepper';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Router, RouterLink } from '@angular/router';
@@ -22,6 +22,7 @@ import { ApiService } from '../api.service';
 import { Page } from '../page';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +32,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ButtonModule, InputGroupAddonModule, InputGroupModule, InputTextModule,
     PasswordModule, ProgressSpinnerModule, FloatLabelModule, StepperModule,
     RadioButtonModule, InputTextareaModule, TableModule, IconFieldModule, 
-    InputIconModule, ConfirmDialogModule, 
+    InputIconModule, ConfirmDialogModule, SkeletonModule,  
    ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -47,6 +48,10 @@ export class DashboardComponent{
 
 
   vagas$ : Observable<ApiResponse<Page<Job | undefined>>> = this.apiService.getAllCreated();
+
+  rows: number = 10;
+  first: number = 0;
+  search: string = "";
 
   public add() : void {
     this.router.navigate(['vagas/new'])
@@ -80,6 +85,24 @@ export class DashboardComponent{
       }
     });
   }
+
+  onLazyLoad(event: TableLazyLoadEvent) : void {
+    console.log(JSON.stringify(event));
+    
+    this.first = event.first ?? 0
+    this.rows = event.rows ?? 10
+    if("string" == typeof event.globalFilter)
+      this.search = event.globalFilter
+    else if ("object" == typeof event.globalFilter && event.globalFilter)
+      this.search = event.globalFilter.join(" ")
+    this.reloadTable();
+  }
+
+  reloadTable() : void {
+    const page: number = this.first / this.rows;
+    this.vagas$ = this.apiService.getAllCreated(this.search, page, this.rows);
+  }
+
 
   private reloadCurrentRoute() {
     let currentUrl = this.router.url;

@@ -6,7 +6,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule, TablePageEvent } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
@@ -43,6 +43,7 @@ export class DisponiveisComponent {
   first: number = 0;
   totalVagas: number = 10;
   rows: number = 10;
+  search: string = "";
 
   ngOnInit(): void {
 
@@ -69,10 +70,22 @@ export class DisponiveisComponent {
     this.reloadTable()
   }
 
+  onLazyLoad(event: TableLazyLoadEvent) : void {
+    console.log(JSON.stringify(event));
+    
+    this.first = event.first ?? 0
+    this.rows = event.rows ?? 10
+    if("string" == typeof event.globalFilter)
+      this.search = event.globalFilter
+    else if ("object" == typeof event.globalFilter && event.globalFilter)
+      this.search = event.globalFilter.join(" ")
+    this.reloadTable();
+  }
+
 
   reloadTable() : void {
     const page: number = this.first / this.rows;
-    this.vagas$ = this.apiService.getAllReceived(page, this.rows);
+    this.vagas$ = this.apiService.getAllApproved(this.search, page, this.rows);
   }
 
 
