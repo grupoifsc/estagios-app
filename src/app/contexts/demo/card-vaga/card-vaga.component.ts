@@ -35,7 +35,7 @@ import { ApiService } from '../api.service';
   selector: 'app-card-vaga',
   providers: [ConfirmationService],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, DatePipe,  
+  imports: [ReactiveFormsModule, CommonModule, DatePipe,   
     InputTextareaModule, MultiSelectModule, DropdownModule, InputNumberModule, 
     InputTextModule, ChipModule, FieldsetModule, ButtonModule, CardModule, SpeedDialModule,
     ConfirmDialogModule, DividerModule, 
@@ -58,6 +58,10 @@ export class CardVagaComponent implements OnInit, OnDestroy {
   @Input() id! : string;
   vaga$! : Observable<ApiResponse<Job | undefined>>;
   subscriptions: Subscription[] = []
+
+  goBack() : void {
+    this.location.back();
+  }
 
   ngOnInit(): void {
     this.vaga$ = this.apiService.getJobInfo(this.id);
@@ -92,6 +96,8 @@ export class CardVagaComponent implements OnInit, OnDestroy {
     })
     this.subscriptions.push(subs);
   }
+
+
 
 
 
