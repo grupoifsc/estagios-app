@@ -1,34 +1,40 @@
 
-<h1 class="text-4xl">Vagas Disponíveis</h1>
-<h2 class="text-color-secondary text-xl mb-6" >Aqui você pode ver todas as vagas que estarão disponíveis de forma segura para sua comunidade acadêmica. Todas as vagas listadas aqui foram criadas ou aprovadas pela sua IE</h2>
+<div class="mb-6">
+    <h1 class="text-4xl">Vagas Aprovadas</h1>
+    <span class="text-color-secondary text-lg">
+        Veja todas as vagas criadas ou aprovadas pela sua IE
+    </span>
+    <!-- Aqui você pode ver todas as vagas que estarão disponíveis de forma segura para sua comunidade acadêmica.    -->
+</div>
 
-<p-table
+<p-table 
     dataKey="id"
     *ngIf="(vagas$ | async) as vagas; else skeleton"
-    #dt2
+    #dt1
     [rows]="rows"
     [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
     [showCurrentPageReport]="true"
+    [totalRecords]="totalVagas"
     [first]="first"
-    [totalRecords]="vagas.data?.totalElements ?? 50"
     [lazy]="true"
     [pageLinks]="5"
     (onLazyLoad)="onLazyLoad($event)"
     [lazyLoadOnInit]="false"
     [globalFilterFields]="['titulo', 'criado_por.nome']"
-    [value]="vagas.data?.content ?? []"
+    [value]="vagas.data?.content ?? [1, 2, 3]"
 >
     <ng-template pTemplate="caption">
         <div class="flex gap-2">
             <p-iconField iconPosition="right" class="ml-auto" >
-                <input pInputText 
+                <input 
+                    pInputText 
                     type="text" 
                     #input
                     placeholder="Busca" 
                     />
                 <p-inputIcon class="cursor-pointer">
-                    <i class="pi pi-search" (click)="dt2.filterGlobal(input.value, 'contains')" ></i>
+                    <i class="pi pi-search"  (click)="dt1.filterGlobal(input.value, 'contains')" ></i>
                 </p-inputIcon>
             </p-iconField>
         </div>
@@ -37,65 +43,60 @@
         <tr>
             <th>Título</th>
             <th>Criado por</th>
+            <!-- <th>Data de criação</th> -->
             <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vaga>
         <tr>
-            <td class="flex align-items-center gap-1">    
-                {{vaga.titulo}}
-            </td>
-            <td>{{vaga.criado_por.nome}}</td>
+            <td> {{ vaga.titulo }}</td>
+            <td> {{ vaga.criado_por?.nome }} </td>
+            <!-- <td> {{vaga.atualizado_em ?? ''}} </td> -->
             <td>
                 <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
             </td>
         </tr>
     </ng-template>
+    <div>
+        {{ setTotalRecords(vagas.data?.totalElements) }}
+    </div>
     <ng-template pTemplate="emptymessage">
         <tr>
             <td colspan="5">Você ainda não adicionou nenhum anúncio.</td>
         </tr>
     </ng-template>
-    <div>
-        {{setTotalRecords(vagas.data?.totalElements)}}
-    </div>
 </p-table>
+<div><p>Total de vagas: {{totalVagas}}</p></div>
 
 <ng-template #skeleton>
     <p-table 
+    dataKey="id"
+    [rows]="rows"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [first]="first"
+    [lazy]="true"
+    [pageLinks]="5"
+    (onPage)="onPage($event)"
+    [globalFilterFields]="['titulo', 'criado_por.nome']"
     [value]="[1,2,3]"
-    >
-        <ng-template pTemplate="caption">
-            <div class="flex gap-2">
-                <p-iconField iconPosition="right" class="ml-auto" >
-                    <input 
-                        pInputText 
-                        type="text" 
-                        placeholder="Busca" 
-                        />
-                    <p-inputIcon class="cursor-pointer">
-                        <i class="pi pi-search" ></i>
-                    </p-inputIcon>
-                </p-iconField>
-            </div>
-        </ng-template>
-
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Título</th>
-                <th>Criado por</th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-vaga>
-            <tr>
-                <td><p-skeleton /></td>
-                <td><p-skeleton /></td>
-                <td><p-skeleton /></td>
-            </tr>
-        </ng-template>
-    </p-table>
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Título</th>
+            <th>Criado por</th>
+            <th>Status</th>
+            <th>Moderação</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-vaga>
+        <tr>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+            <td><p-skeleton /></td>
+        </tr>
+    </ng-template>
+</p-table>
 </ng-template>
-
-
-<div><p>Total de vagas: {{totalVagas}}</p></div>
