@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
+import { RouterLink } from '@angular/router';
 
 
 interface Features {
@@ -14,7 +15,7 @@ interface Features {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CarouselModule, ButtonModule, AccordionModule, ],
+  imports: [CommonModule, RouterLink, CarouselModule, ButtonModule, AccordionModule, ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   host: { ngSkipHydration: 'true' },

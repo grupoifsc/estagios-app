@@ -28,12 +28,6 @@ export class MenuComponent {
       icon: 'pi pi-book'
     },
     {
-      route: 'demo',
-      text: 'Demo',
-      label: 'Demo',
-      icon: 'pi pi-play'
-    },
-    {
       route: 'api',
       text: 'API',
       label: 'API',
@@ -44,6 +38,12 @@ export class MenuComponent {
       text: 'Sobre o Projeto',
       label: 'Sobre',
       icon: 'pi pi-info-circle'
+    }, 
+    {
+      route: 'demo',
+      text: 'Demo',
+      label: 'Demo',
+      icon: 'pi pi-play'
     }
   ]
 

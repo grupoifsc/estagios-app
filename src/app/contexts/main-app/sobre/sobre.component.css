@@ -23,3 +23,6 @@ li {
     list-style-position: inside;
     margin-bottom: 1rem;
 }
+.texto-formal ul li a {
+    text-indent: 0rem;
+}
