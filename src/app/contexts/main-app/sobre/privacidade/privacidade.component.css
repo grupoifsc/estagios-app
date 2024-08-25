@@ -1,0 +1,20 @@
+.texto-formal {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #2e2c2c;
+    text-align: justify;
+}
+.texto-formal h1, .texto-formal h2, .texto-formal h3 {
+    color: #333;
+}
+.texto-formal ul {
+    margin: 0;
+    padding: 0;
+}
+.texto-formal p, .texto-formal ul {
+    text-indent: 3rem;
+}
+li {
+    list-style-position: inside;
+    margin-bottom: 1rem;
+}
