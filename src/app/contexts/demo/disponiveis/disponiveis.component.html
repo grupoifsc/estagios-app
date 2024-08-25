@@ -22,14 +22,13 @@
     <ng-template pTemplate="caption">
         <div class="flex gap-2">
             <p-iconField iconPosition="right" class="ml-auto" >
-                <input 
-                    pInputText 
+                <input pInputText 
                     type="text" 
                     #input
                     placeholder="Busca" 
                     />
                 <p-inputIcon class="cursor-pointer">
-                    <i class="pi pi-search"  (click)="dt2.filterGlobal(input.value, 'contains')" ></i>
+                    <i class="pi pi-search" (click)="dt2.filterGlobal(input.value, 'contains')" ></i>
                 </p-inputIcon>
             </p-iconField>
         </div>
