@@ -21,12 +21,13 @@
 
             <div class="flex flex-column gap-2">
                 <label for="descricao">Descrição:*</label>
-                <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" 
-                    id="descricao" formControlName="descricao"
+                <p-editor id="descricao" formControlName="descricao"
+                     [style]="{ height: '320px' }" 
                     [class]="form.controls.descricao.invalid 
                         && (form.controls.descricao.dirty 
                         || form.controls.descricao.touched ) 
-                        ? 'ng-invalid ng-dirty' : ''" ></textarea>
+                        ? 'ng-invalid ng-dirty' : ''" 
+                />
             </div>
 
             <div class="flex flex-column gap-2">

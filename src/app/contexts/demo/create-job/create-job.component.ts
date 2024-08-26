@@ -29,6 +29,8 @@ import { ApiResponse } from '../api-response';
 import { Address, Contact, Org } from '../organizacao';
 import { Page } from '../page';
 import { MessageService } from 'primeng/api';
+import { EditorModule } from 'primeng/editor';
+
 
 @Component({
   selector: 'app-create-job',
@@ -36,7 +38,7 @@ import { MessageService } from 'primeng/api';
   imports: [ReactiveFormsModule, FormsModule, CommonModule, AsyncPipe, TitleCasePipe,    
     InputTextareaModule, MultiSelectModule, DropdownModule, InputNumberModule, 
     InputTextModule, ChipsModule, FieldsetModule, ButtonModule, InputSwitchModule,
-    DialogModule, InputMaskModule, DividerModule, 
+    DialogModule, InputMaskModule, DividerModule, EditorModule, 
   ],
   templateUrl: './create-job.component.html',
   styleUrl: './create-job.component.css'
@@ -212,7 +214,10 @@ export class CreateJobComponent implements OnInit, OnDestroy {
 
 
   submit() : void {
+    
     this.updateJobFromInput();
+   // console.log(this.job.descricao);
+
     let subs;
     if(this.jobToEdit) {
       subs = this.apiService.updateJob(this.jobToEdit.id!, this.job).subscribe({
