@@ -7,18 +7,16 @@
 
         <nav class="col-12 p-0 px-3 z-2 min-h-screen sticky top-0 lg:relative bg-white lg:col-fixed lg:w-15rem lg:block lg:z-0 sidebar" [hidden]="isMenuHidden" >
             <menu class="p-0 px-3" (click)="toogleMenu()">
-                <p>Demo</p>
                 <p><a routerLink="cadastro">Cadastro</a></p>
                 <p><a routerLink="auth">Autenticação</a></p>
                 <p><a routerLink="criar-anuncio">Criar Anúncio de Vaga</a></p>
                 <p><a routerLink="moderacao">Moderação</a></p>
-                <p><a routerLink="teste">Teste</a></p>
             </menu>
 
             <menu class="xl:hidden p-3" (click)="toogleMenu()">
-                <p><a routerLink="/api" class="no-underline">API</a></p>
-                <p><a href="https://github.com/grupoifsc/estagios-rest" target="_blank" class="no-underline">Github</a></p>
-                <p><a routerLink="/sobre" class="no-underline">Termo de Uso e Política de Privacidade</a></p>
+                <p><a routerLink="/api" class="no-underline  text-700">API</a></p>
+                <p><a href="https://github.com/grupoifsc/estagios-rest" target="_blank" class="no-underline text-700">Github</a></p>
+                <p><a routerLink="/sobre" class="no-underline text-700">Termo de Uso e Política de Privacidade</a></p>
             </menu>
         </nav>
 
@@ -29,10 +27,10 @@
     
             <aside class="hidden xl:block border-left-1 border-400 col-2">
                 <nav>
-                    <menu class="p-0 pl-4">
-                        <p><a routerLink="/api" class="no-underline">API</a></p>
-                        <p><a href="https://github.com/grupoifsc/estagios-rest" target="_blank" class="no-underline">Github</a></p>
-                        <p><a routerLink="/sobre" class="no-underline">Termo de Uso e Política de Privacidade</a></p>        
+                    <menu class="p-0 pl-4 no-underline text-700">
+                        <p><a routerLink="/api" class="no-underline text-700">API</a></p>
+                        <p><a href="https://github.com/grupoifsc/estagios-rest" target="_blank" class="no-underline text-700">Github</a></p>
+                        <p><a routerLink="/sobre" class="no-underline text-700">Termo de Uso e Política de Privacidade</a></p>        
                     </menu>
                 </nav>
             </aside>

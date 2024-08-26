@@ -1,0 +1,18 @@
+
+
+    <p-dialog [visible]="visible" header="Termo de Uso e Privacidade" closable="true" 
+        [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false"
+        [breakpoints]="{'767px': '70vw', '575px': '90vw' }" >
+        
+        <div>
+            <p>Leia com atenção os Termos de Uso:</p>
+            <app-termo class="text-sm"></app-termo>
+            <app-privacidade class="text-sm"></app-privacidade>
+            <div class="mx-auto my-5">
+                <p-button severity="success" [label]="'Aceito os Termos de Serviço e a Política de Privacidade e quero continuar o cadastro'" (onClick)="confirm()"/>
+            </div>
+            <div class="mx-auto my-5">
+                <p-button severity="secondary" [label]="'Cancelar'" (onClick)="visible = false"/>
+            </div>    
+        </div>
+    </p-dialog>

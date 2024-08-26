@@ -1,22 +1,12 @@
-import { CommonModule, DatePipe, Location } from '@angular/common';
+import { CommonModule, DatePipe, Location, TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService, LoginRequestBody } from '../auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { StepperModule } from 'primeng/stepper';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { LoadingService } from '../../../services/loading.service';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { ChipsModule } from 'primeng/chips';
 import { FieldsetModule } from 'primeng/fieldset';
 import { DividerModule } from 'primeng/divider';
 import { CardModule } from 'primeng/card';
@@ -24,18 +14,18 @@ import { ChipModule } from 'primeng/chip';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Job } from '../job';
 import { Observable, Subscription } from 'rxjs';
 import { ApiResponse } from '../api-response';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-card-vaga',
   providers: [ConfirmationService],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, DatePipe,   
+  imports: [ReactiveFormsModule, CommonModule, DatePipe, TitleCasePipe,   
     InputTextareaModule, MultiSelectModule, DropdownModule, InputNumberModule, 
     InputTextModule, ChipModule, FieldsetModule, ButtonModule, CardModule, SpeedDialModule,
     ConfirmDialogModule, DividerModule, 

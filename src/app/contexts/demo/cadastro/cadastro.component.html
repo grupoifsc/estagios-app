@@ -355,7 +355,7 @@
                         <p-button (onClick)="prevCallback.emit()" label="Anterior" 
                             severity="secondary" icon="pi pi-arrow-left" />
                         <p-button type="submit" class="align-self-center" [disabled]="false" 
-                            label="Cadastrar" icon="pi pi-check" (onClick)="submit()" iconPos="right" />
+                            label="Cadastrar" icon="pi pi-check" (onClick)="showTermo = true" iconPos="right" />
                     </div>
   
 
@@ -367,3 +367,20 @@
     </div>
 
 </div>
+
+<p-dialog [(visible)]="showTermo" header="Termo de Uso e Privacidade" closable="true" 
+        [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false"
+        [breakpoints]="{'767px': '70vw', '575px': '90vw' }" >
+        <div> 
+            <div class="mx-auto my-5">
+                <p-button severity="success" [label]="'Aceito os Termos de Serviço e a Política de Privacidade e quero continuar o cadastro'" (onClick)="submit()"/>
+            </div>  
+            <p>Leia com atenção os Termos de Uso:</p>
+            <app-termo class="text-sm"></app-termo>
+            <app-privacidade class="text-sm"></app-privacidade>
+            <div class="mx-auto my-5">
+                <p-button severity="success" [label]="'Aceito os Termos de Serviço e a Política de Privacidade e quero continuar o cadastro'" (onClick)="submit()"/>
+            </div>   
+
+        </div>
+    </p-dialog>

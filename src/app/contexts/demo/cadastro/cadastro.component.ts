@@ -24,6 +24,10 @@ import { log } from 'console';
 import { confirmPasswordValidator, mustMatch } from '../confirm-password.validator';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ConfirmTermoComponent } from './termo/confirm-termo.component';
+import { DialogModule } from 'primeng/dialog';
+import { TermoComponent } from '../../main-app/sobre/termo/termo.component';
+import { PrivacidadeComponent } from '../../main-app/sobre/privacidade/privacidade.component';
 
 class BlankOrg implements Org {
   id?: string | undefined;
@@ -48,7 +52,8 @@ class BlankOrg implements Org {
     ButtonModule, InputGroupAddonModule, InputGroupModule, InputTextModule,
     PasswordModule, ProgressSpinnerModule, FloatLabelModule, StepperModule,
     RadioButtonModule, InputTextareaModule, InputMaskModule, DropdownModule,
-    ChipModule, ChipsModule, 
+    ChipModule, ChipsModule, ConfirmTermoComponent, DialogModule, 
+    TermoComponent, PrivacidadeComponent, 
    ],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css'
@@ -75,6 +80,7 @@ export class CadastroComponent implements OnInit, OnDestroy {
 
   subscriptions : Subscription[] = []
 
+  confirmTermo: boolean = false;
 
   states : {value: string, label: string}[] = [
     { value: 'AC', label: 'Acre' },
@@ -111,6 +117,8 @@ export class CadastroComponent implements OnInit, OnDestroy {
     { value: 'BRA', label: "Brasil" },
     { value: '__0', label: "Outro" }
   ]
+
+  showTermo: boolean = false;
 
 
   ngOnInit(): void {
@@ -181,6 +189,7 @@ export class CadastroComponent implements OnInit, OnDestroy {
       : null;
   }
 
+ 
   /**
    * Updates model with form data
    */
