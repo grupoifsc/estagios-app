@@ -8,11 +8,12 @@ import { jwtDecode } from 'jwt-decode';
 import { MenuItem, MessageService } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RouterLink, ToastModule, ButtonModule, PanelMenuModule, ],
+  imports: [RouterOutlet, CommonModule, RouterLink, ToastModule, ButtonModule, PanelMenuModule, DividerModule ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
@@ -24,13 +25,14 @@ export class MainComponent {
   ) { }
 
   menu : MenuItem[] = [
-    { label : 'Vagas Criadas', routerLink: 'vagas/criadas' },
+    { label: 'Suas Vagas', routerLink: 'vagas/criadas' },
     { label: 'Vagas Recebidas', routerLink: 'vagas/recebidas', state: {guard: 'ie'} },
-    { label: 'Vagas Aprovadas', routerLink: 'vagas/aprovadas', state: {guard: 'ie'} },
-    { label : 'API', routerLink: '/' },
+    { label: 'Vagas Disponibilizadas', routerLink: 'vagas/aprovadas', state: {guard: 'ie'} },
   ]
 
-
+  go(route: string) {
+    this.router.navigate([route])
+  }
 
   isMenuHidden : boolean = true;
 

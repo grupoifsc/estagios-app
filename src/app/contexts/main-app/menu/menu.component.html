@@ -11,7 +11,7 @@
 
     
     <div class="flex flex-wrap gap-2 md:gap-4 justify-content-end align-items-center">
-        <a *ngFor="let menuItem of menu" [routerLink]="menuItem.route" class="text-50 no-underline" [title]="menuItem.text" > 
+        <a *ngFor="let menuItem of menu" [routerLink]="menuItem.route" class="text-50 no-underline" [title]="menuItem.text" [target]="menuItem.target ?? '_self'" > 
             <div class="flex gap-1 align-items-bottom">
                 <i [class]="menuItem.icon" style="font-size: 1.0rem; color: #C2FFF0;"></i>
                 <span class="hidden md:block main-green-font ">{{ menuItem.label }}</span>
@@ -26,18 +26,27 @@
 </div>
 
     
-<footer class="flex flex-wrap gap-4 py-6 mx-3 justify-content-center text-700 " >
-    <a href="mailto:estagios.api@gmail.com" class="text-primary no-underline" title="Contato"> 
-        <div class="flex flex-wrap gap-2 align-items-center">
-            <i class="pi pi-envelope"></i>
-            <span class="text-sm">estagios.api&#64;gmail.com</span>
-        </div>
-    </a>
-    <a href="https://github.com/grupoifsc/estagios-rest" target="_blank" class="text-primary no-underline" title="Github"> 
-        <div class="flex flex-wrap gap-2 align-items-center">
-            <i class="pi pi-github"></i>
-            <span class="text-sm">Github</span>
-        </div>
-    </a>
+<footer class="flex flex-column gap-4 py-6 justify-content-center text-700 " >
+    <div class="flex flex-wrap gap-4 mx-3 justify-content-center ">
+        <a href="mailto:estagios.api@gmail.com" class="text-primary no-underline" title="Contato"> 
+            <div class="flex flex-wrap gap-2 align-items-center">
+                <i class="pi pi-envelope"></i>
+                <span class="text-sm">estagios.api&#64;gmail.com</span>
+            </div>
+        </a>
+        <a href="https://github.com/grupoifsc/estagios-rest" target="_blank" class="text-primary no-underline" title="Github"> 
+            <div class="flex flex-wrap gap-2 align-items-center">
+                <i class="pi pi-github"></i>
+                <span class="text-sm">Github</span>
+            </div>
+        </a>
+    </div>
+    <div class="flex flex-wrap gap-4 mx-3 justify-content-center ">
+        <a routerLink="politica" class="text-primary no-underline" title="Termo de Uso e Política de Privacidade"> 
+            <span class="text-sm">Termo de Uso e Política de Privacidade 2024</span>
+        </a>
+    </div>
+
+
 </footer>    
 

@@ -19,7 +19,7 @@
                                     ? 'ng-invalid ng-dirty' : ''"/>
             </div>
 
-            <div class="flex flex-column gap-2">
+            <!-- <div class="flex flex-column gap-2">
                 <label for="descricao">Descrição:*</label>
                 <p-editor id="descricao" formControlName="descricao"
                      [style]="{ height: '320px' }" 
@@ -28,7 +28,21 @@
                         || form.controls.descricao.touched ) 
                         ? 'ng-invalid ng-dirty' : ''" 
                 />
+            </div> -->
+
+            <div class="flex flex-column gap-2">
+                <label for="descricao">Descrição:*</label>
+                <textarea cols="15" rows="10" 
+                [autoResize]="true"
+                  pInputTextarea id="descricao" formControlName="descricao"
+                     [style]="{ height: '320px' }" 
+                    [class]="form.controls.descricao.invalid 
+                        && (form.controls.descricao.dirty 
+                        || form.controls.descricao.touched ) 
+                        ? 'ng-invalid ng-dirty' : ''" 
+                ></textarea>
             </div>
+
 
             <div class="flex flex-column gap-2">
                 <label for="requsisitos">Requisitos: (separe usando ENTER)</label>

@@ -1,0 +1,20 @@
+
+<div class="w-11 my-4 flex flex-column gap-5 md:w-8 lg:w-7 mx-auto">
+    <p-button text="true" icon="pi pi-angle-left" label="Voltar" />
+
+    <h1 class="text-bluegray-800">Recursos do Serviço Web</h1>
+
+    <div class="mt-5 flex flex-column gap-8">
+    
+        <div *ngFor="let feat of features" class="flex gap-5 texto-formal">
+            <div>
+                <img [src]="feat.icon" [alt]="feat.title" class="w-auto max-w-3rem text-500">
+            </div>
+            <div>
+                <span class="font-bold text-bluegray-800 text-lg block mb-4">{{feat.title}}</span>
+                <span class="block mb-2" *ngFor="let item of feat.details">{{item}}</span>
+            </div>
+        </div>
+    
+    </div>
+</div>

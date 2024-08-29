@@ -3,7 +3,7 @@
 
         <form class="glass border-round-xl md:w-8 max-w-24rem mx-auto p-5 flex flex-column gap-6 justify-content-center" [formGroup]="form" (ngSubmit)="submit()">
 
-            <h1 class="m-0">Login</h1>
+            <h1 class="m-0">Bem vindo!</h1>
 
             <div class="mb-3 flex flex-wrap gap-2 justify-content-center">
                 <span>Ainda não tem uma conta?</span>
@@ -18,7 +18,7 @@
             <div class="flex flex-column gap-2">
                 <div class="flex justify-content-between align-content-end">
                     <label for="pwd">Senha:</label>
-                    <p class="m-0">Esqueceu a senha?</p>
+                    <!-- <p class="m-0">Esqueceu a senha?</p> -->
                 </div>
                 <p-password [feedback]="false" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%', 'background-color':'transparent', 'border-color':'grey'}" toggleMask="true" id="pwd" formControlName="password" placeholder="Senha" />
             </div>

@@ -2,9 +2,9 @@
 
 Você tem a opção de realizar o cadastro da empresa ou Instituição de Ensino (IE) que você representa por meio de um formulário Web ou por requisições HTTP para a API.
 
-> Para ambos os casos, lembre que ao realizar o cadastro, você estará de acordo com os **Termos de Uso e a Política de Privacidade** do serviço web, encontrados nesta seção: [Termo de Uso](/sobre). Leia-os com atenção antes de prosseguir!
+Para ambos os casos, lembre que ao realizar o cadastro, você estará de acordo com os **Termos de Uso** e a **Política de Privacidade** encontrados nesta seção: [Termo de Uso](/sobre). Leia-os com atenção antes de prosseguir!
 
-Para realizar o cadastro via formulário web, siga para esta página: [Cadastro](/demo/cadastro)
+> Para realizar o cadastro via formulário web, siga para esta página: [Cadastro](/demo/cadastro)
 
  - - -
 
@@ -127,5 +127,3 @@ Os erros mais comuns para esta solicitação são:
 - **400 Bad Request**: Solicitação inválida. Verifique o formato e os dados enviados.
 
 - **429 Too Many Requests**: Você excedeu o limite de requisições.
-  
-> Visite a seção [API](/api), onde você pode interagir com a aplicação e testar os endpoints, formatos de dados e respostas geradas.

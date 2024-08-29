@@ -8,7 +8,8 @@ interface MenuItem {
   route: string,
   text: string,
   icon?: string,
-  class?: string
+  class?: string,
+  target?: string,
 }
 
 @Component({
@@ -21,29 +22,36 @@ interface MenuItem {
 export class MenuComponent {
   
   menu : MenuItem[] = [
+    // {
+    //   route: 'recursos',
+    //   text: 'Recursos',
+    //   label: 'Recursos',
+    //   icon: 'pi pi-box'
+    // },
+    {
+      route: 'comece-aqui',
+      text: 'Comece Aqui',
+      label: 'Comece Aqui',
+      icon: 'pi pi-bolt'
+    },
     {
       route: 'tutoriais',
-      text: 'Tutoriais',
-      label: 'Tutoriais',
-      icon: 'pi pi-book'
-    },
-    {
-      route: 'api',
-      text: 'API',
-      label: 'API',
+      text: 'Para Desenvolvedores',
+      label: 'Para Desenvolvedores',
       icon: 'pi pi-code'
     },
-    {
-      route: 'sobre',
-      text: 'Sobre o Projeto',
-      label: 'Sobre',
-      icon: 'pi pi-info-circle'
-    }, 
     {
       route: 'demo',
       text: 'Demo',
       label: 'Demo',
-      icon: 'pi pi-play'
+      icon: 'pi pi-box',
+      target: '_blank',
+    },
+    {
+      route: 'sobre',
+      text: 'Apoie',
+      label: 'Apoie',
+      icon: 'pi pi-info-circle'
     }
   ]
 

@@ -1,68 +1,36 @@
 
-<div class="w-full mx-auto py-5 flex flex-column gap-0 justify-content-center ">
+<div class="w-full mx-auto py-5">
 
-    <div class="align-self-center flex text-xl flex-column my-5 gap-5 w-10 md:w-6 align-items-center">
-        <div class="p-5">
-            (o que é) Um serviço para conectar ies e empresas para divulgar vagas a comunidade estudantil
+    <div class="flex flex-column w-11 md:w-9 lg:w-9 mx-auto gap-3">
+
+        <div class="my-8 w-8 flex flex-column gap-4 mx-auto">
+            <span class="text-center text-500 text-lg uppercase">Para organizações de todos os portes</span>    
+            <span class="text-center text-5xl text-bluegray-800 font-bold ">Facilite a divulgação de vagas de estágio à comunidade estudantil</span>
+            <span class="text-center text-500 text-xl">Paticipe de um ecossistema colaborativo feito para conectar empresas e instituições de ensino</span>
         </div>
-        <div class="p-5">
-            <p>(público-alvo) Escolas, redes e institutos de ensino, universidades, empresas de qualquer porte</p>
-        </div>    
-    </div>
-
-    <div class="flex flex-column">
-        <div class="tag w-9 md:w-5 main-green-bg main-blue-font text-2xl font-bold align-self-center">
-            <p class="m-0">Features</p>
-        </div>
-        <div class="tag-bg">
-        </div>
-        <div class="tag-bg main-blue-bg">
-        </div>
-    </div>
-
-    <div class="main-blue-bg flex justify-content-center ">
-
-        <div class="w-10 md:w-7">
-            <p-carousel class="hidden md:block"
-                [value]="features" 
-                [numVisible]="1"  
-                [circular]="true" 
-                autoplayInterval="5000"
-                >    
-
-                <ng-template let-item pTemplate="item">
-                    <div class="h-25rem flex flex-column align-items-center" >
-                        <div class="w-9 h-full flex flex-column justify-content-center ">
-                            <div class="text-center text-0">
-                                <h1 class="m-0">{{item.title}}</h1>
-                            </div>
-                            
-                            <div class="mt-5 flex flex-column gap-3 text-50">
-                                <div *ngFor="let detail of item.items">
-                                    {{ detail }}
-                                </div>
-                            </div>    
+ 
+        <div class="mt-5 grid grid-nogutter">
+            <div *ngFor="let feat of features" class="col-12 md:col-6 lg:col-4 p-3 ">
+                <p-card class="" [style]="{'min-height':'100%'}">
+                    <div class="flex gap-3">
+                        <div>
+                            <img [src]="feat.icon" [alt]="feat.title" class="max-w-3rem text-500">
+                        </div>
+                        <div>
+                            <span class="font-bold text-lg block mb-2">{{feat.title}}</span>
+                            <span>{{feat.summary}}</span>
                         </div>
                     </div>
-                </ng-template>
-            </p-carousel>
-
-
-            <div class="block md:hidden">
-                <p-accordion [activeIndex]="1">
-                    <p-accordionTab [header]="item.title" *ngFor="let item of features">
-                        <p class="m-0">
-                            {{ item.items }}
-                        </p>
-                    </p-accordionTab>
-                </p-accordion>    
+                </p-card>
             </div>
         </div>
+
+        <div class="mt-8 mb-3 align-self-center">
+            <a routerLink="/comece-aqui" [style]="{'background-color': '#383859'}" class="p-button no-underline ">COMECE AQUI</a>
+        </div>
+
     </div>
 
-    <div class="mt-8 mb-3 align-self-center">
-        <a routerLink="/tutoriais" [style]="{'background-color': '#383859'}" class="p-button no-underline ">COMECE AQUI</a>
-    </div>
 
 </div>
 

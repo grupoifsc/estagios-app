@@ -1,6 +1,6 @@
 # Autenticação
 
-Para lidar com a autenticação e autorização do do sistema de sua organização, utilizamos a estratégia de autenticação baseada em JWT (JSON Web Token). O sistema utiliza duas formas de tokens para gerenciar o acesso: accessToken e refreshToken.
+Para lidar com a autenticação e autorização do do sistema de sua organização, utilizamos a estratégia de autenticação baseada em JWT (JSON Web Token). O sistema utiliza duas formas de tokens para gerenciar o acesso: *accessToken* e *refreshToken*.
 
 ## Fluxo de Autenticação
 
@@ -35,7 +35,7 @@ Resposta:
 
 Após receber o accessToken, você deve incluí-lo no cabeçalho de autorização em todas as suas solicitações HTTP para acessar recursos protegidos da API. Esta será a sua forma de autenticação e autorização.
 
-Exemplo de solicitação com accessToken:
+**Exemplo de solicitação com accessToken:**
 
 ```http
 GET /org/vagas/owned
@@ -48,7 +48,7 @@ Quando o accessToken expira, a aplicação cliente precisa detectar a expiraçã
 
 A identificação de um accessToken expirado ocorre quando uma solicitação para um endpoint protegido retorna um erro de autenticação, como um código de status HTTP 401 Unauthorized, mesmo com o envio do accessToken.
 
-Exemplo de resposta de erro devido a accessToken expirado:
+**Exemplo de resposta de erro devido a accessToken expirado:**
 
 ```http
 HTTP/1.1 401 Unauthorized
@@ -62,11 +62,11 @@ Content-Type: application/json
 
 Sua aplicação deve estar preparada para checar estas respostas de erro em cada requisição para ser capaz de atualizar o accessToken.
 
-### 3. Atualização do accessToken
+### 4. Atualização do accessToken
 
 Quando a aplicação detecta que o accessToken expirou, ela deve enviar uma solicitação para o endpoint `/auth/refresh_token` usando o refreshToken obtido anteriormente. O refreshToken deve ser incluído no corpo da solicitação para obter um novo accessToken.
 
-Exemplo de solicitação para renovar o accessToken:
+**Exemplo de solicitação para renovar o accessToken:**
 
 ```http
 POST /auth/refresh_token
@@ -76,7 +76,7 @@ Content-Type: application/json
 }
 ```
 
-Resposta:
+**Resposta:**
 
 ```json
 {

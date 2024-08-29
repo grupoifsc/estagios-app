@@ -10,3 +10,7 @@
   :host ::ng-deep .p-panelmenu .p-menuitem {
     background: transparent !important;
   }
+
+.sidebar {
+  background-color: #383859;
+}

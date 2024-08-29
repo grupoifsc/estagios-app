@@ -19,6 +19,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ApiResponse } from '../api-response';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { NotFoundComponent } from '../../not-found/not-found.component';
 
 
 @Component({
@@ -28,7 +29,7 @@ import { Router } from '@angular/router';
   imports: [ReactiveFormsModule, CommonModule, DatePipe, TitleCasePipe,   
     InputTextareaModule, MultiSelectModule, DropdownModule, InputNumberModule, 
     InputTextModule, ChipModule, FieldsetModule, ButtonModule, CardModule, SpeedDialModule,
-    ConfirmDialogModule, DividerModule, 
+    ConfirmDialogModule, DividerModule, NotFoundComponent, CardModule,  
   ],
   templateUrl: './card-vaga.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,7 +55,7 @@ export class CardVagaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.vaga$ = this.apiService.getJobInfo(this.id);
+    this.vaga$ = this.apiService.getJobInfo(this.id);    
   }
 
   ngOnDestroy(): void {
@@ -73,6 +74,22 @@ export class CardVagaComponent implements OnInit, OnDestroy {
   edit() : void {
     this.router.navigate(['/demo/vagas/' + this.id + '/edit'])
   }
+
+  getFormato(job: Job) : string {
+    const formato = job.formato;
+    if (formato == 'hibrido') return 'híbrido';
+    return formato;
+  }
+
+  getNivel(job: Job) : string {
+    const nivel = job.nivel;
+    if(nivel == 'medio') return 'médio';
+    if(nivel == 'tecnico') return 'técnico';
+    if(nivel == 'graduacao') return 'graduação';
+    if(nivel == 'pos') return 'pós-Graduação';
+    return nivel;
+  }
+
 
   private delete() : void {
     let subs = this.apiService.deleteJob(this.id).subscribe({
