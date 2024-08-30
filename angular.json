@@ -35,7 +35,6 @@
               "node_modules/swagger-ui-themes/themes/3.x/theme-newspaper.css",
               "src/styles.css",
               "public/css/prism.css"
-
             ],
             "scripts": [
               "node_modules/swagger-ui-dist/swagger-ui-bundle.js",
@@ -66,6 +65,11 @@
                 }
               ],
               "outputHashing": "all"
+            },
+            "analyze-bundle": {
+              "sourceMap": true,
+              "outputHashing": "none",
+              "namedChunks": true
             },
             "development": {
               "optimization": false,

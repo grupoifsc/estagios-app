@@ -7,6 +7,10 @@
     font-size: 200px;
 }
 
+.mirror {
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 
 .summary-box {
     background-color: rgb(194, 255, 240, 0.3);

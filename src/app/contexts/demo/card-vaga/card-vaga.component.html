@@ -2,95 +2,98 @@
     <p-button [link]="true" label="< Voltar" (onClick)="goBack()"/>
 </div>
 
-<p-card *ngIf="(vaga$ | async)?.data as vaga; else notfound">
-    <div class="grid gap-2 w-11 md:w-8 lg:w-8 ml-4 md:ml-8 mb-5" style="max-width: 60rem;">
+<ng-container *ngIf="{jobs: vaga$ | async, error: error$ | async} as data">
+    <ng-container *ngIf="data.jobs?.data as vaga; else notfound">
+        <div class="grid gap-2 w-11 md:w-8 lg:w-8 ml-4 md:ml-8 mb-5" style="max-width: 60rem;">
 
-        <div class="col-12 flex gap-2 flex-wrap ">
-            <h1>{{vaga?.titulo}}</h1>
-        </div>
-    
-        <div class="col flex flex-column gap-4 mr-5">
-    
-            <div class="flex flex-column gap-2">
-                <div class="flex flex-wrap gap-2" id="descricao" >
-                    <p>{{vaga?.descricao}}</p>
-                </div>    
+            <div class="col-12 flex gap-2 flex-wrap ">
+                <h1>{{vaga?.titulo}}</h1>
             </div>
-    
-            <div class="flex flex-column gap-2">
-                <label for="requisitos">Requisitos:</label>
-                <div class="flex flex-wrap gap-2" id="requisitos">
-                    <p-chip *ngFor="let requisito of vaga?.requisitos" [label]="requisito" />
-                    <p-chip *ngIf="!vaga?.requisitos || (vaga?.requisitos && vaga.requisitos.length == 0)" label="Nenhum" />
-                </div>    
+        
+            <div class="col flex flex-column gap-4 mr-5">
+        
+                <div class="flex flex-column gap-2">
+                    <div class="flex flex-wrap gap-2" id="descricao" >
+                        <p>{{vaga?.descricao}}</p>
+                    </div>    
+                </div>
+        
+                <div class="flex flex-column gap-2">
+                    <label for="requisitos">Requisitos:</label>
+                    <div class="flex flex-wrap gap-2" id="requisitos">
+                        <p-chip *ngFor="let requisito of vaga?.requisitos" [label]="requisito" />
+                        <p-chip *ngIf="!vaga?.requisitos || (vaga?.requisitos && vaga.requisitos.length == 0)" label="Nenhum" />
+                    </div>    
+                </div>
+        
+                <div class="flex flex-column gap-2">
+                    <label for="areas">Áreas:</label>
+                    <div class="flex flex-wrap gap-2" id="areas" >
+                        <p-chip *ngFor="let area of vaga?.areas" [label]="area.name" />
+                        <p-chip *ngIf="!vaga?.areas || (vaga?.areas && vaga.areas.length == 0)" label="Nenhuma" />
+                    </div>    
+                </div>
+        
+                <div class="flex flex-column gap-2">
+                    <label for="ies">IEs:</label>
+                    <div class="flex flex-wrap gap-2" id="ies">
+                        <p-chip *ngIf="vaga?.destinatarios?.length == 0; else ie" label="Todas" />
+                        <ng-template #ie>
+                            <p-chip *ngFor="let ie of vaga?.destinatarios" [label]="ie.nome" />
+                        </ng-template>
+                    </div>
+                </div>
+        
             </div>
-    
-            <div class="flex flex-column gap-2">
-                <label for="areas">Áreas:</label>
-                <div class="flex flex-wrap gap-2" id="areas" >
-                    <p-chip *ngFor="let area of vaga?.areas" [label]="area.name" />
-                    <p-chip *ngIf="!vaga?.areas || (vaga?.areas && vaga.areas.length == 0)" label="Nenhuma" />
-                </div>    
-            </div>
-    
-            <div class="flex flex-column gap-2">
-                <label for="ies">IEs:</label>
-                <div class="flex flex-wrap gap-2" id="ies">
-                    <p-chip *ngIf="vaga?.destinatarios?.length == 0; else ie" label="Todas" />
-                    <ng-template #ie>
-                        <p-chip *ngFor="let ie of vaga?.destinatarios" [label]="ie.nome" />
-                    </ng-template>
+        
+        
+            <div class="col-12 lg:col-3 flex flex-column gap-3">
+                <div class="flex flex-wrap lg:flex-column gap-3">
+                    <div class="flex flex-wrap gap-2" >
+                        <label class="text-bluegray-900 font-bold">Formato:</label>
+                        <span id="" class="text-bluegray-700">{{getFormato(vaga!) | titlecase}}</span>
+                    </div>
+        
+                    <div class="flex flex-wrap gap-2" >
+                        <label for="periodo" class="text-bluegray-900 font-bold">Período:</label>
+                        <span id="periodo" class="text-bluegray-700">{{vaga?.periodo | titlecase}}</span>
+                    </div>
+        
+                    <div class="flex flex-wrap gap-2" >
+                        <label for="nivel" class="text-bluegray-900 font-bold">Nível:</label>
+                        <span id="nivel" class="text-bluegray-700">{{getNivel(vaga!) | titlecase}}</span>
+                    </div>
+        
+                    <div class="flex flex-wrap gap-2" >
+                        <label for="ch" class="text-bluegray-900 font-bold">Carga Horária:</label>
+                        <span id="ch" class="text-bluegray-700">{{vaga?.carga_horaria_semanal}} horas/semana</span>
+                    </div>
+        
+                    <div class="flex flex-wrap gap-2" >
+                        <label for="remuneracao" class="text-bluegray-900 font-bold">Remuneração:</label>
+                        <span id="remuneracao" class="text-bluegray-700"> R$ {{vaga?.remuneracao}},00</span>
+                    </div>
+        
+                    <div class="flex flex-wrap gap-2" >
+                        <label for="duracao" class="text-bluegray-900 font-bold">Duração:</label>
+                        <span id="duracao" class="text-bluegray-700">{{ vaga?.duracao_meses ? (vaga?.duracao_meses + ' meses') : 'indefinido' }} </span>
+                    </div>
+                </div>
+        
+                <p-divider class="hidden lg:block" />
+                
+                <div class="flex flex-column">
+                    <div class="flex gap-2" >
+                        <label for="atualizado" class="text-bluegray-900">Atualizado em:</label>
+                        <span id="atualizado" class="text-bluegray-700">{{vaga?.atualizado_em | date : 'short'}}</span>
+                    </div>    
                 </div>
             </div>
-    
-        </div>
-    
-    
-        <div class="col-12 lg:col-3 flex flex-column gap-3">
-            <div class="flex flex-wrap lg:flex-column gap-3">
-                <div class="flex flex-wrap gap-2" >
-                    <label class="text-bluegray-900 font-bold">Formato:</label>
-                    <span id="" class="text-bluegray-700">{{getFormato(vaga!) | titlecase}}</span>
-                </div>
-    
-                <div class="flex flex-wrap gap-2" >
-                    <label for="periodo" class="text-bluegray-900 font-bold">Período:</label>
-                    <span id="periodo" class="text-bluegray-700">{{vaga?.periodo | titlecase}}</span>
-                </div>
-    
-                <div class="flex flex-wrap gap-2" >
-                    <label for="nivel" class="text-bluegray-900 font-bold">Nível:</label>
-                    <span id="nivel" class="text-bluegray-700">{{getNivel(vaga!) | titlecase}}</span>
-                </div>
-    
-                <div class="flex flex-wrap gap-2" >
-                    <label for="ch" class="text-bluegray-900 font-bold">Carga Horária:</label>
-                    <span id="ch" class="text-bluegray-700">{{vaga?.carga_horaria_semanal}} horas/semana</span>
-                </div>
-    
-                <div class="flex flex-wrap gap-2" >
-                    <label for="remuneracao" class="text-bluegray-900 font-bold">Remuneração:</label>
-                    <span id="remuneracao" class="text-bluegray-700"> R$ {{vaga?.remuneracao}},00</span>
-                </div>
-    
-                <div class="flex flex-wrap gap-2" >
-                    <label for="duracao" class="text-bluegray-900 font-bold">Duração:</label>
-                    <span id="duracao" class="text-bluegray-700">{{ vaga?.duracao_meses ? (vaga?.duracao_meses + ' meses') : 'indefinido' }} </span>
-                </div>
-            </div>
-    
-            <p-divider class="hidden lg:block" />
-            
-            <div class="flex flex-column">
-                <div class="flex gap-2" >
-                    <label for="atualizado" class="text-bluegray-900">Atualizado em:</label>
-                    <span id="atualizado" class="text-bluegray-700">{{vaga?.atualizado_em | date : 'short'}}</span>
-                </div>    
-            </div>
-        </div>
-    </div>   
-</p-card>
+        </div>   
+    </ng-container>
 
-<ng-template #notfound>
-    <!-- <app-not-found></app-not-found> -->
-</ng-template>
+    <ng-template #notfound>
+        <app-not-found *ngIf="data.error" ></app-not-found>
+    </ng-template>
+
+</ng-container>

@@ -85,7 +85,7 @@
                     </form>
 
                     <div class="my-3 flex flex-wrap pt-4 justify-content-center md:justify-content-end">
-                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                        <p-button (onClick)="nextCallback.emit()" [disabled]="!profileForm.valid" 
                             label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
                     </div>
 
@@ -169,7 +169,7 @@
                     <div class="my-5 flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
                         <p-button (onClick)="prevCallback.emit()" label="Anterior" 
                             severity="secondary" icon="pi pi-arrow-left" />
-                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                        <p-button (onClick)="nextCallback.emit()" [disabled]="!addressForm.valid" 
                             label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
                     </div>
 
@@ -281,7 +281,7 @@
                     <div class="my-5 flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
                         <p-button (onClick)="prevCallback.emit()" label="Anterior" 
                             severity="secondary" icon="pi pi-arrow-left" />
-                        <p-button (onClick)="nextCallback.emit()" [disabled]="false" 
+                        <p-button (onClick)="nextCallback.emit()" [disabled]="!mainContactForm.valid" 
                             label="Próximo" icon="pi pi-arrow-right" iconPos="right" />
                     </div>
 
@@ -354,7 +354,7 @@
                     <div class="my-5 flex flex-wrap gap-5 pt-4 justify-content-center md:justify-content-between">
                         <p-button (onClick)="prevCallback.emit()" label="Anterior" 
                             severity="secondary" icon="pi pi-arrow-left" />
-                        <p-button type="submit" class="align-self-center" [disabled]="false" 
+                        <p-button type="submit" class="align-self-center" [disabled]="!credentialsForm.valid" 
                             label="Cadastrar" icon="pi pi-check" (onClick)="showTermo = true" iconPos="right" />
                     </div>
   
@@ -368,18 +368,15 @@
 
 </div>
 
-<p-dialog [(visible)]="showTermo" header="Termo de Uso e Privacidade" closable="true" 
-        [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false"
+<p-dialog [(visible)]="showTermo" header="Leia com atenção" closable="true" 
+        [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false"
         [breakpoints]="{'767px': '70vw', '575px': '90vw' }" >
         <div> 
-            <div class="mx-auto my-5">
-                <p-button severity="success" [label]="'Aceito os Termos de Serviço e a Política de Privacidade e quero continuar o cadastro'" (onClick)="submit()"/>
-            </div>  
-            <p>Leia com atenção os Termos de Uso:</p>
+            <p-button severity="secondary" [label]="''" text="true" />
             <app-termo class="text-sm"></app-termo>
             <app-privacidade class="text-sm"></app-privacidade>
             <div class="mx-auto my-5">
-                <p-button severity="success" [label]="'Aceito os Termos de Serviço e a Política de Privacidade e quero continuar o cadastro'" (onClick)="submit()"/>
+                <p-button severity="info" [label]="'Aceito os Termos de Serviço e a Política de Privacidade e quero continuar o cadastro'" (onClick)="submit()"/>
             </div>   
 
         </div>

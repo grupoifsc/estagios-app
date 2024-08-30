@@ -12,5 +12,10 @@ import { ToastModule } from 'primeng/toast';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+  constructor (
+    // private messageService: MessageService
+  ) {}
+
   title = 'estagios-app';
 }

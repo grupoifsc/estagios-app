@@ -69,8 +69,7 @@ export class ModerationComponent implements OnInit, OnDestroy {
   confirmAction(action: 'aprovar' | 'rejeitar', id: string) : void {
     this.confirmationService.confirm({
       header: 'Confirme a ação',
-      message: 'Quero ' + action + ' esta vaga',
-      icon: action == 'aprovar' ? 'text-4xl text-green-500 pi pi-thumbs-up' : 'text-2xl text-red-500 pi pi-thumbs-down',
+      message: action,
       accept: () => {
         if(action == 'aprovar') return this.accept(id);
         else return this.reject(id);

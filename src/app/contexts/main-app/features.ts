@@ -12,7 +12,7 @@ export const MAIN_FEATURES : Features[] = [
       summary: 'Compartilhe anúncios de vagas de estágio com toda a rede de instituições cadastradas',
       icon: 'img/compartilhar.png',
       details: [
-        'Com nosso serviço, você participa de um ecossistema centralizado para o compartilhamento de vagas de estágios.Esse ecossistema não só facilita a disseminação de oportunidades, mas também promove uma colaboração mais eficiente entre diferentes entidades, permitindo que todas as partes interessadas acessem e compartilhem informações de forma coordenada e transparente.'
+        'Com nosso serviço, você participa de um ecossistema centralizado para o compartilhamento de vagas de estágios. Este ecossistema facilita a disseminação de oportunidades de estágio com toda a rede de instituições de ensino cadastradas e ajuda a criar oportunidades de colaboração construtivo entre os espaços acadêmicos e a indústria.'
       ]
     },
     {
@@ -20,8 +20,9 @@ export const MAIN_FEATURES : Features[] = [
       summary: 'Integre o serviço web com o seu sistema e automatize o envio e recebimento de anúncios de vagas de estágio',
       icon: 'img/collaborate.png',
       details: [
-        'O sistema é projetado para integrar-se e automatizar a troca de informações com os sistemas existentes das organizações. Ao receber anúncios de diversas empresas em um único sistema, você elimina a necessidade de gerenciar múltiplas fontes de informação. Isso simplifica a administração e reduz a carga de trabalho envolvida na coleta e processamento desses anúncios. Além disso, a integração com seus sistemas existentes permite a automação de processos, como a importação e publicação dos anúncios. Isso diminui a necessidade de intervenção manual e reduz o risco de erros. ',
-        'Para estudantes, isso significa que todas as informações sobre vagas são acessíveis exclusivamente por meio dos sistemas acadêmicos das Instituições de Ensino (IEs). Assim, mantemos o acesso às vagas dentro dos sistemas das IEs, garantindo que os dados dos estudantes permaneçam protegidos e que a comunicação sobre vagas respeite as políticas de privacidade das instituições.'
+        'Um serviço web é projetado para integrar-se e automatizar a troca de informações com os sistemas existentes das organizações.', 
+        'Ao receber anúncios de diversas empresas em um único sistema, se elimina a necessidade de gerenciar múltiplas fontes de informação. Isso simplifica a administração e reduz a carga de trabalho envolvida na coleta e processamento desses anúncios. Isto diminui a necessidade de intervenção manual e reduz o risco de erros. ',
+        'Para estudantes, isto significa que todas as informações sobre vagas são acessíveis exclusivamente por meio dos sistemas acadêmicos das Instituições de Ensino (IEs). Assim, mantemos o acesso às vagas dentro dos sistemas das IEs, garantindo que os dados dos estudantes permaneçam protegidos e que a comunicação sobre vagas respeite as políticas de privacidade das instituições.'
       ]
     },
     {
@@ -29,15 +30,15 @@ export const MAIN_FEATURES : Features[] = [
       summary: 'Escolha quais instituições receberão seus anúncios',
       icon: 'img/information.png',
       details: [
-        'Você pode selecionar quais Instituições de Ensino receberão suas ofertas de vagas. Em vez de disponibilizar uma vaga para todos indiscriminadamente, você pode direcionar a vaga para instituições específicas que atendem ao perfil desejado dos candidatos. Isso permite um alinhamento mais preciso entre as oportunidades oferecidas e o público-alvo, garantindo que as vagas sejam vistas pelas pessoas mais qualificadas e relevantes.'
-      ]
+        'Você pode selecionar quais Instituições de Ensino receberão suas ofertas de vagas. Assim, você pode direcionar a vaga para instituições específicas que atendem ao perfil desejado dos candidatos.' ,      ]
     },
     {
       title: 'Moderação',
       summary: 'Rejeite anúncios falsos, ofensivos ou que violem as políticas da sua instituição',
       icon: 'img/banned.png',
       details: [
-        'Com a funcionalidade de moderação, as IEs têm total controle sobre quais vagas de estágio são exibidas para seus alunos. Elas podem revisar e aprovar ou rejeitar os anúncios, garantindo que apenas oportunidades relevantes e em conformidade com suas políticas sejam divulgadas. Isso protege os estudantes de anúncios falsos ou inadequados e mantém a qualidade das informações disponíveis.'
+        'Com a funcionalidade de moderação, as IEs têm total controle sobre quais vagas de estágio são exibidas para seus alunos. Elas podem revisar e aprovar ou rejeitar os anúncios, garantindo que apenas oportunidades relevantes e em conformidade com suas políticas sejam divulgadas.', 
+        'Isso protege os estudantes de anúncios falsos ou inadequados e mantém a qualidade das informações disponíveis.'
       ]
     },
     {
@@ -54,7 +55,8 @@ export const MAIN_FEATURES : Features[] = [
       icon: 'img/demo.png',
       details: [
         'Entendemos que nem todas as empresas têm sistemas próprios ou desejam se envolver em integrações técnicas. Por isso, oferecemos uma alternativa prática: uma aplicação web simples e fácil de usar. Com essa aplicação, você poderá gerenciar suas vagas de estágio diretamente na nossa plataforma, sem precisar de sistemas adicionais ou integrações complicadas. Essa ferramenta permite que você crie, edite e acompanhe seus anúncios de forma direta e intuitiva, garantindo que você possa aproveitar todos os benefícios do nosso serviço web com facilidade.',
-        'Essa aplicação é ideal para familiarizar-se com a interface e os recursos do nosso serviço. No entanto, é importante observar que esta ferramenta não é acessível pelos estudantes, sendo destinada exclusivamente à gestão e administração por parte da sua instituição.'
+        'Essa aplicação é ideal para familiarizar-se com a interface e os recursos do nosso serviço. No entanto, é importante observar que esta ferramenta não é acessível pelos estudantes, sendo destinada exclusivamente à gestão e administração por parte da sua instituição.',
+        ''
       ]
     }
   ]

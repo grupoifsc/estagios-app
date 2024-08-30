@@ -1,19 +1,14 @@
 <div class="grid m-0 p-0">
 
     <div class="p-3 bg-bluegray-900 top-0 sticky min-h-screen col-fixed w-full absolute lg:block z-2 lg:relative lg:z-0 lg:w-15rem" [hidden]="isMenuHidden">
-        <p-button class="lg:hidden" (onClick)="toogleMenu()" label="Voltar" icon="pi pi-arrow-left" severity="secondary" [text]="true" />
-     
-        <!-- <div>
-            <p-panelMenu [model]="menu" [style]="{'background-color':'transparent'}" />
-        </div> -->
-        
-        <div *ngFor="let item of menu" class="my-3" (click)="toogleMenu()" >
-            <a *ngIf="!item.state || (item.state.guard == 'ie' && auth.isIe())" [routerLink]="item.routerLink" class="p-button bg-transparent w-full border-none text-0 no-underline text-left" >{{item.label}}</a>
+        <div>
+            <p-button class="lg:hidden" (onClick)="toogleMenu()" label="Voltar" icon="pi pi-arrow-left" severity="secondary" [text]="true" />
+             
+            <div *ngFor="let item of menu" class="my-3" (click)="toogleMenu()" >
+                <a *ngIf="!item.state || (item.state.guard == 'ie' && auth.isIe())" [routerLink]="item.routerLink" class="p-button bg-transparent w-full border-none text-0 no-underline text-left" >{{item.label}}</a>
+            </div>
+    
         </div>
-
-
-
-
     </div>
 
 
@@ -26,21 +21,6 @@
         <div class="">
             <router-outlet />
         </div>
- 
-        <footer class="mt-8 my-4 pt-8">
-            <div class="flex flex-column mt-8 gap-2 mx-3 justify-content-center align-items-center text-left">
-                <a routerLink="/" class="text-primary no-underline text-center" title="Documentação API"> 
-                    <span class="text-sm">Para desenvolvedores</span>
-                </a>
-                <a routerLink="/politica" class="text-primary no-underline text-center" title="Termo de Uso e Política de Privacidade"> 
-                    <span class="text-sm">Termo de Uso e Política de Privacidade 2024</span>
-                </a>
-            </div>
-        </footer>
-
     </div>
-
-    
-
 </div>
 

@@ -15,7 +15,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Job } from '../job';
-import { Observable, Subscription } from 'rxjs';
+import { catchError, ignoreElements, Observable, of, Subscription } from 'rxjs';
 import { ApiResponse } from '../api-response';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
@@ -48,14 +48,25 @@ export class CardVagaComponent implements OnInit, OnDestroy {
 
   @Input() id! : string;
   vaga$! : Observable<ApiResponse<Job | undefined>>;
-  subscriptions: Subscription[] = []
+  error$! : any;
+  subscriptions: Subscription[] = [];
 
   goBack() : void {
     this.location.back();
   }
 
   ngOnInit(): void {
-    this.vaga$ = this.apiService.getJobInfo(this.id);    
+    this.vaga$ = this.apiService.getJobInfo(this.id);  
+    this.error$ = this.vaga$.pipe(
+      ignoreElements(),
+      catchError(
+        (err) => of(err.error)
+      )
+    )  
+  }
+
+  showJson(object: any) {
+    console.log(JSON.stringify(object));
   }
 
   ngOnDestroy(): void {

@@ -1,12 +1,12 @@
 
 <div class="w-11 my-4 flex flex-column gap-5 md:w-8 lg:w-7 mx-auto">
-    <p-button text="true" icon="pi pi-angle-left" label="Voltar" />
+    <p-button text="true" icon="pi pi-angle-left" label="Voltar" (onClick)="voltar()" />
 
     <h1 class="text-bluegray-800">Recursos do Serviço Web</h1>
 
     <div class="mt-5 flex flex-column gap-8">
     
-        <div *ngFor="let feat of features" class="flex gap-5 texto-formal">
+        <div *ngFor="let feat of features" class="flex gap-5 texto-formal text-primary">
             <div>
                 <img [src]="feat.icon" [alt]="feat.title" class="w-auto max-w-3rem text-500">
             </div>
@@ -17,4 +17,10 @@
         </div>
     
     </div>
+
+    <div class="bg-bluegray-100  p-5 mt-8">
+        Acesse a seção Para Desenvolvedores para ler a documentação da API e tutoriais que facilitam o processo de integração com seu sistema 
+        <p><i class="pi pi-angle-right" ></i> <a routerLink="/tutoriais">Documentação</a></p>
+    </div>
+
 </div>

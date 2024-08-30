@@ -37,7 +37,7 @@ export const routes: Routes = [
     { path: 'demo/login', component: LoginComponent },
     { path: 'demo/cadastro', component: CadastroComponent },
     { path: 'demo', component: MainComponent, children: [
-        { path: '', component: HomeComponent },
+        { path: '', component: HomeComponent, canActivate: [ authGuard ] },
         { path: 'vagas/criadas', component: DashboardComponent, canActivate: [ authGuard ] },
         { path: 'vagas/new', component: CreateJobComponent, canActivate: [ authGuard ] },
         { path: 'vagas/recebidas', component: ModerationComponent, canActivate: [ authGuard, iesGuard ] },
