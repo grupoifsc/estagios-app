@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import SwaggerUI from 'swagger-ui';
+import { env } from '../../../environment';
 
-declare const SwaggerUIBundle: any;
+// https://stackoverflow.com/questions/65419099/adding-swagger-ui-with-angular-10
 
 @Component({
   selector: 'app-swagger',
   standalone: true,
   imports: [],
   templateUrl: './swagger.component.html',
-  styleUrl: './swagger.component.css'
+  styleUrl: './swagger.component.css',
+  encapsulation: ViewEncapsulation.None,
 })
 export class SwaggerComponent implements OnInit {
 
   ngOnInit(): void {
-    const ui = SwaggerUIBundle({
+    SwaggerUI({
       dom_id: '#swagger-ui',
       layout: 'BaseLayout',
-      presets: [
-        SwaggerUIBundle.presets.apis,
-        SwaggerUIBundle.SwaggerUIStandalonePreset
-      ],
-      url: 'http://localhost:8080/v3/api-docs',
+      url: env.apiUrl + '/v3/api-docs',
       docExpansion: 'none',
       operationsSorter: 'alpha'
     });
