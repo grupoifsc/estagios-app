@@ -13,6 +13,9 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 
+// Essa alternativa é muito massa!
+// https://moduscreate.com/blog/how-to-mock-data-in-angular-applications/
+
 export class DataService implements DataFetching {
 
   service!: DataFetching;
