@@ -60,7 +60,7 @@ export class CardVagaComponent implements OnInit, OnDestroy {
     this.error$ = this.vaga$.pipe(
       ignoreElements(),
       catchError(
-        (err) => of(err.error)
+        (err) => of(err)
       )
     )  
   }

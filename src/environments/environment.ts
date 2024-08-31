@@ -1,4 +1,4 @@
-export const environment = {
-    apiUrl : 'http://localhost:8080',
+export const environment : {apiUrl : string, inMemoryDatabase: boolean} = {
+    apiUrl : 'https://julia4453.c44.integrator.host/',
     inMemoryDatabase: false,
 };

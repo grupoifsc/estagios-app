@@ -1,3 +1,3 @@
-export const env = {
-    apiUrl: 'http://localhost:8080',
+export const environment = {
+    apiUrl: 'https://julia4453.c44.integrator.host',
 }

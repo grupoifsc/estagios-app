@@ -57,10 +57,7 @@ export class AuthService {
    */
   public isAuthenticated() : boolean {
     if(!this.getAuthToken()) return false;
-//    let expiration = jwtDecode(this.getAuthToken()!).exp!
-    console.log("You have a accessToken");
-    console.log(this.storage.getItem('accessToken'));
-    
+//    let expiration = jwtDecode(this.getAuthToken()!).exp!    
     
     let expiration = Number(localStorage.getItem('expiration'))
     let now = Math.floor(Date.now()/1000)

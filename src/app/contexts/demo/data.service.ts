@@ -21,9 +21,9 @@ export class DataService implements DataFetching {
   service!: DataFetching;
 
   constructor() {
-    if(environment.inMemoryDatabase)
-      this.service = inject(InMemoryService)
-    else
+  //   if(environment.inMemoryDatabase)
+  //     this.service = inject(InMemoryService)
+  //   else
       this.service = inject(ApiService) 
    }
 
