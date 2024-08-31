@@ -6,16 +6,17 @@ import { Area, Job, JobEntryData } from './job';
 import { ApiResponse } from './api-response';
 import { Page } from './page';
 import { NEED_AUTH } from '../../interceptors/contexts';
+import { DataFetching } from './data-fetching';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+
+export class ApiService implements DataFetching {
 
   constructor(
     private http : HttpClient,
   ) { }
-
   
   orgBaseUrl = '/org';
   jobBaseUrl = '/vagas';
@@ -54,8 +55,6 @@ export class ApiService {
     return this.http.get<ApiResponse<Contact[]>>(this.orgBaseUrl + '/contacts');
   } 
 
-
-
   createJob(job: JobEntryData) : Observable<ApiResponse<Job | undefined>> {
     return this.http.post<ApiResponse<Job>>(this.jobBaseUrl, job);
   } 
@@ -91,8 +90,6 @@ export class ApiService {
     return this.http.get<ApiResponse<Area[]>>('/areas');
   } 
 
-
-
   approveJob(ids: string[]) : Observable<ApiResponse<any>> {
     return this.http.put<ApiResponse<any>>(this.orgBaseUrl + this.jobBaseUrl + '/disponiveis', ids);
   } 
@@ -100,7 +97,6 @@ export class ApiService {
   rejectJob(ids: string[]) : Observable<ApiResponse<any>> {
     return this.http.put<ApiResponse<any>>(this.orgBaseUrl + this.jobBaseUrl + '/rejeitadas', ids);
   } 
-
 
   getAllReceived(search? : string, page?: number, limit?: number | null) : Observable<ApiResponse<Page<Job> | undefined>> {
     let url = this.orgBaseUrl + this.jobBaseUrl + '/recebidas';
@@ -126,6 +122,5 @@ export class ApiService {
   getAllRejected() : Observable<ApiResponse<Page<Job> | undefined>> {
     return this.http.get<ApiResponse<Page<Job>>>(this.orgBaseUrl + this.jobBaseUrl + '/rejeitadas');
   } 
-
 
 }

@@ -24,7 +24,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
 import { Area, Job, JobEntryData } from '../job';
 import { Observable, Subscription } from 'rxjs';
-import { ApiService } from '../api.service';
+import { DataService } from '../data.service';
 import { ApiResponse } from '../api-response';
 import { Address, Contact, Org } from '../organizacao';
 import { Page } from '../page';
@@ -47,7 +47,7 @@ export class CreateJobComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private apiService: ApiService,
+    private apiService: DataService,
     private location: Location,
     private messageService: MessageService,
   ) {}

@@ -6,7 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { TableLazyLoadEvent, TableModule, TablePageEvent } from 'primeng/table';
-import { ApiService } from '../api.service';
+import { DataService } from '../data.service';
 import { ApiResponse } from '../api-response';
 import { Job } from '../job';
 import { first, Observable, Subscription } from 'rxjs';
@@ -30,7 +30,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 export class ModerationComponent implements OnInit, OnDestroy {
 
   constructor (
-    private apiService : ApiService,
+    private apiService : DataService,
     private messageService : MessageService,
     private confirmationService : ConfirmationService,
     private route : ActivatedRoute,

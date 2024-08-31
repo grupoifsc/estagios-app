@@ -18,7 +18,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Job } from '../job';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../api-response';
-import { ApiService } from '../api.service';
+import { DataService } from '../data.service';
 import { Page } from '../page';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -42,7 +42,7 @@ export class DashboardComponent{
 
   constructor(
     private router: Router,
-    private apiService: ApiService,
+    private apiService: DataService,
     private confirmationService : ConfirmationService,
     private messageService : MessageService  ) { }
 

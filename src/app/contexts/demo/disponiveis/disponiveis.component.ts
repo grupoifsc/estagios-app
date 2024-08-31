@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableLazyLoadEvent, TableModule, TablePageEvent } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { ApiService } from '../api.service';
+import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ApiResponse } from '../api-response';
@@ -28,7 +28,7 @@ import { Job } from '../job';
 export class DisponiveisComponent {
 
   constructor (
-    private apiService : ApiService,
+    private apiService : DataService,
 //    private messageService : MessageService,
 //    private confirmationService : ConfirmationService,
 //    private route : ActivatedRoute,

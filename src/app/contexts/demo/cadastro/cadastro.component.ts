@@ -15,7 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputMaskModule } from 'primeng/inputmask';
 import { LoadingService } from '../../../services/loading.service';
 import { Contact, Credentials, Address, Org } from '../organizacao';
-import { ApiService } from '../api.service';
+import { DataService } from '../data.service';
 import { Subscription } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChipModule } from 'primeng/chip';
@@ -62,7 +62,7 @@ export class CadastroComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private orgService: ApiService,
+    private orgService: DataService,
     private authService: AuthService,
     private messageService: MessageService,
     private router: Router,

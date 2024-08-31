@@ -17,7 +17,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Job } from '../job';
 import { catchError, ignoreElements, Observable, of, Subscription } from 'rxjs';
 import { ApiResponse } from '../api-response';
-import { ApiService } from '../api.service';
+import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { NotFoundComponent } from '../../not-found/not-found.component';
 
@@ -42,7 +42,7 @@ export class CardVagaComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router : Router,
-    private apiService : ApiService,
+    private apiService : DataService,
     private location: Location,
   ) { }
 
