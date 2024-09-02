@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/
 import {MarkdownComponent} from "ngx-markdown";
 import { API_REQUEST } from '../../../interceptors/contexts';
 import { Observable, Subscription } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, Location } from '@angular/common';
 import { error } from 'console';
 
 @Component({
@@ -16,6 +16,7 @@ import { error } from 'console';
 export class MarkdownTutComponent implements OnChanges {
 
   constructor(
+    private location: Location
   ) { }
 
   @Input({required: true}) tut! : string;
@@ -25,7 +26,8 @@ export class MarkdownTutComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     
     if(changes['tut']) {
-      this.dataURL = '../../../../../wiki/' + this.tut + '.md';
+      this.dataURL = 'wiki/' + this.tut + '.md';
+      // this.dataURL = '../../../../../wiki/' + this.tut + '.md';
     }
   }
 
