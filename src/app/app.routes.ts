@@ -8,7 +8,8 @@ export const routes: Routes = [
         { path: '', loadComponent: () => import('./contexts/main-app/home/home.component').then(m => m.HomeComponent) },
         { path: 'api', loadComponent: () => import('./contexts/main-app/swagger/swagger.component').then(m => m.SwaggerComponent) },
         { path: 'tutoriais', loadComponent: () => import('./contexts/main-app/tutoriais/tutoriais.component').then(m => m.TutoriaisComponent), children: [
-            { path: ':tut', loadComponent: () => import('./contexts/main-app/markdown-tut/markdown-tut.component').then(m => m.MarkdownTutComponent) }
+            { path: '', loadComponent: () => import('./contexts/main-app/tutoriais/entrada/entrada.component').then(m => m.EntradaComponent) },
+            { path: ':tut', loadComponent: () => import('./contexts/main-app/markdown-tut/markdown-tut.component').then(m => m.MarkdownTutComponent) },
         ] },
         { path: 'sobre', loadComponent: () => import('./contexts/main-app/sobre/sobre.component').then(m => m.SobreComponent) },
         { path: 'recursos', loadComponent: () => import('./contexts/main-app/features/features.component').then(m => m.FeaturesComponent) },
@@ -18,7 +19,7 @@ export const routes: Routes = [
     { path: 'demo/login', loadComponent: () => import('./contexts/demo/login/login.component').then(m => m.LoginComponent) },
     { path: 'demo/cadastro', loadComponent: () => import('./contexts/demo/cadastro/cadastro.component').then(m => m.CadastroComponent) },
     { path: 'demo', loadComponent: () => import('./contexts/demo/main/main.component').then(m => m.MainComponent), children: [
-        { path: '', loadComponent: () => import('./contexts/demo/home/home.component').then(m => m.HomeComponent), canActivate: [ authGuard ] },
+        { path: '', loadComponent: () => import('./contexts/demo/home/home.component').then(m => m.HomeComponent) },
         { path: 'vagas/criadas', loadComponent: () => import('./contexts/demo/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [ authGuard ] },
         { path: 'vagas/new', loadComponent: () => import('./contexts/demo/create-job/create-job.component').then(m => m.CreateJobComponent), canActivate: [ authGuard ] },
         { path: 'vagas/recebidas', loadComponent: () => import('./contexts/demo/moderation/moderation.component').then(m => m.ModerationComponent), canActivate: [ authGuard, iesGuard ] },

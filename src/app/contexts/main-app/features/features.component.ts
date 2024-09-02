@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule, Location } from '@angular/common';
 import { Features, MAIN_FEATURES } from '../features';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-features',
   standalone: true,
-  imports: [CommonModule, TabViewModule, 
+  imports: [CommonModule, RouterLink, 
     ButtonModule,
   ],
   templateUrl: './features.component.html',

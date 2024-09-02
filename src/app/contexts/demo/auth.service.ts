@@ -140,7 +140,7 @@ export class AuthService {
    */
   public logoutAndRedirect() : void {
     this.destroyAuthToken();
-    this.router.navigate(['/demo/login']);
+    this.router.navigate(['/demo']);
   }
 
   

@@ -1,24 +1,28 @@
-<div class="grid m-0 p-0">
+<div class="grid grid-nogutter m-0 p-0">
 
     <div class="p-3 bg-bluegray-900 top-0 sticky min-h-screen col-fixed w-full absolute lg:block z-2 lg:relative lg:z-0 lg:w-15rem" [hidden]="isMenuHidden">
-        <div>
+        <div *ngIf="auth.isAuthenticated()" class="mt-5">
             <p-button class="lg:hidden" (onClick)="toogleMenu()" label="Voltar" icon="pi pi-arrow-left" severity="secondary" [text]="true" />
-             
+                         
             <div *ngFor="let item of menu" class="my-3" (click)="toogleMenu()" >
                 <a *ngIf="!item.state || (item.state.guard == 'ie' && auth.isIe())" [routerLink]="item.routerLink" class="p-button bg-transparent w-full border-none text-0 no-underline text-left" >{{item.label}}</a>
             </div>
     
+            <div class="my-5 flex justify-content-center gap-1 align-items-center">
+                <p-button class="" icon="pi pi-sign-out" [rounded]="true" [text]="true" title="Logout" label="Logout" (onClick)="logout()" />            
+            </div>
+
+
         </div>
     </div>
 
 
-    <div class="col-12 md:col p-3 ml-3">
+    <div class="col-12 flex flex-column min-h-full md:col m-0 p-0">
         <div class="flex lg:justify-content-end justify-content-between">
             <p-button class="lg:hidden mb-2 ml-3" icon="pi pi-bars" [rounded]="true" [text]="true" (onClick)="toogleMenu()" />
             <div></div>
-            <p-button class="" icon="pi pi-sign-out" [rounded]="true" [text]="true" title="Logout" (onClick)="logout()" />            
         </div>        
-        <div class="">
+        <div class="min-h-full">
             <router-outlet />
         </div>
     </div>

@@ -1,11 +1,21 @@
-
-<div class="grid grid-nogutter w-11 mx-auto main-screen align-content-end">
-    <div class="col-6 flex flex-wrap flex-column gap-4 justify-content-top my-5 ">
-        <span class="text-500 font-bold text-lg uppercase">Bem vindo!</span>    
-        <span class="text-3xl font-bold text-bluegray-800 ">Gerencie o compartilhamento de suas vagas de estágio</span>
-        <span class="text-500 text-xl">Explore as funcionalidades de publicação e moderação de anúncios</span>
-    </div>    
-    <div class="col-6 flex align-items-end">
-        <img src="img/mochila.png" class="max-w-full mirror" alt="">
+    <div class="grid grid-nogutter w-11 mx-auto min-h-full align-content-end">
+        <div class="col-12 md:col-6 flex flex-wrap flex-column gap-4 justify-content-center">
+            <span class="text-500 font-bold text-lg uppercase">Bem vindo!</span>    
+            <span class="text-3xl font-bold text-bluegray-800 ">Gerencie o compartilhamento de suas vagas de estágio</span>
+            <span class="text-500 text-xl">Explore as funcionalidades de publicação e moderação de anúncios</span>
+            <div class="my-5 text-center" *ngIf="!auth.isAuthenticated()">
+                <a routerLink="/demo/login" class="p-button no-underline" title="Login">Login</a>
+            </div>
+            <div class="flex flex-wrap flex-column gap-2 justify-content-center">
+                <a routerLink="/tutoriais" class="no-underline" title="Para Desenvolvedores"> 
+                    <span class="text-sm">Para Desenvolvedores</span>
+                </a>
+                <a routerLink="/politica" class="no-underline" title="Termo de Uso e Política de Privacidade"> 
+                    <span class="text-sm">Termo de Uso e Política de Privacidade 2024</span>
+                </a>
+            </div>       
+        </div>    
+        <div class="col-12 md:col-6 flex gap-0 align-items-end m-0 p-0">
+            <img src="img/mulher-jovem.png" class="max-w-full mirror" alt="" >
+        </div>
     </div>
-</div>

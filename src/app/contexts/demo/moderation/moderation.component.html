@@ -1,155 +1,159 @@
 
-<div class="mb-6">
-    <h1 class="text-4xl">Moderação de Vagas Recebidas</h1>
-    <!-- Aqui você pode ver todas as vagas que estarão disponíveis de forma segura para sua comunidade acadêmica.    -->
-    <div class="bg-teal-50 flex flex-column gap-1 p-3 m-2 w-11 text-color-secondary ">
-        <span>Nesta seção, você visualiza todas as vagas que outras organizações estão compartilhando com a sua instituição</span>
-        <span><strong class="text-red-700">Nunca compartilhe esta visualização com seus estudantes</strong>, pois vagas rejeitadas ou com moderação pendente serão visíveis por eles</span>
-    </div>
-    
-</div>
+<div class="p-4 mt-4">
 
-
-
-<p-table 
-    dataKey="id"
-    *ngIf="(vagas$ | async) as vagas; else skeleton"
-    #dt1
-    [rows]="rows"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [paginator]="true"
-    [showCurrentPageReport]="true"
-    [totalRecords]="totalVagas"
-    [first]="first"
-    [lazy]="true"
-    [pageLinks]="5"
-    (onLazyLoad)="onLazyLoad($event)"
-    [lazyLoadOnInit]="false"
-    [globalFilterFields]="['titulo', 'criado_por.nome']"
-    [value]="vagas.data?.content ?? [1, 2, 3]"
->
-    <ng-template pTemplate="caption">
-        <div class="flex gap-2">
-            <p-iconField iconPosition="right" class="ml-auto" >
-                <input 
-                    pInputText 
-                    type="text" 
-                    #input
-                    placeholder="Busca" 
-                    />
-                <p-inputIcon class="cursor-pointer">
-                    <i class="pi pi-search"  (click)="dt1.filterGlobal(input.value, 'contains')" ></i>
-                </p-inputIcon>
-            </p-iconField>
+    <div class="mb-6">
+        <h1 class="text-4xl">Moderação de Vagas Recebidas</h1>
+        <!-- Aqui você pode ver todas as vagas que estarão disponíveis de forma segura para sua comunidade acadêmica.    -->
+        <div class="bg-teal-50 flex flex-column gap-1 p-3 m-2 w-11 text-color-secondary ">
+            <span>Nesta seção, você visualiza todas as vagas que outras organizações estão compartilhando com a sua instituição</span>
+            <span><strong class="text-red-700">Nunca compartilhe esta visualização com seus estudantes</strong>, pois vagas rejeitadas ou com moderação pendente serão visíveis por eles</span>
         </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Título</th>
-            <th>Criado por</th>
-            <th>Status</th>
-            <th>Moderação</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-vaga>
-        <tr>
-            <td> {{ vaga.titulo }}</td>
-            <td> {{ vaga.criado_por?.nome }} </td>
-            <td>
-                <p-tag #tag [rounded]="true" [value]="vaga.moderacao?.status ?? 'indefinido'" [severity]="getSeverity(tag.value ?? '')" />
-            </td>
-            <td>
-                <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
-                <p-button icon="pi pi-thumbs-up" [rounded]="true" [text]="true" title="Aceitar" [disabled]="vaga.moderacao?.status == 'aprovado'" (onClick)="confirmAction('aprovar', vaga.id)" />
-                <p-button icon="pi pi-thumbs-down" [rounded]="true" [text]="true" title="Rejeitar" [disabled]="vaga.moderacao?.status == 'rejeitado'" (onClick)="confirmAction('rejeitar', vaga.id)" /> 
-            </td>
-        </tr>
-    </ng-template>
-    <div>
-        {{ setTotalRecords(vagas.data?.totalElements) }}
+        
     </div>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="5">Nenhuma vaga.</td>
-        </tr>
-    </ng-template>
-</p-table>
-<div><p>Total de vagas: {{totalVagas}}</p></div>
 
-<ng-template #skeleton>
+
+
     <p-table 
-    dataKey="id"
-    [rows]="rows"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [paginator]="true"
-    [showCurrentPageReport]="true"
-    [first]="first"
-    [lazy]="true"
-    [pageLinks]="5"
-    (onPage)="onPage($event)"
-    [globalFilterFields]="['titulo', 'criado_por.nome']"
-    [value]="[1,2,3]"
->
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Título</th>
-            <th>Criado por</th>
-            <th>Status</th>
-            <th>Moderação</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-vaga>
-        <tr>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
-            <td><p-skeleton /></td>
-        </tr>
-    </ng-template>
-</p-table>
-</ng-template>
-
-<p-confirmDialog styleClass="delete-dialog" #cd styleClass="w-11 md:w-4" closable="true">
-    <ng-template pTemplate="message" let-message >
-        <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
-            @if (message.message == 'aprovar') {
-                <i class="pi pi-thumbs-up text-6xl text-green-500"></i>
-                } @else {
-                    <i class="pi pi-thumbs-down text-6xl text-red-500"></i>
-                }
-            <p>Quero {{ message.message }} esta vaga</p>
-        </div>
-    </ng-template>
-        <!-- <ng-template pTemplate="headless" let-message >
-        <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
-            <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem">
-                <i class="pi pi-question text-5xl"></i>
+        dataKey="id"
+        *ngIf="(vagas$ | async) as vagas; else skeleton"
+        #dt1
+        [rows]="rows"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        [totalRecords]="totalVagas"
+        [first]="first"
+        [lazy]="true"
+        [pageLinks]="5"
+        (onLazyLoad)="onLazyLoad($event)"
+        [lazyLoadOnInit]="false"
+        [globalFilterFields]="['titulo', 'criado_por.nome']"
+        [value]="vagas.data?.content ?? [1, 2, 3]"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex gap-2">
+                <p-iconField iconPosition="right" class="ml-auto" >
+                    <input 
+                        pInputText 
+                        type="text" 
+                        #input
+                        placeholder="Busca" 
+                        />
+                    <p-inputIcon class="cursor-pointer">
+                        <i class="pi pi-search"  (click)="dt1.filterGlobal(input.value, 'contains')" ></i>
+                    </p-inputIcon>
+                </p-iconField>
             </div>
-            <span class="font-bold text-2xl block mb-2 mt-4">
-                {{ message.header }}
-            </span>
-            <p class="mb-0">{{ message.message }}</p>
-            <div class="flex align-items-center gap-2 mt-4">
-                <button 
-                    pButton 
-                    [label]="'Sim, quero ' + message.message + ' esta vaga'" 
-                    (click)="cd.accept()" 
-                    class="w-8rem">
-                </button>
-                <button 
-                    pButton 
-                    label="Cancel" 
-                    (click)="cd.reject()" 
-                    class="p-button-outlined w-8rem ">
-                </button>
-            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Título</th>
+                <th>Criado por</th>
+                <th>Status</th>
+                <th>Moderação</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vaga>
+            <tr>
+                <td> {{ vaga.titulo }}</td>
+                <td> {{ vaga.criado_por?.nome }} </td>
+                <td>
+                    <p-tag #tag [rounded]="true" [value]="vaga.moderacao?.status ?? 'indefinido'" [severity]="getSeverity(tag.value ?? '')" />
+                </td>
+                <td>
+                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" title="Ver" (onClick)="see(vaga.id, vaga)" />
+                    <p-button icon="pi pi-thumbs-up" [rounded]="true" [text]="true" title="Aceitar" [disabled]="vaga.moderacao?.status == 'aprovado'" (onClick)="confirmAction('aprovar', vaga.id)" />
+                    <p-button icon="pi pi-thumbs-down" [rounded]="true" [text]="true" title="Rejeitar" [disabled]="vaga.moderacao?.status == 'rejeitado'" (onClick)="confirmAction('rejeitar', vaga.id)" /> 
+                </td>
+            </tr>
+        </ng-template>
+        <div>
+            {{ setTotalRecords(vagas.data?.totalElements) }}
         </div>
-    </ng-template> -->
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Nenhuma vaga.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div><p>Total de vagas: {{totalVagas}}</p></div>
 
-    <ng-template pTemplate="footer">
-        <div class="flex flex-wrap px-0 md:px-5 gap-3 justify-content-between ">
-            <button type="button" class="p-button-secondary" pButton label="Cancelar" (click)="cd.reject()"></button>
-            <button type="button" class="p-button-primary" pButton label="Confirmar" (click)="cd.accept()"></button>
-        </div>
+    <ng-template #skeleton>
+        <p-table 
+        dataKey="id"
+        [rows]="rows"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        [first]="first"
+        [lazy]="true"
+        [pageLinks]="5"
+        (onPage)="onPage($event)"
+        [globalFilterFields]="['titulo', 'criado_por.nome']"
+        [value]="[1,2,3]"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Título</th>
+                <th>Criado por</th>
+                <th>Status</th>
+                <th>Moderação</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vaga>
+            <tr>
+                <td><p-skeleton /></td>
+                <td><p-skeleton /></td>
+                <td><p-skeleton /></td>
+                <td><p-skeleton /></td>
+            </tr>
+        </ng-template>
+    </p-table>
     </ng-template>
-</p-confirmDialog>
+
+    <p-confirmDialog styleClass="delete-dialog" #cd styleClass="w-11 md:w-4" closable="true">
+        <ng-template pTemplate="message" let-message >
+            <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                @if (message.message == 'aprovar') {
+                    <i class="pi pi-thumbs-up text-6xl text-green-500"></i>
+                    } @else {
+                        <i class="pi pi-thumbs-down text-6xl text-red-500"></i>
+                    }
+                <p>Quero {{ message.message }} esta vaga</p>
+            </div>
+        </ng-template>
+            <!-- <ng-template pTemplate="headless" let-message >
+            <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+                <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem">
+                    <i class="pi pi-question text-5xl"></i>
+                </div>
+                <span class="font-bold text-2xl block mb-2 mt-4">
+                    {{ message.header }}
+                </span>
+                <p class="mb-0">{{ message.message }}</p>
+                <div class="flex align-items-center gap-2 mt-4">
+                    <button 
+                        pButton 
+                        [label]="'Sim, quero ' + message.message + ' esta vaga'" 
+                        (click)="cd.accept()" 
+                        class="w-8rem">
+                    </button>
+                    <button 
+                        pButton 
+                        label="Cancel" 
+                        (click)="cd.reject()" 
+                        class="p-button-outlined w-8rem ">
+                    </button>
+                </div>
+            </div>
+        </ng-template> -->
+
+        <ng-template pTemplate="footer">
+            <div class="flex flex-wrap px-0 md:px-5 gap-3 justify-content-between ">
+                <button type="button" class="p-button-secondary" pButton label="Cancelar" (click)="cd.reject()"></button>
+                <button type="button" class="p-button-primary" pButton label="Confirmar" (click)="cd.accept()"></button>
+            </div>
+        </ng-template>
+    </p-confirmDialog>
+
+</div>

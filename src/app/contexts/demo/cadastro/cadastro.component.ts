@@ -262,7 +262,7 @@ export class CadastroComponent implements OnInit, OnDestroy {
 
 
   public redirectHome() : void {
-    this.router.navigate(['demo']);
+    this.router.navigate(['demo/login']);
   }  
 
 
