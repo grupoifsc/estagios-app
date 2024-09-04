@@ -120,11 +120,7 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {
-            "baseHref" : "/estagios-app/",
-            "name": "Plataforma de Estágios"
-          }
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
