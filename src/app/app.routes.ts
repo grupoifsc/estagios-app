@@ -29,6 +29,7 @@ export const routes: Routes = [
         {path: 'teste', loadComponent: () => import('./contexts/demo/teste/teste.component').then(m => m.TesteComponent), canActivate: [authGuard]},
         { path: '**', loadComponent: () => import('./contexts/not-found/not-found.component').then(m => m.NotFoundComponent) },
     ]},
+    { path: 'settings', loadComponent: () => import('./settings/settings.component').then(m => m.SettingsComponent) },
     { path : '', loadComponent: () => import('./contexts/main-app/menu/menu.component').then(m => m.MenuComponent), children: [
         // { path: '', loadComponent: () => import('./contexts/main-app/home/home.component').then(m => m.HomeComponent) },
         { path: '**', loadComponent: () => import('./contexts/not-found/not-found.component').then(m => m.NotFoundComponent) },

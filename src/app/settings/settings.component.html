@@ -1,0 +1,11 @@
+<h1>Settings</h1>
+<div>
+    <div>Url atual: {{ getUrl() }}</div>
+    <div class="field">
+        <label for="api-url">Base API host:</label>
+        <input pInputText #url id="api-utl" type="text">
+    </div>
+    <div class="mx-auto">
+        <p-button [disabled]="!url.value || url.value.trim().length == 0" label="Alterar" (onClick)="changeApiUrl(url.value)" />
+    </div>
+</div>
