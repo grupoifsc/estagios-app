@@ -1,3 +1,17 @@
-# EstagiosApp
+# Plataforma de Estágios (versão web)
 
-🚧 Páginas web para documentação e demonstração do projeto estagios-api (https://github.com/grupoifsc/pi_develop). Construído com Angular, como parte da conclusão do Curso Técnico em Desenvolvimento de Sistemas - IFSC / 2024.1
+> Desenvolvido como parte do trabalho de conclusão do Curso Técnico em Desenvolvimento de Sistemas - IFSC - Câmpus Florianópolis / 2024.1
+
+Um website para documentação e demonstração do projeto "Plataforma de Estágios - API" - um serviço web que facilita a divulgação de vagas de estágio à comunidade estudantil. 
+
+- Repositório do projeto: [grupoifsc/estagios-rest](https://github.com/grupoifsc/estagios-rest)
+
+- Website de documentação: [grupoifsc/estagios-app](https://grupoifsc.github.io/estagios-app/)
+
+## Construído com:
+- Angular
+- PrimeNG
+- Prime Flex
+- Swagger UI
+- Prism.js
+- ngx-markdown
