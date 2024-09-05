@@ -63,10 +63,7 @@
               "outputHashing": "none",
               "namedChunks": true,
               "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.analyze-bundle.ts"
-                }
+               
               ]
             },
             "development": {
@@ -74,10 +71,7 @@
               "extractLicenses": false,
               "sourceMap": true,
               "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
-                }
+               
               ]
             }
           },

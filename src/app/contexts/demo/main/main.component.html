@@ -3,7 +3,9 @@
     <div class="p-3 theme-font bg-bluegray-900 top-0 sticky min-h-screen col-fixed w-full absolute lg:block z-2 lg:relative lg:z-0 lg:w-15rem" [hidden]="isMenuHidden">
         <div *ngIf="auth.isAuthenticated()" class="mt-5">
             <p-button class="lg:hidden" (onClick)="toogleMenu()" label="Voltar" icon="pi pi-arrow-left" severity="secondary" [text]="true" />
-                         
+            <div class="ml-1 mt-3 mb-6">
+                <span class="text-bluegray-200 font-bold">Bem vindo(a), {{ auth.getUserName() }}!</span>
+            </div>
             <div *ngFor="let item of menu" class="my-3" (click)="toogleMenu()" >
                 <a *ngIf="!item.state || (item.state.guard == 'ie' && auth.isIe())" [routerLink]="item.routerLink" class="p-button bg-transparent w-full border-none text-0 no-underline text-left" >{{item.label}}</a>
             </div>
@@ -27,4 +29,3 @@
         </div>
     </div>
 </div>
-

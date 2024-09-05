@@ -5,8 +5,6 @@ import { Area, Job, JobEntryData } from './job';
 import { ApiResponse } from './api-response';
 import { Page } from './page';
 import { DataFetching } from './data-fetching';
-import { environment } from '../../../environments/environment';
-import { InMemoryService } from './in-memory.service';
 import { ApiService } from './api.service';
 
 @Injectable({

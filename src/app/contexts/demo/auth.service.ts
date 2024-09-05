@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { BrowserStorageService } from './browser-storage.service';
 import { NEED_AUTH } from '../../interceptors/contexts';
+import { ApiService } from './api.service';
 
 
 export interface LoginRequestBody {
@@ -43,6 +44,7 @@ export class AuthService {
     private http : HttpClient,
     private router : Router,
     private storage : BrowserStorageService,
+    private apiService: ApiService,
   ) { }
 
 
@@ -109,6 +111,7 @@ export class AuthService {
         tap(res => {
           if(res?.status == 'success' && res.data) {
             this.storeAuthToken(res.data);
+            this.getAndStoreAuthUserName();
             this.router.navigate([url]);
           }}
         )
@@ -140,7 +143,27 @@ export class AuthService {
    */
   public logoutAndRedirect() : void {
     this.destroyAuthToken();
+    this.destroyAuthUserName();
     this.router.navigate(['/demo']);
+  }
+
+  private getAndStoreAuthUserName() : void {
+    this.apiService.getAuthOrg().subscribe({
+      next: response => {
+        if(response.data) {
+          this.storage.setItem("user", response.data.nome);
+        }
+      }, 
+      error: err => console.log(err.error)
+    })
+  }
+
+  private destroyAuthUserName() : void {
+    this.storage.removeItem("user");
+  }
+
+  public getUserName() : string {
+    return this.storage.getItem("user") ?? '';
   }
 
   
