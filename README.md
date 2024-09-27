@@ -1,6 +1,6 @@
-# Plataforma de Estágios (versão web)
+![image](https://github.com/user-attachments/assets/ed4c597f-cb44-4c81-968a-78c72866b386)# Plataforma de Estágios (versão web)
 
-> Desenvolvido como parte do trabalho de conclusão do Curso Técnico em Desenvolvimento de Sistemas - IFSC - Câmpus Florianópolis / 2024.1. E também como Projeto de Extensão do Curso de Análise e Desenvolvimento de Sistemas da Estácio - 2024.1
+> Este projeto foi desenvolvido no contexto do Curso Técnico em Desenvolvimento de Sistemas - IFSC - Florianópolis, semestre 2024.1 e do Curso de Análise e Desenvolvimento de Sistemas da Estácio - 2024.1
 
 Um website para documentação e demonstração do projeto "Plataforma de Estágios - API" - um serviço web que facilita a divulgação de vagas de estágio à comunidade estudantil. 
 
